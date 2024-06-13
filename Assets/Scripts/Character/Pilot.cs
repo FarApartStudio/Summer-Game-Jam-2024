@@ -27,23 +27,6 @@ public class Pilot : CharacterManager
 
     private void Start()
     {
-        canMove = true;
-
-        movementController.CanMove += () =>
-        {
-            return canMove;
-        };
-
-        movementController.CanRotate += () =>
-        {
-            return canRotate;
-        };
-
-        movementController.CanSprint += () =>
-        {
-            return true;    
-        };
-
         movementController.OnSprintChange += OnSprintChange;
     }
 

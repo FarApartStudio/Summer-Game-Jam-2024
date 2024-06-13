@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PilotAnimatorController : CharacterAnimatorController
 {
-    public Action OnClimbElevate;
-    public Action OnRefillAmmo;
-    public Action OnReload;
     [SerializeField] private float gravityMultiplier = 1f;
 
     private void OnAnimatorMove()
@@ -28,18 +25,13 @@ public class PilotAnimatorController : CharacterAnimatorController
         }
     }
 
-    public void ElevetaePlayer()
+    public void FootL()
     {
-        OnClimbElevate?.Invoke();
+
     }
 
-    public void RefillAmmo()
+    public void FootR()
     {
-        OnRefillAmmo?.Invoke();
-    }
 
-    public void Reload()
-    {
-        OnReload?.Invoke();
     }
 }
