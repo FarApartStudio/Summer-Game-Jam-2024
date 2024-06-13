@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad252d5ed33e7f4995c6ed10769430a, type: 3}
+  m_Name: GameObject Bank
+  m_EditorClassIdentifier: 
+  _valueList:
+  - Key: Table
+    Asset: {fileID: 2485986627279254815, guid: 96f158bbb9ca72e46858e2a8192a4e3f, type: 3}
+    Info: 
+    IsGroup: 0
+    GroupAsset: []
+    ShowFoldOut: 1
+  - Key: Enemy
+    Asset: {fileID: 2485986627279254815, guid: 96f158bbb9ca72e46858e2a8192a4e3f, type: 3}
+    Info: 
+    IsGroup: 1
+    GroupAsset:
+    - Chance: 80
+      Asset: {fileID: 5188294207045827386, guid: ef9be7befa773bf42a8369fb90980b7d, type: 3}
+    - Chance: 20
+      Asset: {fileID: 8213738591763170679, guid: 4ae3ba998b91b23458b8d8a1e7717213, type: 3}
+    - Chance: 60
+      Asset: {fileID: 879483054761182464, guid: 1efaec41350ac424596e698401035e43, type: 3}
+    - Chance: 1
+      Asset: {fileID: 8144958529893609046, guid: ba89af3f867152c4eb4bbcd4ace8901e, type: 3}
+    ShowFoldOut: 1
