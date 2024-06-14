@@ -274,19 +274,6 @@ public class MovementController : MonoBehaviour
         StopSprint();
     }
 
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    // Checks if the player collided with a object in front of them
-    //    float dotProduct = Vector3.Dot(hit.normal, transform.up);
-
-    //    if (dotProduct > 0.1)
-    //    {
-    //        return;
-    //    }
-
-    //    StopSprint();
-    //}
-
     public void StopSprint()
     {
         if (sprint)
