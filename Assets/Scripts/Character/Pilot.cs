@@ -41,7 +41,7 @@ public class Pilot : CharacterManager
         {
             movementController.OnMove(InputManager.Instance.GetMovementInput());
 
-            if (InputManager.Instance.GetSprintInput()) movementController.OnSprint();
+            movementController.OnSprint(InputManager.Instance.GetSprintInput());
 
             if (canJump) movementController.OnJump(InputManager.Instance.GetJumpInput());
 

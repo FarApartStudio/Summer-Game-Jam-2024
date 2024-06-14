@@ -10,7 +10,6 @@ namespace CraftingAnims
 		[HideInInspector] public Animator animator;
 		[HideInInspector] public CrafterShowItem showItem;
 		[HideInInspector] public CrafterIKHands crafterIKhands;
-		[HideInInspector] public GUIControls guiControls;
 		[HideInInspector] public Rigidbody rb;
 
 		// Variables.
@@ -88,7 +87,6 @@ namespace CraftingAnims
 			}
 
 			rb = GetComponent<Rigidbody>();
-			guiControls = GetComponent<GUIControls>();
 			showItem = GetComponent<CrafterShowItem>();
 			crafterIKhands = GetComponentInChildren<CrafterIKHands>();
 
@@ -500,7 +498,6 @@ namespace CraftingAnims
 		/// <param name="time"></param>
 		public void BlendOff(float time)
 		{
-			guiControls.ResetCarry();
 			StartCoroutine(_RightArmBlendOff(time));
 			StartCoroutine(_RightHandBlendOff(time));
 		}

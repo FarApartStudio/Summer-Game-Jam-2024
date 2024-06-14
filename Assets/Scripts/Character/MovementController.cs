@@ -98,11 +98,6 @@ public class MovementController : MonoBehaviour
     public void OnSprint(bool value)
     {
         sprint = value;
-    }
-
-    public void OnSprint()
-    {
-        sprint = !sprint;
         OnSprintChange?.Invoke(sprint);
     }
 
