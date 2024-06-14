@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
+public enum ViewMode
+{
+    HipFire,
+    Aim
+}
+
 public class CharacterCombatController : MonoBehaviour
 {
-    public enum AimMode
-    {
-        HipFire,
-        Aim
-    }
 
     public enum WeaponState
     {
@@ -30,9 +31,9 @@ public class CharacterCombatController : MonoBehaviour
     public event Action<float> OnReloading;
     public event Action OnReloadEnd;
 
-    public event Action<bool, Vector3> GunPointDetected;
+    public event Action<bool, Vector3> HitablePointDetected;
     public event Action hitDetected;
-    public event Action<AimMode> OnAimModeChanged;
+    public event Action<ViewMode> OnAimModeChanged;
 
     [Header("References")]
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
@@ -43,8 +44,12 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private Transform weaponTransform;
     [SerializeField] private Transform firePos;
     [SerializeField] private LayerMask hitLayer;
+    [SerializeField] private Arrow arrow;
+    [SerializeField] private float arrowSpeed = 25;
 
-    [Header("ShootingRig")]
+    [Header("Aiming")]
+    [SerializeField] private float aimRotateSpeed = 10;
+    [SerializeField] private float aimResetDelay = 0.5f;
     [SerializeField] private Rig aimingRig;
     [SerializeField] private float aimingRigLerpSpeed = 20;
 
@@ -52,15 +57,12 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private bool autoHideMouse = false;
     [SerializeField] private bool isTriggerHeld = false;
     [SerializeField] private bool isTriggerReleased = true;
-    [SerializeField] private int currentBulletInBurst;
-    [SerializeField] private bool CanBurstFire = false;
-    [SerializeField] private float currentFireRate;
     [SerializeField] private float currentTriggerHoldTime;
+    [SerializeField] private float currentFireRate;
 
-    private AimMode aimMode = AimMode.HipFire;
+    private ViewMode aimMode = ViewMode.HipFire;
     private WeaponState weaponState = WeaponState.Idle;
     private Camera cam;
-    //[SerializeField] private WeaponModel currentWeaponModel;
     private bool aimInput = false;
     private Vector2 screeCenterPoint;
     private Vector3 mouseWorldPosition;
@@ -72,21 +74,27 @@ public class CharacterCombatController : MonoBehaviour
     private float turnThreshold = 0.002f;
     private bool reloaded = false;
 
-    public AimMode GetAimMode => aimMode;
+    public ViewMode GetAimMode => aimMode;
     public WeaponState GetWeaponState => weaponState;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
 
     private void Update()
     {
-        // pilotAnimatorController.SetBool("InAction", isTriggerHeld || aimInput);
-        // pilotAnimatorController.Animator.SetFloat("Turn", turnValue, .2f, Time.deltaTime);
-
+        HandleAnimationWeights();
         HandleInput();
+        HandleMouseWorldPosition();
+        HandleRotationWithCamera();
     }
 
-    public void ChangeAimMode(AimMode mode)
+    public void HandleAnimationWeights()
     {
-        aimMode = mode;
-        OnAimModeChanged?.Invoke(aimMode);
+        aimingRig.weight = Mathf.Lerp(aimingRig.weight, shootingRigWeight, Time.deltaTime * aimingRigLerpSpeed);
+        pilotAnimatorController.SetBool("InAction", isTriggerHeld || aimInput);
+        pilotAnimatorController.Animator.SetFloat("Turn", turnValue, .2f, Time.deltaTime);
     }
 
     public void HandleInput()
@@ -96,6 +104,7 @@ public class CharacterCombatController : MonoBehaviour
         if (InputManager.Instance.GetAimInput())
         {
             if (CamAim != null && !CamAim()) return;
+
             HandleAim(true);
         }
         else
@@ -116,6 +125,11 @@ public class CharacterCombatController : MonoBehaviour
 
     public void SetTriggerHeld(bool trigger)
     {
+        if (isTriggerHeld)
+        {
+            currentTriggerHoldTime += Time.deltaTime;
+        }
+
         if (isTriggerHeld && !trigger)
         {
             currentTriggerHoldTime = 0;
@@ -132,7 +146,7 @@ public class CharacterCombatController : MonoBehaviour
 
         aimInput = aim;
         pilotAnimatorController.SetBool("IsAiming", aimInput);
-        ChangeAimMode(aimInput ? AimMode.Aim : AimMode.HipFire);
+        ChangeAimMode(aimInput ? ViewMode.Aim : ViewMode.HipFire);
 
         if (aimInput)
         {
@@ -152,6 +166,20 @@ public class CharacterCombatController : MonoBehaviour
         }
     }
 
+    public void SpawnArrow ()
+    {
+        shootDirection = (targetDetectPos - firePos.position);
+        shootDirection.Normalize();
+        Arrow arrowInstance = Instantiate(arrow, firePos.position,transform.rotation);
+        arrowInstance.Init(shootDirection, arrowSpeed);
+    }
+
+    public void ChangeAimMode(ViewMode mode)
+    {
+        aimMode = mode;
+        OnAimModeChanged?.Invoke(aimMode);
+    }
+
     public bool FireRateReady()
     {
         if (currentFireRate > 0)
@@ -165,7 +193,7 @@ public class CharacterCombatController : MonoBehaviour
     public void HandleMouseWorldPosition()
     {
         screeCenterPoint = new Vector2(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2);
-        Ray ray = Camera.main.ScreenPointToRay(screeCenterPoint);
+        Ray ray = cam.ScreenPointToRay(screeCenterPoint);
 
         if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, hitLayer))
         {
@@ -186,12 +214,12 @@ public class CharacterCombatController : MonoBehaviour
             targetDetectPos = linecastHit.point;
 
             Vector2 screenPosition = cam.WorldToScreenPoint(targetDetectPos);
-            GunPointDetected?.Invoke(true, screenPosition);
+            HitablePointDetected?.Invoke(true, screenPosition);
         }
         else
         {
             targetDetectPos = mouseWorldPosition;
-            GunPointDetected?.Invoke(false, targetDetectPos);
+            HitablePointDetected?.Invoke(false, targetDetectPos);
         }
 
         aimTargetDebug.position = Vector3.Lerp(aimTargetDebug.position, mouseWorldPosition, Time.deltaTime * 10);
@@ -199,7 +227,7 @@ public class CharacterCombatController : MonoBehaviour
 
     public void HandleRotationWithCamera()
     {
-        if (isTriggerHeld || aimMode == AimMode.Aim)
+        if (isTriggerHeld || aimMode == ViewMode.Aim)
         {
             previousFoward = transform.forward;
 
@@ -208,7 +236,7 @@ public class CharacterCombatController : MonoBehaviour
             worldAimTarget.y = transform.position.y;
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
-            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10);
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * aimRotateSpeed);
 
             if (Vector3.Distance(transform.forward, previousFoward) < turnThreshold)
             {

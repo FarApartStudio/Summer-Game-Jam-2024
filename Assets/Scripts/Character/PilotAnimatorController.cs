@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PilotAnimatorController : CharacterAnimatorController
 {
+    public Action OnShootTriggered;
+
     [SerializeField] private float gravityMultiplier = 1f;
 
     private void OnAnimatorMove()
@@ -33,5 +35,10 @@ public class PilotAnimatorController : CharacterAnimatorController
     public void FootR()
     {
 
+    }
+
+    public void Shoot()
+    {
+        OnShootTriggered?.Invoke();
     }
 }
