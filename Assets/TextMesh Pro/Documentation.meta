@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/TextMesh Pro/Documentation.meta
 guid: 8e7e8f5a82a3a134e91c54efd2274ea9
 folderAsset: yes
+=======
+guid: ed09910c0094cb27be8f3ca264680da3
+timeCreated: 1488828285
+>>>>>>> Stashed changes:Assets/Plugins/Sirenix/Demos/Editor Windows.unitypackage.meta
 DefaultImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

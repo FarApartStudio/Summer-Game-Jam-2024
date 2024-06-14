@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/TextMesh Pro/Fonts.meta
 guid: 6ab70aee4d56447429c680537fbf93ed
 folderAsset: yes
+=======
+guid: cc355dd4cf1e6173beaeb22c2858cbe1
+timeCreated: 1488828285
+>>>>>>> Stashed changes:Assets/Plugins/Sirenix/Demos/Sample - RPG Editor.unitypackage.meta
 DefaultImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -13,11 +13,25 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
     [SerializeField] private Transform _target;
 
+
+    [Header("Screen Shake")]
+    [SerializeField] CinemachineImpulseSource bumpSource;
+    [SerializeField] CinemachineImpulseSource explosionSource;
+    [SerializeField] CinemachineImpulseSource rumbleSource;
+    [SerializeField] CinemachineImpulseSource recoilSource;
+    [SerializeField] CinemachineImpulseSource genericSource;
+    [SerializeField] CinemachineImpulseListener listener;
+
+    private CinemachineCameraShaker cinemachineCameraShaker;
+
+
     Coroutine fovCoroutine;
 
     private void Awake()
     {
         Instance = this;
+        listener = GetComponent<CinemachineImpulseListener>();
+        cinemachineCameraShaker = new CinemachineCameraShaker(bumpSource, explosionSource, rumbleSource, recoilSource, genericSource, listener);
     }
 
     public void SetDistanceToTarget(float newValue)
@@ -48,6 +62,16 @@ public class CameraManager : MonoBehaviour
         _target = target;
         followVirtualCamera.LookAt = _target;
         aimVirtualCamera.LookAt = _target;
+    }
+
+    public void ShakeCamera(CinemachineImpulseDefinition.ImpulseShapes shape, float duration = 0.1f, float force = 1f, Vector2 velocity = default)
+    {
+        cinemachineCameraShaker.ShakeCamera(shape, duration, force, velocity);
+    }
+
+    public void ShakeCamera(ScreenShakeProfile profile)
+    {
+        cinemachineCameraShaker.ShakeCamera(profile);
     }
 
     public void ChangeCameraDirection(CameraDirection direction)

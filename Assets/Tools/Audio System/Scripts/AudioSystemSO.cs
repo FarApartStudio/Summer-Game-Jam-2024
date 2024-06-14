@@ -29,9 +29,21 @@ namespace Pelumi.AudioSystem
             audioMixer.SetFloat(key, mute ? -80 : 0);
         }
 
-        public void SetVolume(AudioCategory audioCategory, float volume)
+        public void ChangeVolume(AudioCategory audioCategory, float volume)
+        {
+            SetVolume (audioCategory, volume);
+            SaveAudioVolumeData();
+        }
+
+        private void SetVolume(AudioCategory audioCategory, float volume)
         {
             audioMixer.SetFloat(audioCategory.ToString(), ConvertVolumeToDecibel(volume));
+        }
+
+        public float GetVolume (AudioCategory audioCategory)
+        {
+            audioMixer.GetFloat(audioCategory.ToString(), out float volume);
+            return ConvertDecibelToVolume(volume);
         }
 
         public float ConvertVolumeToDecibel(float volume)
@@ -51,7 +63,6 @@ namespace Pelumi.AudioSystem
             foreach (AudioVolumeData data in audioVolumeData)
             {
                 SetVolume(data.AudioCategory, data.Volume);
-                Debug.Log($"Loaded {data.AudioCategory} with volume {data.Volume}");
             }
         }
 

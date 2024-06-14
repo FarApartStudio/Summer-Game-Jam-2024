@@ -17,19 +17,6 @@ public class Book : MonoBehaviour
 
     JuicerRuntime juicerRuntime;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            FlipPage(Direction.Backward);
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            FlipPage(Direction.Forward);
-        }
-    }
-
     public void FlipPage(Direction direction)
     {
         if (juicerRuntime != null && !juicerRuntime.IsFinished)

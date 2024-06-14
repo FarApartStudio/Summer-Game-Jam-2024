@@ -5,6 +5,7 @@ using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Linq;
+using Object = UnityEngine.Object;
 
 namespace Pelumi.Juicer
 {
@@ -82,6 +83,14 @@ namespace Pelumi.Juicer
                     {
                         if (juicerRuntimeParam.LoopCount == 1 || (juicerRuntimeParam.LoopCount >= 1 && loopCount >= juicerRuntimeParam.LoopCount))
                         {
+                            currentDelay = juicerRuntimeController.EndDelay;
+
+                            while (currentDelay > 0)
+                            {
+                                if (!juicerRuntimeController.IsPaused) currentDelay -= juicerRuntimeParam.TimeMode == TimeMode.Unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
+                                yield return null;
+                            }
+
                             juicerRuntimeController.OnCompleted();
                             yield break;
                         }
@@ -301,7 +310,7 @@ namespace Pelumi.Juicer
             return result;
         }
 
-        public static IEnumerator Shake(Vector3 original, JuicerSetter<Vector3> valueToModify, float duration, Vector3 strength, int vibrato, float randomness, bool fadeOut, ShakeRandomnessMode randomnessMode)
+        public static IEnumerator Shake(object target, Vector3 original, JuicerSetter<Vector3> valueToModify, float duration, Vector3 strength, int vibrato, float randomness, bool fadeOut, ShakeRandomnessMode randomnessMode)
         {
             Vector3 originalPosition = original;
             Vector3 startPosition = original;
@@ -343,6 +352,10 @@ namespace Pelumi.Juicer
                     );
                 }
 
+                if (Object.ReferenceEquals(target, null))
+                {
+                    yield break;
+                }
                 valueToModify?.Invoke(originalPosition + randomOffset + vibratoOffset);
 
                 elapsedTime += Time.deltaTime;
@@ -407,6 +420,17 @@ namespace Pelumi.Juicer
         public override bool keepWaiting => !_juicerRuntime.IsFinished && !_juicerRuntime.IsStepCompleted;
 
         public WaitUntilJuicerComplectedOrStep(JuicerRuntime juicerRuntime)
+        {
+            _juicerRuntime = juicerRuntime;
+        }
+    }
+
+    public class WaitUntilJuicerStepComplete : CustomYieldInstruction
+    {
+        private JuicerRuntime _juicerRuntime;
+        public override bool keepWaiting => !_juicerRuntime.IsStepCompleted;
+
+        public WaitUntilJuicerStepComplete(JuicerRuntime juicerRuntime)
         {
             _juicerRuntime = juicerRuntime;
         }
