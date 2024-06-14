@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   analogMovement: 0
   cinemachineCameraTarget: {fileID: 1024778935941270529}
-  moveSpeed: 2
+  moveSpeed: 2.5
   sprintSpeed: 5.335
   rotationSmoothTime: 0.12
   speedChangeRate: 10
