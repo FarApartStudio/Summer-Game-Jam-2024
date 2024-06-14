@@ -9,17 +9,14 @@ public enum CameraDirection
     Left, Right
 }
 
-public enum ViewMode
-{
-    HipFire, Aim
-}
 
 public class Pilot : CharacterManager
 {
     [SerializeField] private CameraDirection currentCameraDirection;
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
-    
+    [SerializeField] private CharacterCombatController characterCombatController;
+
     [SerializeField] private Vector3 hipCameraTargetPos;
     [SerializeField] private Vector3 aimLeftCameraTargetPos;
     [SerializeField] private Vector3 aimRightCameraTargetPos;
@@ -28,6 +25,7 @@ public class Pilot : CharacterManager
     private void Start()
     {
         movementController.OnSprintChange += OnSprintChange;
+        pilotAnimatorController.OnShootTriggered += OnFire;
     }
 
     private void OnCameraRecoil(Vector2 vector)
@@ -47,7 +45,9 @@ public class Pilot : CharacterManager
 
             cameraController.UpdateInput(InputManager.Instance.GetCameraInput());
 
-            if(Input.GetKeyDown(KeyCode.T))
+            characterCombatController.OnAimModeChanged += OnAimModeChanged;
+
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 switch (currentCameraDirection)
                 {
@@ -119,7 +119,7 @@ public class Pilot : CharacterManager
 
     private void OnFire()
     {
-        movementController.StopSprint();
+        characterCombatController.SpawnArrow();
     }
 
     public override void SetShowWeapon(bool show)
