@@ -17,7 +17,7 @@ public class ObjectRevealer : MonoBehaviour
 
     private void Awake()
     {
-        _effector.transform.eulerAngles = new Vector3(0, 0, -90);
+        _effector.transform.eulerAngles = new Vector3(0, 0, 90);
         _collider = GetComponent<Collider>();
     }
 
@@ -28,18 +28,7 @@ public class ObjectRevealer : MonoBehaviour
 
     public void ToggleReveal(bool state)
     {
-        if (!_canToggleReveal) return;
-        _collider.enabled = false;
-        _rotateEffect.SetDestination(state ? new Vector3(0, 0, 360) : new Vector3(0, 0, -90));
+        _rotateEffect.SetDestination(state ? new Vector3(0, 0, 0) : new Vector3(0, 0, 90));
         _rotateEffect.Start();
-        StartCoroutine(CoolDown());
-    }
-
-    IEnumerator CoolDown ()
-    {
-        _canToggleReveal = false;
-        yield return new WaitForSeconds(_duration + 1.5f);
-        _canToggleReveal = true;
-        _collider.enabled = true;
     }
 }
