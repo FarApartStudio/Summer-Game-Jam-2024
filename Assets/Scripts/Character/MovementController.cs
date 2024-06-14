@@ -66,7 +66,7 @@ public class MovementController : MonoBehaviour
     // timeout deltatime
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
-
+    private bool _isSprinting;
     private CharacterController _controller;
     private GameObject _mainCamera;
 
@@ -97,10 +97,9 @@ public class MovementController : MonoBehaviour
 
     public void OnSprint(bool value)
     {
-        sprint = value;
+        sprint = value && move.magnitude > 0.1f;
         OnSprintChange?.Invoke(sprint);
     }
-
 
     private void Awake()
     {
@@ -183,7 +182,7 @@ public class MovementController : MonoBehaviour
         {
             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                 _mainCamera.transform.eulerAngles.y;
-            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+            float inputRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                 rotationSmoothTime);
 
             // rotate to face input direction relative to camera position
@@ -191,9 +190,10 @@ public class MovementController : MonoBehaviour
             if (rotateOnMove)
             {
                 if(sprint)
-                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                transform.rotation = Quaternion.Euler(0.0f, inputRotation, 0.0f);
                 else
                 {
+                    float cameraFowardRotationotation = Mathf.SmoothDampAngle (transform.eulerAngles.y, _mainCamera.transform.eulerAngles.y, ref _rotationVelocity, rotationSmoothTime);
                     transform.rotation = Quaternion.Euler(0.0f, _mainCamera.transform.eulerAngles.y, 0.0f);
                 }
             }
