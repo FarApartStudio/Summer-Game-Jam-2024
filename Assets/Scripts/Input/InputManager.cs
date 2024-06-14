@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
 
     public bool GetSprintInput()
     {
-        return playerControls.Player.Sprint.triggered;
+        return playerControls.Player.Sprint.IsPressed();
     }
 
     public bool GetAimInput()
