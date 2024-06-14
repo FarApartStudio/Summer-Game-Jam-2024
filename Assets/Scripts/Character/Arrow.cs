@@ -1,3 +1,4 @@
+using Pelumi.Juicer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,14 +28,17 @@ public class Arrow : MonoBehaviour
     [SerializeField] LayerMask _collisionLayer;
     [SerializeField] Vector3 _detectOffset;
     [SerializeField] float _detectRadius;
+    [SerializeField] float _lifeTime;
 
     private Vector3 _direction;
     private float _speed;
     private bool _isHit;
+    private JuicerRuntimeCore<Vector3> _scaleEffect;
 
     private void Awake()
     {
-
+        _scaleEffect = transform.JuicyScale(Vector3.one * 1.5f, 0.15f);
+        _scaleEffect.SetLoop(2);
     }
 
     public void Init(Vector3 direction, float speed)
@@ -76,7 +80,7 @@ public class Arrow : MonoBehaviour
     {
         _isHit = true;
         transform.SetParent(hit.Collider.transform, true);
-        //transform.forward = Vector3.Reflect(_direction, hit.HitNormal);
+        _scaleEffect.Start();
     }
 
     private Vector3 GetOffsetPosition()
