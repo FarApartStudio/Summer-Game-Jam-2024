@@ -8,7 +8,6 @@ namespace Pelumi.ObjectPool
     public class ObjectPoolManager : MonoBehaviour
     {
         public static Dictionary<string, PoolObjectInfo> objectPoolDictionary;
-
         public static GameObject _poolHolder;
         public static GameObject _particleSystemParent;
         public static GameObject _gameObjectSystemParent;
@@ -145,7 +144,6 @@ namespace Pelumi.ObjectPool
 
             GameObject gameObject = poolObjectInfo.pool.Get();
             gameObject.transform.SetPositionAndRotation(position, rotation);
-            gameObject.SetActive(true);
             return gameObject;
         }
 
@@ -164,7 +162,7 @@ namespace Pelumi.ObjectPool
             }
             else
             {
-                Debug.LogWarning("Failed to release object that has not been pooled but created a new pool for it");
+                Debug.LogWarning("Failed to release object that has not been pooled but created a new pool for it" + objectToReturn.name);
                 poolObjectInfo = new PoolObjectInfo(objectToReturn);
                 objectPoolDictionary.Add(objectToReturn.GetRawName(), poolObjectInfo);
             }
@@ -212,6 +210,8 @@ namespace Pelumi.ObjectPool
             ,
             (gameObject) =>
             {
+                gameObject.SetActive(true);
+
                 if (gameObject.TryGetComponent(out IHasPool hasPool))
                 {
                     hasPool.OnGet();

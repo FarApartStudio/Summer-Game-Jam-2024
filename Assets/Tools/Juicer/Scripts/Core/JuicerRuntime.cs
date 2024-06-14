@@ -54,6 +54,27 @@ namespace Pelumi.Juicer
         }
     }
 
+    public class ConditionalJuicerRuntime : JuicerRuntimeBase
+    {
+        private JuicerGetter<bool> _condition;
+        private JuicerRuntime _juicerRuntime;
+
+        public ConditionalJuicerRuntime(JuicerGetter<bool> condition, JuicerRuntime juicerRuntime)
+        {
+            _condition = condition;
+            _juicerRuntime = juicerRuntime;
+        }
+
+        public JuicerRuntime ConditionMet()
+        {
+            if (_condition.Invoke())
+            {
+                return _juicerRuntime;
+            }
+            return null;
+        }
+    }   
+
     public class JuicerRuntimeCore<T> : JuicerRuntime
     {
         private T _startValue;
@@ -112,7 +133,7 @@ namespace Pelumi.Juicer
             return this;
         }
 
-        public JuicerRuntimeCore<T> ChangeDestination(T newEndValue)
+        public JuicerRuntimeCore<T> SetDestination(T newEndValue)
         {
             _destinationValue = newEndValue;
             return this;
@@ -151,6 +172,12 @@ namespace Pelumi.Juicer
         public JuicerRuntime SetStepDelay(float delay)
         {
             _juicerRuntimeController.SetStepDelay(delay);
+            return this;
+        }
+
+        public JuicerRuntime SetEndDelay(float delay)
+        {
+            _juicerRuntimeController.SetEndDelay(delay);
             return this;
         }
 
@@ -237,10 +264,8 @@ namespace Pelumi.Juicer
 
         public void Stop()
         {
-            if (_coroutine != null)
-            {
-                Juicer.StopCoroutine(_coroutine);
-            }
+            if (_coroutine == null || _coroutine.IsDone) return;
+            Juicer.StopCoroutine(_coroutine);
         }
     }
 
@@ -305,6 +330,7 @@ namespace Pelumi.Juicer
         protected object _target;
         private float _startDelay;
         private float _stepDelay;
+        private float _endDelay;
         protected float _duration;
         private bool _isPaused;
         private bool _isStepCompleted;
@@ -314,6 +340,7 @@ namespace Pelumi.Juicer
         public JuicerRuntimeEvent JuicerEvent => _juicerEvent;
         public float StartDelay => _startDelay;
         public float StepDelay => _stepDelay;
+        public float EndDelay => _endDelay;
         public float Duration => _duration;
         public bool IsPaused => _isPaused;
         public bool IsStepCompleted => _isStepCompleted;
@@ -324,6 +351,11 @@ namespace Pelumi.Juicer
             _duration = duration;
         }
 
+        public void SetTarget(object target)
+        {
+            _target = target;
+        }
+
         public void SetStartDelay(float startDelay)
         {
             _startDelay = startDelay;
@@ -332,6 +364,11 @@ namespace Pelumi.Juicer
         public void SetStepDelay(float stepDelay)
         {
             _stepDelay = stepDelay;
+        }
+
+        public void SetEndDelay(float endDelay)
+        {
+            _endDelay = endDelay;
         }
 
         public void SetDuration(float duration)
@@ -352,7 +389,7 @@ namespace Pelumi.Juicer
 
         public void OnStart()
         {
-            _isStepCompleted = true;
+            _isStepCompleted = false;
             _juicerEvent.InvokeOnStart();
             _juicerEvent.ResetTimelineEvents();
         }
@@ -364,7 +401,7 @@ namespace Pelumi.Juicer
 
         public void OnCompleteStep()
         {
-            _isStepCompleted = false;
+            _isStepCompleted = true;
             _juicerEvent.InvokeOnStepComplete();
             _juicerEvent.ResetTimelineEvents();
         }
@@ -507,6 +544,11 @@ namespace Pelumi.Juicer
             juicerRuntimeBases.Add(juicerRuntime);
         }
 
+        public void Append(JuicerGetter<bool> condition, JuicerRuntime juicerRuntime)
+        {
+            juicerRuntimeBases.Add(new ConditionalJuicerRuntime(condition, juicerRuntime));
+        }
+
         public void Delay(float delay)
         {
             juicerRuntimeBases.Add(new JuicerDelay(delay));
@@ -536,6 +578,17 @@ namespace Pelumi.Juicer
                         }
 
                         break;
+
+                    case ConditionalJuicerRuntime conditionalJuicerRuntime:
+                        _currentJuicerRuntime = conditionalJuicerRuntime.ConditionMet();
+
+                        if (_currentJuicerRuntime != null)
+                        {
+                            _currentJuicerRuntime.Start();
+                            yield return new WaitUntilJuicerComplected(_currentJuicerRuntime);
+                        }
+
+                    break;
 
                     case JuicerDelay juicerDelay:
                         _currentJuicerRuntime = null;

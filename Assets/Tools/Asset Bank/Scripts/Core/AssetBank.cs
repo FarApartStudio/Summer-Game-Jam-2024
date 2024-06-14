@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using System;
+using Random = UnityEngine.Random;
 
 public class AssetBank<T> : ScriptableObject
 {
-    [SerializeField] protected List<AssetWithID<T>> _valueList = new List<AssetWithID<T>>();
+    [SerializeField, Searchable (FilterOptions = SearchFilterOptions.ISearchFilterableInterface)] 
+    protected List<AssetWithID<T>> _valueList = new List<AssetWithID<T>>();
 
     public T GetAsset(string key)
     {
@@ -58,27 +62,42 @@ public class AssetBank<T> : ScriptableObject
     {
         return _valueList[Random.Range(0, _valueList.Count)].Asset;
     }
+
+    public List<string> GetAllID()
+    {
+        return _valueList.Select(x => x.Key).ToList();
+    }
 }
 
-[System.Serializable]
-public class AssetWithID<T>
+[Serializable]
+public class AssetWithID<T> : ISearchFilterable
 {
-    public string Key;
-    public T Asset;
+    [FoldoutGroup("Asset")] public string Key;
+    [HideIf("IsGroup")] [FoldoutGroup("Asset")] public T Asset;
+    [FoldoutGroup("Asset")] [TextArea(1, 3)] public string Info;
 
-    [TextArea(1, 3)]
-    public string Info;
+    [FoldoutGroup("Asset")] public bool IsGroup;
+    [FoldoutGroup("Asset")] [ShowIf ("IsGroup")] public AssetInGroup<T>[] GroupAsset;
 
-    public bool IsGroup;
-    public AssetInGroup<T>[] GroupAsset;
+    [FoldoutGroup("Asset")]
+    [Button]
+    public void CopyKey()
+    {
+#if UNITY_EDITOR
+        EditorGUIUtility.systemCopyBuffer = Key;
+#endif
+    }
 
-    [HideInInspector] public bool ShowFoldOut;
+    public bool IsMatch(string searchString)
+    {
+        return Key.ToLower().Contains(searchString.ToLower());
+    }
 }
 
 [System.Serializable]
 public class AssetInGroup<T>
 {
     [Range(0, 100)]
-    public float Chance;
+    public float Chance = 50;
     public T Asset;
 }

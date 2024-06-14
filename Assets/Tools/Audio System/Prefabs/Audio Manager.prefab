@@ -49,3 +49,4 @@ MonoBehaviour:
   audio3DPlayerPrefab: {fileID: 235305810262089396, guid: 8e256f8a3efee8e449d223390b90851b,
     type: 3}
   audioManagerSO: {fileID: 11400000, guid: 2dd99eeb3b1cb4d4a935b9185ce5d835, type: 2}
+  audioBank: {fileID: 11400000, guid: c2e32fe1f53e51444babba7fcfd872c4, type: 2}

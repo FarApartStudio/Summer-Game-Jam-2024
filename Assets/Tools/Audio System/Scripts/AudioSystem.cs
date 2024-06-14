@@ -5,9 +5,19 @@ using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
 using UnityEngine.Pool;
+using UnityEditor;
+using Sirenix.OdinInspector;
 
 namespace Pelumi.AudioSystem
 {
+    public struct AudioSfxEntry
+    {
+        AudioTypeID audioType;
+        AudioCategory category;
+        bool randomPitch;
+        float pitch;
+    }
+
 
     public class AudioSystem : MonoBehaviour
     {
@@ -17,6 +27,7 @@ namespace Pelumi.AudioSystem
         [SerializeField] private AudioSource audioSourcePrefab;
         [SerializeField] private Audio3DPlayer audio3DPlayerPrefab;
         [SerializeField] private AudioSystemSO audioManagerSO;
+        [SerializeField] private AudioBank audioBank;
 
         private Dictionary<AudioCategory, AudioSource> audioSources = new Dictionary<AudioCategory, AudioSource>();
         private ObjectPool<Audio3DPlayer> audio3DPool;
@@ -27,7 +38,6 @@ namespace Pelumi.AudioSystem
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(this);
                 Init();
             }
             else Destroy(gameObject);
@@ -46,7 +56,10 @@ namespace Pelumi.AudioSystem
             }
 
             audio3DPool = new ObjectPool<Audio3DPlayer>(On3DAudioCreated, On3DAudioPooledPool, On3DAudioReleasedToPool);
+        }
 
+        private void Start()
+        {
             audioManagerSO.LoadAudioVolumeData();
         }
 
@@ -70,8 +83,7 @@ namespace Pelumi.AudioSystem
 
         public void SetVolume(AudioCategory audioCategory, float volume)
         {
-            audioManagerSO.SetVolume(audioCategory, volume);
-            audioManagerSO.SaveAudioVolumeData();
+            audioManagerSO.ChangeVolume(audioCategory, volume);
         }
 
         private IEnumerator PlayMusicFade(AudioSource musicPlayer, AudioClip audioClip, bool loop = true, float fadeDuration = 1.0f)
@@ -135,21 +147,42 @@ namespace Pelumi.AudioSystem
 
         public AudioSource GetAudioSource(AudioCategory audioCategory) => audioSources[audioCategory];
 
-        public static void PlayOneShotAudio(AudioClip audioClip, AudioCategory category, bool randomPitch = false)
+        public static AudioClip PlayOneShotAudio(string id, AudioCategory category, bool randomPitch = false, float pitch = 1, float volume = 1)
         {
-            if (Instance == null) return;
-
-            AudioSource sfxSource = Instance.audioSources[category];
-            sfxSource.pitch = randomPitch ? Random.Range(0.8f, 1.2f) : 1;
-            sfxSource.PlayOneShot(audioClip);
-            return;
+            return PlayOneShotAudio(Instance.audioBank.GetAsset (id), category, randomPitch, pitch, volume);
         }
 
-        public static void PlayAudio(AudioClip audioClip, AudioCategory audioCategory, bool loop = true)
+        public static AudioClip PlayOneShotAudio(AudioTypeID audioType, AudioCategory category, bool randomPitch = false, float pitch = 1, float volume = 1)
+        {
+            return PlayOneShotAudio(Instance.audioBank.GetAsset(audioType.ToString()), category, randomPitch, pitch, volume);
+        }
+
+        public static AudioClip PlayOneShotAudio(AudioClip audioClip, AudioCategory category, bool randomPitch = false, float pitch = 1, float volume = 1)
+        {
+            if (Instance == null) return null;
+
+            AudioSource sfxSource = Instance.audioSources[category];
+            sfxSource.pitch = randomPitch ? Random.Range(0.8f, 1.2f) : pitch;
+            sfxSource.volume = volume;
+            sfxSource.PlayOneShot(audioClip);
+            return audioClip;
+        }
+
+        public static void PlayAudio(AudioTypeID audioType, AudioCategory audioCategory, bool loop = true, float fadeduration = 1)
+        {
+            PlayAudio(audioType.ToString(), audioCategory, loop, fadeduration);
+        }
+
+        public static void PlayAudio(string id, AudioCategory audioCategory, bool loop = true, float fadeduration = 1)
+        {
+            PlayAudio (Instance.audioBank.GetAsset (id), audioCategory, loop, fadeduration);
+        }
+
+        public static void PlayAudio(AudioClip audioClip, AudioCategory audioCategory, bool loop = true, float fadeduration = 1)
         {
             if (!InstanceExists()) return;
             Instance.StopAllCoroutines();
-            Instance.StartCoroutine(Instance.PlayMusicFade(Instance.audioSources[audioCategory], audioClip, loop));
+            Instance.StartCoroutine(Instance.PlayMusicFade(Instance.audioSources[audioCategory], audioClip, loop, fadeduration));
         }
 
         public static void PauseAudio(AudioCategory audioCategory)
@@ -192,5 +225,61 @@ namespace Pelumi.AudioSystem
             if (Instance == null) Debug.LogError("No Audio Manager in the scene");
             return Instance != null;
         }
+
+#if UNITY_EDITOR
+
+        [Button]
+        public void GenerateEnumFromBank()
+        {
+            List<string> audioList = audioBank.GetAllID();
+            string audioEnum = typeof(AudioTypeID).ToString();
+            audioEnum = audioEnum.Substring(audioEnum.LastIndexOf(".") + 1);
+            CreateEnum(audioEnum, audioList);
+        }
+
+        public void CreateEnum(string enumName, List<string> stringList)
+        {
+            if (stringList.Count == 0)
+            {
+                Debug.LogWarning("String list is empty. Add string values to create an enum.");
+                return;
+            }
+
+            string enumScript = "using UnityEngine;\n\n";
+
+            enumScript += $"namespace {"Pelumi.AudioSystem"}\n";
+            enumScript += "{\n";
+
+            enumScript += $"public enum {enumName}\n";
+            enumScript += "{\n";
+
+            // Generate enum values from the string list
+            for (int i = 0; i < stringList.Count; i++)
+            {
+                enumScript += $"\t{stringList[i]} = {i},\n";
+            }
+
+            enumScript += "}\n";
+
+            enumScript += "}\n";
+
+            string assetPath = AssetDatabase.GetAssetPath(audioManagerSO);
+
+            // Generate the enum script file path in the same directory as the ScriptableObject
+            string scriptPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(assetPath), $"{enumName}.cs");
+
+            // Check if the script file already exists and delete it
+            if (System.IO.File.Exists(scriptPath))
+            {
+                System.IO.File.Delete(scriptPath);
+            }
+
+            // Save the generated enum script as a C# file in the same directory as the ScriptableObject
+            System.IO.File.WriteAllText(scriptPath, enumScript);
+
+            // Refresh asset database to recognize the newly created script
+            AssetDatabase.Refresh();
+        }
+#endif
     }
 }

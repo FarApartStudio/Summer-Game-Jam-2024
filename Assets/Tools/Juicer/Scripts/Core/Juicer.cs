@@ -105,6 +105,12 @@ namespace Pelumi.Juicer
             return JuicerController.StartCoroutine(RunActionAfterInstruction(new WaitForFixedUpdate(), OnComplete));
         }
 
+        public static Coroutine WaitForSecondsRealtime(float duration, JuicerCallBack OnComplete)
+        {
+            Init();
+            return JuicerController.StartCoroutine(RunActionAfterInstruction(new WaitForSecondsRealtime(duration), OnComplete));
+        }
+
         public static Coroutine WaitForCustomYieldInstruction(CustomYieldInstruction instruction, JuicerCallBack OnComplete)
         {
             Init();
@@ -178,12 +184,22 @@ namespace Pelumi.Juicer
         public static CoroutineHandle JuicyShakeScale(this Transform transform, float duration, Vector3 strength, int vibrato = 10, float randomness = 90f, bool fadeOut = true, ShakeRandomnessMode randomnessMode = ShakeRandomnessMode.Full)
         {
             Init();
-            return StartCoroutine(JuicerCore.Shake(transform.localScale, (value) => transform.localScale = value, duration, strength, vibrato, randomness, fadeOut, randomnessMode));
+            return StartCoroutine(JuicerCore.Shake(transform, transform.localScale, (value) => transform.localScale = value, duration, strength, vibrato, randomness, fadeOut, randomnessMode));
         }
 
         #endregion
 
         #region Transform - World Position
+
+        public static JuicerRuntimeCore<Vector3> JuicyAnchoredMove(this RectTransform rectTransform, Vector3 to, float duration)
+        {
+            Init();
+            JuicerRuntimeCore<Vector3> juicerRuntime = new JuicerRuntimeCore<Vector3>
+            (rectTransform, () => rectTransform.anchoredPosition, (value) => rectTransform.anchoredPosition = value, to, duration);
+            return juicerRuntime;
+        }
+
+
         public static JuicerRuntimeCore<Vector3> JuicyMove(this Transform transform, Vector3 to, float duration)
         {
             Init();
@@ -255,8 +271,15 @@ namespace Pelumi.Juicer
         public static CoroutineHandle JuicyShakePosition(this Transform transform, float duration, Vector3 strength, int vibrato = 10, float randomness = 90f, bool fadeOut = true, ShakeRandomnessMode randomnessMode = ShakeRandomnessMode.Full)
         {
             Init();
-            return StartCoroutine(JuicerCore.Shake(transform.localPosition, (value) => transform.localPosition = value, duration, strength, vibrato, randomness, fadeOut, randomnessMode));
+            return StartCoroutine(JuicerCore.Shake(transform, transform.localPosition, (value) => transform.localPosition = value, duration, strength, vibrato, randomness, fadeOut, randomnessMode));
         }
+
+        public static CoroutineHandle JuicyShakePosition(this RectTransform transform, float duration, Vector3 strength, int vibrato = 10, float randomness = 90f, bool fadeOut = true, ShakeRandomnessMode randomnessMode = ShakeRandomnessMode.Full)
+        {
+            Init();
+            return StartCoroutine(JuicerCore.Shake(transform, transform.anchoredPosition, (value) => transform.anchoredPosition = value, duration, strength, vibrato, randomness, fadeOut, randomnessMode));
+        }
+
         #endregion
 
         #region Transform - World Rotation
@@ -297,7 +320,7 @@ namespace Pelumi.Juicer
         public static CoroutineHandle JuicyShakeRotation(this Transform transform, float duration, Vector3 strength, int vibrato = 10, float randomness = 90f, bool fadeOut = true, ShakeRandomnessMode randomnessMode = ShakeRandomnessMode.Full)
         {
             Init();
-            return StartCoroutine(JuicerCore.Shake(transform.localEulerAngles, (value) => transform.rotation = Quaternion.Euler(value), duration, strength, vibrato, randomness, fadeOut, randomnessMode));
+            return StartCoroutine(JuicerCore.Shake(transform, transform.localEulerAngles, (value) => transform.rotation = Quaternion.Euler(value), duration, strength, vibrato, randomness, fadeOut, randomnessMode));
         }
         #endregion
 
@@ -350,6 +373,18 @@ namespace Pelumi.Juicer
             Init();
             JuicerRuntimeCore<float> juicerRuntime = new JuicerRuntimeCore<float>
             (canvasGroup, () => canvasGroup.alpha, (value) => canvasGroup.alpha = value, to, duration);
+            juicerRuntime.SetOnStart(() =>
+            {
+                canvasGroup.blocksRaycasts = canvasGroup.alpha > 0;
+                canvasGroup.interactable = canvasGroup.alpha > 0;
+            });
+
+            juicerRuntime.SetOnCompleted(() => 
+            {
+                canvasGroup.blocksRaycasts = canvasGroup.alpha > 0;
+                canvasGroup.interactable = canvasGroup.alpha > 0;
+            });
+
             return juicerRuntime;
         }
 
@@ -401,11 +436,11 @@ namespace Pelumi.Juicer
             return juicerRuntime;
         }
 
-        public static JuicerRuntimeCore<float> JuicyTextNumber(this TMP_Text textMeshPro, float to, float duration)
+        public static JuicerRuntimeCore<float> JuicyTextNumber(this TMP_Text textMeshPro, float to, float duration, string format = "F0")
         {
             Init();
             JuicerRuntimeCore<float> juicerRuntime = new JuicerRuntimeCore<float>
-            (textMeshPro, () => float.Parse(textMeshPro.text), (value) => textMeshPro.text = value.ToString(), to, duration);
+            (textMeshPro, () => float.Parse(textMeshPro.text), (value) => textMeshPro.text = value.ToString(format), to, duration);
             return juicerRuntime;
         }
 
