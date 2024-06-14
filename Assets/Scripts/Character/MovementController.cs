@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class MovementController : MonoBehaviour
 {
@@ -178,27 +179,19 @@ public class MovementController : MonoBehaviour
 
         // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is a move input rotate player when the player is moving
+
+
         if (move != Vector2.zero)
         {
             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                _mainCamera.transform.eulerAngles.y;
-            float inputRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                              _mainCamera.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                 rotationSmoothTime);
 
             // rotate to face input direction relative to camera position
 
             if (rotateOnMove)
-            {
-                //if(sprint)
-                //transform.rotation = Quaternion.Euler(0.0f, inputRotation, 0.0f);
-                //else
-                //{
-                //    float cameraFowardRotationotation = Mathf.SmoothDampAngle (transform.eulerAngles.y, _mainCamera.transform.eulerAngles.y, ref _rotationVelocity, rotationSmoothTime);
-                //    transform.rotation = Quaternion.Euler(0.0f, _mainCamera.transform.eulerAngles.y, 0.0f);
-                //}
-
-                transform.rotation = Quaternion.Euler(0.0f, inputRotation, 0.0f);
-            }
+                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
 

@@ -1086,6 +1086,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3863470334873653690, guid: 676160572f9c2d44389b6212140b2837,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c2f6434fddb70094c919305e843b1370, type: 2}
+    - target: {fileID: 8046655933381770757, guid: 676160572f9c2d44389b6212140b2837,
+        type: 3}
+      propertyPath: canJump
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8046655933381770757, guid: 676160572f9c2d44389b6212140b2837,
         type: 3}
       propertyPath: aimVirtualCamera
