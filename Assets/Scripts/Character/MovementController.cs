@@ -189,13 +189,15 @@ public class MovementController : MonoBehaviour
 
             if (rotateOnMove)
             {
-                if(sprint)
+                //if(sprint)
+                //transform.rotation = Quaternion.Euler(0.0f, inputRotation, 0.0f);
+                //else
+                //{
+                //    float cameraFowardRotationotation = Mathf.SmoothDampAngle (transform.eulerAngles.y, _mainCamera.transform.eulerAngles.y, ref _rotationVelocity, rotationSmoothTime);
+                //    transform.rotation = Quaternion.Euler(0.0f, _mainCamera.transform.eulerAngles.y, 0.0f);
+                //}
+
                 transform.rotation = Quaternion.Euler(0.0f, inputRotation, 0.0f);
-                else
-                {
-                    float cameraFowardRotationotation = Mathf.SmoothDampAngle (transform.eulerAngles.y, _mainCamera.transform.eulerAngles.y, ref _rotationVelocity, rotationSmoothTime);
-                    transform.rotation = Quaternion.Euler(0.0f, _mainCamera.transform.eulerAngles.y, 0.0f);
-                }
             }
         }
 
@@ -279,18 +281,18 @@ public class MovementController : MonoBehaviour
         StopSprint();
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        // Checks if the player collided with a object in front of them
-        float dotProduct = Vector3.Dot(hit.normal, transform.up);
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    // Checks if the player collided with a object in front of them
+    //    float dotProduct = Vector3.Dot(hit.normal, transform.up);
 
-        if (dotProduct > 0.1)
-        {
-            return;
-        }
+    //    if (dotProduct > 0.1)
+    //    {
+    //        return;
+    //    }
 
-        StopSprint();
-    }
+    //    StopSprint();
+    //}
 
     public void StopSprint()
     {
