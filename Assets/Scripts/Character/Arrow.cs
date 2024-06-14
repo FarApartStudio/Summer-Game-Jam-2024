@@ -84,15 +84,6 @@ public class Arrow : MonoBehaviour
         return transform.position + transform.forward * _detectOffset.z + transform.right * _detectOffset.x + transform.up * _detectOffset.y;
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (ExisingCollisionLayer (other.gameObject.layer))
-    //    {
-    //        _isHit = true;
-    //        transform.SetParent(other.transform);
-    //    }
-    //}
-
     public bool ExisingCollisionLayer(int layer)
     {
         return (_collisionLayer & (1 << layer)) != 0;

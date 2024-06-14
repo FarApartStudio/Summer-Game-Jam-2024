@@ -370,7 +370,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   arrow: {fileID: 8349473470084570783, guid: 03578d52053a2184c97697672507e17b, type: 3}
-  arrowSpeed: 15
+  arrowSpeed: 30
   aimRotateSpeed: 10
   aimResetDelay: 0.5
   aimingRig: {fileID: 7879682714115200223}
@@ -378,10 +378,8 @@ MonoBehaviour:
   autoHideMouse: 0
   isTriggerHeld: 0
   isTriggerReleased: 1
-  currentBulletInBurst: 0
-  CanBurstFire: 0
-  currentFireRate: 0
   currentTriggerHoldTime: 0
+  currentFireRate: 0
 --- !u!1 &4966983381144437047
 GameObject:
   m_ObjectHideFlags: 0
