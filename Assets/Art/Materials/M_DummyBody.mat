@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Arrow
+  m_Name: M_DummyBody
   m_Shader: {fileID: 4800000, guid: 11cb3c27d84b6b948a9a0d5350d2ae5a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -85,7 +85,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample:
-        m_Texture: {fileID: 2800000, guid: 570e96df059dcf14abad525931ce7955, type: 3}
+        m_Texture: {fileID: 2800000, guid: 85db9693f3554ef47953843ad016642d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -126,7 +126,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.006
+    - _OutlineWidth: 0.02
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
