@@ -126,6 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6236958012690613615}
+  - component: {fileID: 2137325709477813335}
   m_Layer: 0
   m_Name: CardboardCloud
   m_TagString: Untagged
@@ -149,6 +150,21 @@ Transform:
   - {fileID: 3338749189279378986}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2137325709477813335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3019413248389725463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b06c1ee576c5474e911e5bd0168e90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveDistance: {x: 0, y: 3, z: 0}
+  _movementDuration: 2
+  _movementEaseType: 24
 --- !u!1001 &4630467159506788474
 PrefabInstance:
   m_ObjectHideFlags: 0
