@@ -158,7 +158,7 @@ namespace Pelumi.Juicer
 
         public bool IsStepCompleted => _juicerRuntimeController.IsStepCompleted;
 
-        public bool IsFinished { get => _coroutine.IsDone; }
+        public bool IsFinished { get => _coroutine  == null || _coroutine.IsDone; }
 
         public abstract JuicerRuntime Start(JuicerEventHandler PreStartEvent = null);
 
