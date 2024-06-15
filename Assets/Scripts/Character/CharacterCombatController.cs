@@ -1,3 +1,5 @@
+using Pelumi.ObjectPool;
+using Pelumi.SurfaceSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -161,8 +163,27 @@ public class CharacterCombatController : MonoBehaviour
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
         shootDirection = (targetDetectPos - currentBow.GetFirePoint().position);
         shootDirection.Normalize();
-        Arrow arrowInstance = Instantiate(arrow, currentBow.GetFirePoint().position,transform.rotation);
+        Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position,transform.rotation);
+        arrowInstance.OnHit += HitDetection;
         arrowInstance.Init(shootDirection, arrowSpeed);
+    }
+
+    public void HitDetection(ArrowHit arrowHit)
+    {
+        // Check if we hit a surface
+        if (arrowHit.Collider.gameObject.TryGetComponent<Surface>(out Surface surface))
+        {
+            GameObject impactEffect = ObjectPoolManager.SpawnObject(surface.GetSurfaceInfo()._particleSystem);
+            impactEffect.transform.position = arrowHit.HitPoint + arrowHit.HitNormal * 0.01f;
+            impactEffect.transform.rotation = Quaternion.FromToRotation(Vector3.up, arrowHit.HitNormal);
+            impactEffect.gameObject.SetActive(true);
+            impactEffect.transform.LookAt(arrowHit.HitPoint + arrowHit.HitNormal);
+        }
+
+        if (arrowHit.Collider.TryGetComponent<IDamageable>(out IDamageable damageable))
+        {
+
+        }
     }
 
     public void ChangeAimMode(ViewMode mode)

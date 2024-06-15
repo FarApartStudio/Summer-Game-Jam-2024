@@ -1,4 +1,5 @@
 using Pelumi.Juicer;
+using Pelumi.ObjectPool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ public struct ArrowHit
     public Vector3 HitPoint;
     public Vector3 HitNormal;
     public Vector3 HitDirection;
-    public float distance;
 
     public void Set(Arrow owner, Collider collider, Vector3 hitPoint, Vector3 hitNormal, Vector3 hitDirection)
     {
@@ -25,16 +25,23 @@ public struct ArrowHit
 
 public class Arrow : MonoBehaviour
 {
+    public Action<ArrowHit> OnHit;
+
     [SerializeField] LayerMask _collisionLayer;
     [SerializeField] Vector3 _detectOffset;
     [SerializeField] float _detectRadius;
-    [SerializeField] float _lifeTime;
+    [SerializeField] float _lifeTime = 20;
+    [SerializeField] float _afterHitLifeTime = 5;
+
+    [Header("Trail")]
+    [SerializeField] float _trailHideDelay;
     [SerializeField] GameObject _trail;
 
     private Vector3 _direction;
     private float _speed;
     private bool _isHit;
     private JuicerRuntimeCore<Vector3> _scaleEffect;
+    private Coroutine _deSpawnRoutine;
 
     private void Awake()
     {
@@ -47,6 +54,9 @@ public class Arrow : MonoBehaviour
         _direction = direction;
         _speed = speed;
         transform.forward = direction;
+        _trail.gameObject.SetActive(true);
+        _deSpawnRoutine = StartCoroutine(DeSpawn(_lifeTime));
+        _isHit = false;
     }
 
     public bool RayTraceForward (out ArrowHit hit)
@@ -54,9 +64,10 @@ public class Arrow : MonoBehaviour
         Collider[] collider = Physics.OverlapSphere(GetOffsetPosition(), _detectRadius, _collisionLayer);
         if (collider.Length > 0)
         {
-            hit = new ArrowHit();
-            hit.Set(this, collider[0], collider[0].ClosestPoint(transform.position), collider[0].ClosestPointOnBounds(transform.position), _direction);
             _isHit = true;
+            hit = new ArrowHit();
+            Vector3 hitDirection = (collider[0].transform.position - transform.position).normalized;
+            hit.Set(this, collider[0], collider[0].ClosestPoint(transform.position), collider[0].ClosestPointOnBounds(transform.position), hitDirection);
             return true;
         }
         else
@@ -73,16 +84,36 @@ public class Arrow : MonoBehaviour
         transform.position += _direction * _speed * Time.deltaTime;
         if (RayTraceForward(out ArrowHit hit))
         {
-            OnHit(hit);
+            Hit(hit);
         }
     }
 
-    private void OnHit(ArrowHit hit)
+    private void Hit(ArrowHit hit)
     {
-        _isHit = true;
+        OnHit?.Invoke(hit);
         transform.SetParent(hit.Collider.transform, true);
-        _trail.gameObject.SetActive(false);
-       // _scaleEffect.Start();
+
+        IEnumerator HideTrail()
+        {
+            yield return new WaitForSeconds(_trailHideDelay);
+            _trail.gameObject.SetActive(false);
+        }
+
+        // _scaleEffect.Start();
+
+        StartCoroutine(HideTrail());
+
+        if (_deSpawnRoutine != null)
+            StopCoroutine(_deSpawnRoutine);
+        _deSpawnRoutine = StartCoroutine(DeSpawn(_afterHitLifeTime));
+    }
+
+
+    IEnumerator DeSpawn(float time)
+    {
+        yield return new WaitForSeconds(time);
+        transform.SetParent(null);
+        ObjectPoolManager.ReleaseObject(gameObject);
     }
 
     private Vector3 GetOffsetPosition()
