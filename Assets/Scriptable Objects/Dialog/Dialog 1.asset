@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textSequences:
   - messages: Hey there
-    audioClip: {fileID: 8300000, guid: ecf67a53bf6b18942b84e0c24c22b55a, type: 3}
+    audioClip: {fileID: 8300000, guid: 321feb9f51af885488e5ed433aecd467, type: 3}
     textDuration: 0
   - messages: Look at you
-    audioClip: {fileID: 8300000, guid: ab68ee5948aa0c34aa2d9699aa28fa5f, type: 3}
+    audioClip: {fileID: 8300000, guid: 9fb2085538d1bfe41abcb2b5c317517f, type: 3}
     textDuration: 0
   - messages: See you later
-    audioClip: {fileID: 8300000, guid: ed921ad1d903a454698ede27f45f98b3, type: 3}
+    audioClip: {fileID: 8300000, guid: c149a5b5299974c4183ac0b2ea58a9a0, type: 3}
     textDuration: 0
