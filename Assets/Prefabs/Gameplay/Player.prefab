@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 8046655933381770757}
   - component: {fileID: 3697906092153187270}
   - component: {fileID: 2495128076503502575}
+  - component: {fileID: 8715130316006574714}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -372,7 +373,8 @@ MonoBehaviour:
     m_Bits: 9
   arrow: {fileID: 8349473470084570783, guid: 03578d52053a2184c97697672507e17b, type: 3}
   arrowSpeed: 30
-  aimRotateSpeed: 10
+  fireRate: 0.5
+  aimRotateSpeed: 50
   aimResetDelay: 0.5
   aimingRig: {fileID: 7879682714115200223}
   aimingRigLerpSpeed: 20
@@ -381,6 +383,21 @@ MonoBehaviour:
   isTriggerReleased: 1
   currentTriggerHoldTime: 0
   currentFireRate: 0
+--- !u!114 &8715130316006574714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843559297540417718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f9a7dfc1fd79a4995e29f4a7a43a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodgeDuration: 1
+  dodgeCooldown: 1
+  characterManager: {fileID: 8046655933381770757}
 --- !u!1 &4966983381144437047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,6 +1050,16 @@ PrefabInstance:
       propertyPath: movementController
       value: 
       objectReference: {fileID: 7216827852898462637}
+    - target: {fileID: 7716237971634376834, guid: fc59b575eec1f8a4cb9c28de082ddd90,
+        type: 3}
+      propertyPath: FootstepAudioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716237971634376834, guid: fc59b575eec1f8a4cb9c28de082ddd90,
+        type: 3}
+      propertyPath: FootstepAudioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5052682f23f19384da5d743dc76ed64b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

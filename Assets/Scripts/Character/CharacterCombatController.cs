@@ -20,8 +20,8 @@ public class CharacterCombatController : MonoBehaviour
         Reloading
     }
 
-    public event Func<bool> CanFire;
-    public event Func<bool> CamAim;
+    public Func<bool> CanFire;
+    public Func<bool> CamAim;
     public event Action<Vector2> OnCameraRecoil;
     public event Action OnFire;
     public event Action<float> ModifyCrosshair;
@@ -114,6 +114,14 @@ public class CharacterCombatController : MonoBehaviour
 
     public void SetTriggerHeld(bool trigger)
     {
+        bool fireRateReady = FireRateReady();
+
+        if (trigger && !fireRateReady)
+            return;
+
+        if (trigger && !CamAim()) 
+            return;
+
         if (isTriggerHeld)
         {
             currentTriggerHoldTime += Time.deltaTime;
@@ -124,17 +132,14 @@ public class CharacterCombatController : MonoBehaviour
             currentTriggerHoldTime = 0;
             ModifyCrosshair?.Invoke(0);
             isTriggerReleased = true;
+            currentFireRate = fireRate;
         }
 
         isTriggerHeld = trigger;
 
         if (trigger)
         {
-            if (CamAim != null && !CamAim()) return;
-
             HandleAim(true);
-
-            currentFireRate = fireRate;
         }
         else
         {

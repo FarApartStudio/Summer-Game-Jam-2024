@@ -31,6 +31,8 @@ public class Pilot : CharacterManager
         movementController.CanMove = () => canMove;
         movementController.CanRotate = () => canRotate;
 
+        characterCombatController.CamAim = ()=> !IsPerformingAction;
+
         ResetActions();
     }
 
