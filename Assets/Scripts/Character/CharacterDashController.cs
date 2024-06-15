@@ -7,10 +7,8 @@ public class CharacterDashController : MonoBehaviour
 {
     public Action OnDodgeStart;
 
-    [SerializeField] private float dodgeDistance;
     [SerializeField] private float dodgeDuration;
     [SerializeField] private float dodgeCooldown;
-    [SerializeField] private AnimationCurve dodgeCurve;
 
     [Header("References")]
     [SerializeField] private CharacterManager characterManager;
@@ -51,25 +49,8 @@ public class CharacterDashController : MonoBehaviour
     public void OnDodge()
     {
         if (characterManager.IsPerformingAction) return;
-        OnDodgeStart.Invoke();
-        characterManager.GetAnimator.SetLayerWeight(1, 0);
-        Vector2 inputDirection = characterManager.GetMovementController.move;
-        int animIndex = 1;
-
-        if (!characterManager.GetMovementController.IsSprinting)
-        {
-            switch (inputDirection.y)
-            {
-                case > 0: // forward
-                    animIndex = 1;
-                    break;
-                case < 0: // backward
-                    animIndex = 2;
-                    break;
-            };
-        }
-
-        characterManager.GetCharacterAnimatorController.SetFloat("DodgeIndex", animIndex);
+        OnDodgeStart?.Invoke();
+        //characterManager.GetAnimator.SetLayerWeight(1, 0);
         characterManager.GetCharacterAnimatorController.PlayTargetActionAnimation("Dodge", true, true, true);
     }
 }

@@ -62,29 +62,22 @@ public class Pilot : CharacterManager
                 }
             }
         }
+
+        if (InputManager.Instance.GetReloadInput())
+        {
+
+        }
+
+        if (InputManager.Instance.GetSwapWeaponInput())
+        {
+
+        }
     }
 
     public void ChangeCameraDirection(CameraDirection direction)
     {
         currentCameraDirection = direction;
         CameraManager.Instance.ChangeCameraDirection(currentCameraDirection);
-    }
-
-    public void OnPick()
-    {
-        movementController.StopMovement();
-        characterController.enabled = false;
-        movementController.enabled = false;
-        cameraController.enabled = false;
-        animator.SetBool("IsPicked", true);
-    }
-
-    public void OnDrop()
-    {
-        animator.SetBool("IsPicked", false);
-        characterController.enabled = true;
-        movementController.enabled = true;
-        cameraController.enabled = true;
     }
 
     private void OnSprintChange(bool state)

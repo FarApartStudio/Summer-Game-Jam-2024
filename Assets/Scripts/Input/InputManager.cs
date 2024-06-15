@@ -83,7 +83,7 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Interact.triggered;
     }
 
-    public bool GetReloadnput()
+    public bool GetReloadInput()
     {
         return playerControls.Player.Reload.triggered;
     }

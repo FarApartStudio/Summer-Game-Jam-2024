@@ -93,6 +93,15 @@ public class CharacterCombatController : MonoBehaviour
 
     public void HandleAnimationWeights()
     {
+        if (aimInput && IsFacingTarget())
+        {
+            shootingRigWeight = 1;
+        }
+        else
+        {
+            shootingRigWeight = 0;
+        }
+
         aimingRig.weight = Mathf.Lerp(aimingRig.weight, shootingRigWeight, Time.deltaTime * aimingRigLerpSpeed);
         pilotAnimatorController.SetBool("InAction", isTriggerHeld || aimInput);
         pilotAnimatorController.Animator.SetFloat("Turn", turnValue, .2f, Time.deltaTime);
@@ -101,29 +110,6 @@ public class CharacterCombatController : MonoBehaviour
     public void HandleInput()
     {
         SetTriggerHeld(InputManager.Instance.GetAttackInputAction().IsPressed());
-
-        if (InputManager.Instance.GetAimInput())
-        {
-            if (CamAim != null && !CamAim()) return;
-
-            HandleAim(true);
-
-            currentFireRate = fireRate;
-        }
-        else
-        {
-            HandleAim(false);
-        }
-
-        if (InputManager.Instance.GetReloadnput())
-        {
-            
-        }
-
-        if (InputManager.Instance.GetSwapWeaponInput())
-        {
- 
-        }
     }
 
     public void SetTriggerHeld(bool trigger)
@@ -141,6 +127,19 @@ public class CharacterCombatController : MonoBehaviour
         }
 
         isTriggerHeld = trigger;
+
+        if (trigger)
+        {
+            if (CamAim != null && !CamAim()) return;
+
+            HandleAim(true);
+
+            currentFireRate = fireRate;
+        }
+        else
+        {
+            HandleAim(false);
+        }
     }
 
     public void HandleAim(bool aim)
@@ -150,27 +149,11 @@ public class CharacterCombatController : MonoBehaviour
         aimInput = aim;
         pilotAnimatorController.SetBool("IsAiming", aimInput);
         ChangeAimMode(aimInput ? ViewMode.Aim : ViewMode.HipFire);
-
-        if (aimInput)
-        {
-            if (weaponState != WeaponState.Reloading)
-            {
-                shootingRigWeight = 1;
-            }
-        }
-        else
-        {
-            shootingRigWeight = 0;
-
-            if (weaponState != WeaponState.Reloading)
-            {
-                ModifyCrosshair?.Invoke(0);
-            }
-        }
     }
 
     public void SpawnArrow ()
     {
+        ModifyCrosshair?.Invoke(0);
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
         shootDirection = (targetDetectPos - firePos.position);
         shootDirection.Normalize();
@@ -252,5 +235,12 @@ public class CharacterCombatController : MonoBehaviour
                 turnValue = Mathf.Lerp(turnValue, crossProduct > 0 ? 1 : -1, Time.deltaTime * 20);
             }
         }
+    }
+
+    public bool IsFacingTarget()
+    {
+        Vector3 direction = (targetDetectPos - transform.position).normalized;
+        float dot = Vector3.Dot(transform.forward, direction);
+        return dot > 0.7f;
     }
 }
