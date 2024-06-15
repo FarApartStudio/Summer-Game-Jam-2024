@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2879189850149094626}
   - component: {fileID: 8869065879248130762}
   - component: {fileID: 5085811221259377016}
+  - component: {fileID: 2231872299084904861}
   m_Layer: 0
   m_Name: HangingBarrel
   m_TagString: Untagged
@@ -105,6 +106,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.118541, y: 1.4084964, z: 1.1225857}
   m_Center: {x: -0.0011842704, y: 0.60527647, z: 0.012797638}
+--- !u!114 &2231872299084904861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5989064814214122325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0c86c002c25d743a9386af8ee8d699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _surfaceType: 2
+  _friction: 0.5
 --- !u!1 &6325798024099368839
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b06c1ee576c5474e911e5bd0168e90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startDelay: {x: 0, y: 0}
   _moveDistance: {x: 0, y: 1, z: 0}
   _movementDuration: 2
   _movementEaseType: 24
