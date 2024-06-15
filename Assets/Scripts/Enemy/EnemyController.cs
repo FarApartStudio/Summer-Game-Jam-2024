@@ -82,6 +82,9 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
        // target = Player.Instance.transform;
+
+        navMeshAgent.updateRotation = false;
+
         hitDelayTime = new WaitForSeconds(hitDelay);
         damageDefector.OnDefect = OnDamageDefect;
         AssignEvents();

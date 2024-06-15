@@ -90,6 +90,14 @@ public static class EnemyAIActions
         return true;
     }
 
+    public static bool IsPositionValid(Vector3 position, out Vector3 result)
+    {
+        NavMeshHit hit;
+        bool isValid = NavMesh.SamplePosition(position, out hit, .5f, NavMesh.AllAreas);
+        result = hit.position;
+        return isValid;
+    }
+
     public static void TeleportToPosition(NavMeshAgent navAgent,  Vector3 newPos)
     {
         navAgent.Warp(newPos);
