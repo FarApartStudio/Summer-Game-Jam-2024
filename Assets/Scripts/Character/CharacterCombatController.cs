@@ -46,6 +46,7 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private Arrow arrow;
     [SerializeField] private float arrowSpeed = 25;
+    [SerializeField] private float fireRate = 0.1f;
 
     [Header("Aiming")]
     [SerializeField] private float aimRotateSpeed = 10;
@@ -106,6 +107,8 @@ public class CharacterCombatController : MonoBehaviour
             if (CamAim != null && !CamAim()) return;
 
             HandleAim(true);
+
+            currentFireRate = fireRate;
         }
         else
         {
@@ -168,6 +171,7 @@ public class CharacterCombatController : MonoBehaviour
 
     public void SpawnArrow ()
     {
+        CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
         shootDirection = (targetDetectPos - firePos.position);
         shootDirection.Normalize();
         Arrow arrowInstance = Instantiate(arrow, firePos.position,transform.rotation);
