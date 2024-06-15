@@ -14,11 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textSequences:
   - messages: Hey there
-    audioClip: {fileID: 8300000, guid: 321feb9f51af885488e5ed433aecd467, type: 3}
-    textDuration: 0
-  - messages: Look at you
-    audioClip: {fileID: 8300000, guid: 9fb2085538d1bfe41abcb2b5c317517f, type: 3}
-    textDuration: 0
-  - messages: See you later
-    audioClip: {fileID: 8300000, guid: c149a5b5299974c4183ac0b2ea58a9a0, type: 3}
+    audioClip: {fileID: 8300000, guid: 8fffcaaf077b8304f9ed71b425df0062, type: 3}
     textDuration: 0
