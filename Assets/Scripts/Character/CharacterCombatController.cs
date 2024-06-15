@@ -25,9 +25,10 @@ public class CharacterCombatController : MonoBehaviour
 
     public Func<bool> CanFire;
     public Func<bool> CamAim;
+
     public event Action<Vector2> OnCameraRecoil;
     public event Action OnFire;
-    public event Action<float> ModifyCrosshair;
+    public event Action<float> OnAimAccuracyChanged;
     public event Action<float> OnAmmoUpdate;
 
     public event Action OnReloadStart;
@@ -140,13 +141,14 @@ public class CharacterCombatController : MonoBehaviour
         if (isTriggerHeld)
         {
             currentTriggerHoldTime += Time.deltaTime;
+            OnAimAccuracyChanged?.Invoke(GetCurrentAimAccuracy());
+            currentBow.SetAccuracy(GetCurrentAimAccuracy());
         }
 
         if (isTriggerHeld && !trigger)
         {
             lastHoldTime = currentTriggerHoldTime;
             currentTriggerHoldTime = 0;
-            ModifyCrosshair?.Invoke(0);
             isTriggerReleased = true;
             currentFireRate = fireRate;
             cancelShot = false;
@@ -187,10 +189,8 @@ public class CharacterCombatController : MonoBehaviour
     {
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
 
-        Debug.Log("targetDetectPos " + targetDetectPos);
-        Debug.Log("Stability " + lastHoldTime / stabilityDuration);
-        Vector3 finalDestination = GetBulletSpread(targetDetectPos, maxRecoil, lastHoldTime / stabilityDuration);
-        Debug.Log("finalDestination " + finalDestination);
+
+        Vector3 finalDestination = GetBulletSpread(targetDetectPos, maxRecoil, GetLastAimAccuracy());
 
         shootDirection = finalDestination - currentBow.GetFirePoint().position;
         shootDirection.Normalize();
@@ -293,6 +293,16 @@ public class CharacterCombatController : MonoBehaviour
                 turnValue = Mathf.Lerp(turnValue, crossProduct > 0 ? 1 : -1, Time.deltaTime * 20);
             }
         }
+    }
+
+    public float GetLastAimAccuracy()
+    {
+        return Mathf.Clamp(lastHoldTime / stabilityDuration, 0, 1);
+    }
+
+    public float GetCurrentAimAccuracy()
+    {
+        return Mathf.Clamp(currentTriggerHoldTime / stabilityDuration, 0, 1);
     }
 
     public Vector3 GetBulletSpread(Vector3 screenCenterPoint,float spreadRange, float normalisedStability)

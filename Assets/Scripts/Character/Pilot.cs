@@ -22,6 +22,8 @@ public class Pilot : CharacterManager
     [SerializeField] private Vector3 aimRightCameraTargetPos;
     [SerializeField] private bool canJump = true;
 
+    public CharacterCombatController GetCharacterCombatController => characterCombatController;
+
     private void Start()
     {
         movementController.OnSprintChange += OnSprintChange;
