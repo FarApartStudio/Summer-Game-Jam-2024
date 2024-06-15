@@ -44,7 +44,10 @@ public class DialogManager : MonoBehaviour
 
     public void PlayDialog(Dialog dialog)
     {
-        if (!isFinished) return;
+        if (!isFinished)
+        {
+            SkipDialog();
+        }
         currentDialog = dialog;
         currentDialog.OnBegin?.Invoke();
         popUpBox.SetActive(true);
@@ -65,7 +68,8 @@ public class DialogManager : MonoBehaviour
     IEnumerator PlayVoiceOver(AudioClip audioClip)
     {
         isPlayingVoiceOver = true;
-        audioSource.PlayOneShot(audioClip);
+        audioSource.clip = audioClip;
+        audioSource.Play();
         yield return new WaitForSecondsRealtime(audioClip.length);
         isPlayingVoiceOver = false;
     }
@@ -80,8 +84,6 @@ public class DialogManager : MonoBehaviour
 
             isTyping = true;
             isPlayingVoiceOver = true;
-
-            yield return new WaitForSecondsRealtime(textSequences[i].audioClip.length);
 
             StartCoroutine(PlayText());
 
@@ -101,6 +103,7 @@ public class DialogManager : MonoBehaviour
     
     public void SkipDialog()
     {
+        audioSource.Stop();
         StopAllCoroutines();
         popUpBox.SetActive(false);
         currentDialog.OnFinsihed.Invoke();

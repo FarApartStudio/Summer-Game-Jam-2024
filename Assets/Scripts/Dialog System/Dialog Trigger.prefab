@@ -71,9 +71,6 @@ MonoBehaviour:
     dialogObject: {fileID: 11400000, guid: dc640f4d61ea4854c82369d758da9912, type: 2}
     OnBegin:
       m_PersistentCalls:
-        m_Calls: []
-    OnFinsihed:
-      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2998670276366083506}
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -87,6 +84,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    OnFinsihed:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1326169718055078647
 MonoBehaviour:
   m_ObjectHideFlags: 0

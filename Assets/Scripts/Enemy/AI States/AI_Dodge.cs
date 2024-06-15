@@ -33,9 +33,9 @@ public class AI_Dodge : AI_BaseState
 
         targetPosition = GetEnemyController(animator).transform.position + sideDirection * moveRange;
 
-        GetEnemyController(animator).StartCoroutine(GetEnemyController(animator).navMeshAgent.KnockBack(targetPosition, 0.2f, 5, moveForce));
+       // GetEnemyController(animator).StartCoroutine(GetEnemyController(animator).navMeshAgent.KnockBack(targetPosition, 0.2f, 5, moveForce));
 
-       // GetEnemyController(animator).StartCoroutine(GetEnemyController(animator).LerpPosition (targetPosition, .2F, null, null));
+        GetEnemyController(animator).StartCoroutine(GetEnemyController(animator).LerpPosition (targetPosition, .2F, null, null));
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
