@@ -6,6 +6,46 @@ using UnityEngine.UIElements;
 
 public static class EnemyAIActions 
 {
+    public static T GetClosest<T>(this Transform owner, List<T> others) where T : Component
+    {
+        T closestPlayerPos = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = owner.position;
+
+        foreach (T otherPos in others)
+        {
+            Vector3 diff = otherPos.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+
+            if (curDistance < distance)
+            {
+                closestPlayerPos = otherPos;
+                distance = curDistance;
+            }
+        }
+        return closestPlayerPos;
+    }
+
+    public static T GetFurthest<T>(this Transform owner, List<T> others) where T : Component
+    {
+        T furthestPlayerPos = null;
+        float distance = 0;
+        Vector3 position = owner.position;
+
+        foreach (T otherPos in others)
+        {
+            Vector3 diff = otherPos.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+
+            if (curDistance > distance)
+            {
+                furthestPlayerPos = otherPos;
+                distance = curDistance;
+            }
+        }
+        return furthestPlayerPos;
+    }
+
     public static void LookAtTarget(this Transform ownerTranfrom, Vector3 targetPosition)
     {
         Vector3 tragetPosition = new Vector3(targetPosition.x, ownerTranfrom.position.y, targetPosition.z);

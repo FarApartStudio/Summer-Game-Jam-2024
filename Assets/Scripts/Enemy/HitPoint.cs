@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HitPoint : MonoBehaviour,IDamageable
 {
-    public int damageMultiplier;
+    public int damageMultiplier = 1;
 
     public delegate void OnHitEventHandler(DamageInfo damageInfo, Vector3 damagePos);
     public event OnHitEventHandler OnHit;
