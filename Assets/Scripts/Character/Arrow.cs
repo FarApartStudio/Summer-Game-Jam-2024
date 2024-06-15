@@ -29,6 +29,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] Vector3 _detectOffset;
     [SerializeField] float _detectRadius;
     [SerializeField] float _lifeTime;
+    [SerializeField] GameObject _trail;
 
     private Vector3 _direction;
     private float _speed;
@@ -80,6 +81,7 @@ public class Arrow : MonoBehaviour
     {
         _isHit = true;
         transform.SetParent(hit.Collider.transform, true);
+        _trail.gameObject.SetActive(false);
        // _scaleEffect.Start();
     }
 

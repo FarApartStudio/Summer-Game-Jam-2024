@@ -42,7 +42,7 @@ public class CharacterCombatController : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private Transform rightHandSocket;
     [SerializeField] private Transform weaponTransform;
-    [SerializeField] private Transform firePos;
+    [SerializeField] private Bow currentBow;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private Arrow arrow;
     [SerializeField] private float arrowSpeed = 25;
@@ -159,15 +159,16 @@ public class CharacterCombatController : MonoBehaviour
     public void SpawnArrow ()
     {
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
-        shootDirection = (targetDetectPos - firePos.position);
+        shootDirection = (targetDetectPos - currentBow.GetFirePoint().position);
         shootDirection.Normalize();
-        Arrow arrowInstance = Instantiate(arrow, firePos.position,transform.rotation);
+        Arrow arrowInstance = Instantiate(arrow, currentBow.GetFirePoint().position,transform.rotation);
         arrowInstance.Init(shootDirection, arrowSpeed);
     }
 
     public void ChangeAimMode(ViewMode mode)
     {
         aimMode = mode;
+        currentBow.SetState(mode == ViewMode.Aim ? Bow.State.Pulling : Bow.State.Normal);
         OnAimModeChanged?.Invoke(aimMode);
     }
 
@@ -196,9 +197,9 @@ public class CharacterCombatController : MonoBehaviour
             mouseWorldPosition = ray.GetPoint(1000);
         }
 
-        Debug.DrawLine(firePos.position, mouseWorldPosition, Color.red, 1f);
+        Debug.DrawLine(currentBow.GetFirePoint().position, mouseWorldPosition, Color.red, 1f);
 
-        if (Physics.Linecast(firePos.position, mouseWorldPosition, out RaycastHit linecastHit, hitLayer)
+        if (Physics.Linecast(currentBow.GetFirePoint().position, mouseWorldPosition, out RaycastHit linecastHit, hitLayer)
             && linecastHit.point != mouseWorldPosition
             )
         {

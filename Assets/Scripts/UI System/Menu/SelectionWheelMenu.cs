@@ -73,6 +73,7 @@ namespace GameProject
             }
 
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         protected override void OnClosed()
@@ -86,6 +87,7 @@ namespace GameProject
             //_trapVisualDataList.Clear();
 
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         protected override void OnDestoryInvoked()
