@@ -17,19 +17,19 @@ public class ObjectRevealer : MonoBehaviour
 
     private void Awake()
     {
-        _effector.transform.eulerAngles = new Vector3(0, 0, -90);
+        _effector.transform.localEulerAngles = new Vector3(0, 0, -90);
         _collider = GetComponent<Collider>();
     }
 
     private void Start()
     {
-        _rotateEffect = _effector.JuicyRotate(new Vector3(0, 0, 0), _duration);
+        _rotateEffect = _effector.JuicyLocalRotate(new Vector3(0, 0, 0), _duration);
     }
 
     public void ToggleReveal(bool state)
     {
         if (!_rotateEffect.IsFinished) return;
-        _effector.transform.eulerAngles = state ? new Vector3(0, 0, -90) : new Vector3(0, 0, 360);
+        _effector.transform.localEulerAngles = state ? new Vector3(0, 0, -90) : new Vector3(0, 0, 360);
         _rotateEffect.SetDestination(state ? new Vector3(0, 0, 360) : new Vector3(0, 0, -90));
         _rotateEffect.Start();
     }
