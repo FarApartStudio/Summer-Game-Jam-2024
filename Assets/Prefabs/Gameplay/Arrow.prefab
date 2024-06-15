@@ -50,7 +50,9 @@ MonoBehaviour:
     m_Bits: 25
   _detectOffset: {x: 0, y: 0, z: 0.44}
   _detectRadius: 0.05
-  _lifeTime: 0
+  _lifeTime: 30
+  _afterHitLifeTime: 5
+  _trailHideDelay: 1
   _trail: {fileID: 2488935897088984726}
 --- !u!1001 &4425470932556058092
 PrefabInstance:

@@ -178,7 +178,7 @@ MonoBehaviour:
   _closeBehaviour: 0
   waypointPrefab: {fileID: 0}
   waypointParent: {fileID: 8165846710405124228}
-  waypointController: {fileID: 6156142645441936826}
+  waypointController: {fileID: 0}
 --- !u!114 &6156142645441936826
 MonoBehaviour:
   m_ObjectHideFlags: 0

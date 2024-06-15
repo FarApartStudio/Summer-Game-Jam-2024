@@ -6,7 +6,7 @@ namespace Pelumi.SurfaceSystem
 {
     public class Surface : MonoBehaviour
     {
-        [SerializeField] private SurfaceType _surfaceType = SurfaceType.Metall;
+        [SerializeField] private SurfaceType _surfaceType = SurfaceType.Metal;
         [Range(0, 1)]
         [SerializeField] private float _friction = 0.5f;
 

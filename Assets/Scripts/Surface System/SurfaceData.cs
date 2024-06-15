@@ -6,7 +6,7 @@ namespace Pelumi.SurfaceSystem
 {
     public enum SurfaceType
     {
-        Metall, Rock, Wood, Concrete, Dirt, Blood
+        Metal, Rock, Wood,Enemy
     }
 
     [System.Serializable]
