@@ -37,14 +37,14 @@ public class AI_ChargeState : AI_BaseState
         {
             if (stateInfo.normalizedTime <= 0.6)
             {
-                GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).target.position);
+                GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).GetTarget.position);
             }
             else
             {
                 if (!charge)
                 {
-                    GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).target);
-                    chargePos = GetEnemyController(animator).target.position + (animator.transform.forward * 20);
+                    GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).GetTarget);
+                    chargePos = GetEnemyController(animator).GetTarget.position + (animator.transform.forward * 20);
                     GetEnemyController(animator).navMeshAgent.SetDestination(chargePos);
                     charge = true;
                 }

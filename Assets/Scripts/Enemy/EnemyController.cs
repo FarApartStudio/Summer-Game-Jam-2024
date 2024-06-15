@@ -12,11 +12,14 @@ public class EnemyController : MonoBehaviour
     public NavMeshAgent navMeshAgent { get; private set; }
     public Animator animator{ get; private set; }
     public HealthController healthController { get; private set; }
-    public Transform target { get; private set; }
+    public Transform GetTarget => target;
     public bool canAttack { get; private set; }
     public bool isDead { get; private set; }
     public bool isRaging { get; private set; }
     public bool canMove { get; private set; }
+    public bool IsAttacking  => isAttacking;
+
+    public DamageDefector GetDamageDefector => damageDefector;
 
     [Header("Enemy Properties")]
     [SerializeField] float hitDelay;
@@ -30,7 +33,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float knockBackDistance = 5;
 
     [Header("Raders")]
-    public DetectRadar detectRadar;
+    public DetectRadar searchDetectRadar;
+    public DetectRadar damageDetectRadar;
 
     [Header("Vfx Raders")]
     public GameObject stunVfx;
@@ -43,14 +47,17 @@ public class EnemyController : MonoBehaviour
     public bool isStuned = false;
     public bool chanceToStopAttack = false;
     public bool cannotStopAttack = false;
+    [SerializeField] Transform target;
 
     float speed;
     Vector3 lastPosition;
     float timer;
     int rageCounter;
+    bool isAttacking;
 
     WaitForSeconds hitDelayTime;
     NavMeshObstacle navMeshObs;
+    DamageDefector damageDefector;
     //EnemyManager enemyManager
 
     private void Awake()
@@ -67,6 +74,8 @@ public class EnemyController : MonoBehaviour
 
         attackInfoManager = GetComponentInChildren<AttackInfoManager>();
 
+        damageDefector = GetComponentInChildren<DamageDefector>();
+
        // enemyManager = EnemyManager.Instance;
     }
 
@@ -74,7 +83,14 @@ public class EnemyController : MonoBehaviour
     {
        // target = Player.Instance.transform;
         hitDelayTime = new WaitForSeconds(hitDelay);
+        damageDefector.OnDefect = OnDamageDefect;
         AssignEvents();
+    }
+
+    private void OnDamageDefect()
+    {
+        if (isAttacking) return;
+        animator.CrossFade("Dodge", 0.1f);
     }
 
     private void OnEnable()
@@ -179,6 +195,8 @@ public class EnemyController : MonoBehaviour
         if(enemyData.enemyType == EnemyData.EnemyType.Boss) animator.SetTrigger("Stun");
     } 
 
+    public void SetIsAttacking (bool status) => isAttacking = status;
+
     IEnumerator HitDelay()
     {
         canPlayHit = false;
@@ -210,26 +228,33 @@ public class EnemyController : MonoBehaviour
         } 
     }
 
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
+
     public void LookAtTarget()
     {
        transform.LookAtTargetSmooth(target.position);
     }
 
-    public void RoamAround()
+    public Vector3 RoamAround()
     {
         Vector3 nextDestination;
 
-        if (EnemyAIActions.RandomPosition(transform.position, detectRadar.GetScanSize(), out nextDestination))
+        if (EnemyAIActions.RandomPosition(transform.position, damageDetectRadar.GetScanSize(), out nextDestination))
         {
             navMeshAgent.SetDestination(nextDestination);
         }
+
+        return nextDestination;
     }
 
     public void TeleportToRandomPosition()
     {
         Vector3 nextDestination;
 
-        if (EnemyAIActions.RandomPosition(target.position, detectRadar.GetScanSize(), out nextDestination))
+        if (EnemyAIActions.RandomPosition(GetTarget.position, damageDetectRadar.GetScanSize(), out nextDestination))
         {
             navMeshAgent.Warp(nextDestination);
         }
@@ -259,7 +284,7 @@ public class EnemyController : MonoBehaviour
         canMove = true;
     }
 
-    IEnumerator LerpPosition(Vector3 targetPosition, float duration, Action OnStart, Action OnFinish)
+    public IEnumerator LerpPosition(Vector3 targetPosition, float duration, Action OnStart, Action OnFinish)
     {
         if (OnStart != null) OnStart.Invoke();
         float time = 0;

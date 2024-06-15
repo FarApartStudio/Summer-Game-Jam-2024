@@ -5,8 +5,7 @@ using UnityEngine;
 public class AI_RoamState : AI_BaseState
 {
     [SerializeField] float moveSpeed;
-    [SerializeField] Transiton exitTransitons;
-    [SerializeField] float chargeDelay;
+    [SerializeField] Transiton reachRoamExit;
 
     [Header("Debug")]
     [SerializeField] bool changeState;
@@ -16,20 +15,28 @@ public class AI_RoamState : AI_BaseState
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("Roam State");
         GetEnemyController(animator).CanMove(true);
         GetEnemyController(animator).navMeshAgent.speed = moveSpeed;
-        GetEnemyController(animator).RoamAround();
+        roamPos = GetEnemyController(animator).RoamAround();
+        changeState = false;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (GetEnemyController(animator).navMeshAgent.remainingDistance < .1f)
-        {
-            GetEnemyController(animator).RoamAround();
-        }
+        if (!GetEnemyController(animator).canMove) return;
 
-        Debug.Log("Roam State Update");
+        GetEnemyController(animator).transform.LookAtTargetSmooth(roamPos);
+
+        //Debug.Log("Roam State" + GetEnemyController(animator).navMeshAgent.remainingDistance);
+
+        if (GetEnemyController(animator).navMeshAgent.remainingDistance < 1f)
+        {
+            if (!changeState)
+            {
+                changeState = true;
+                reachRoamExit.Execute(animator);
+            }
+        }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

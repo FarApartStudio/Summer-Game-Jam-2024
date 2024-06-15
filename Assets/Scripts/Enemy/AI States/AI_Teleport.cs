@@ -26,13 +26,13 @@ public class AI_Teleport : AI_BaseState
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (lookAtPlayer) GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).target);
+        if (lookAtPlayer) GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).GetTarget);
 
         if (stateInfo.normalizedTime >= 0.9 && !changeState)
         {
             changeState = true;
 
-            if (GetEnemyController(animator).detectRadar.TargetInRange()) inRangeTransiton.Execute(animator);
+            if (GetEnemyController(animator).damageDetectRadar.TargetInRange()) inRangeTransiton.Execute(animator);
             else OutRangeTransiton.Execute(animator);
         }
     }

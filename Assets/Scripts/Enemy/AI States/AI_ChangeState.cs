@@ -25,7 +25,7 @@ public class AI_ChangeState : AI_BaseState
         {
             changeState = true;
 
-            if (GetEnemyController(animator).detectRadar.TargetInRange())
+            if (GetEnemyController(animator).damageDetectRadar.TargetInRange())
             {
                 int randomTransition = Random.Range(0, inRangeTransitons.Length);
                 inRangeTransitons[randomTransition].Execute(animator);

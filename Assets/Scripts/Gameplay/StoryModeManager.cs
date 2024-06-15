@@ -20,7 +20,6 @@ public class StoryModeManager : MonoBehaviour
 
     private void OnAimAccuracyChanged(float value)
     {
-        Debug.Log("Accuracy: " + value);
         _gameMenu.SetAimIndicatorSize(1 - value);
     }
 

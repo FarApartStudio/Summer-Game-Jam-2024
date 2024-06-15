@@ -48,6 +48,7 @@ public class AI_AttackState : AI_BaseState
         GetEnemyController(animator).chanceToStopAttack = chanceToStopAttack;
         GetEnemyController(animator).cannotStopAttack = cannotStopAttack;
         GetEnemyController(animator).ToggleAttackIndicator(attackIndicatorIndex, true);
+        GetEnemyController(animator).SetIsAttacking(true);
 
         if (followPlayer)
         {
@@ -65,16 +66,16 @@ public class AI_AttackState : AI_BaseState
 
         if (followPlayer && !GetEnemyController(animator).canMove  && stateInfo.normalizedTime <= 0.3) return;
 
-        if (stateInfo.normalizedTime <= 0.3 || lookAtPlayer) GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).target);
+        if (stateInfo.normalizedTime <= 0.3 || lookAtPlayer) GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).GetTarget);
 
         if(canLoop)
         {
             if (followPlayer && GetEnemyController(animator).navMeshAgent.isActiveAndEnabled)
             {
-                if (GetEnemyController(animator).detectRadar.TargetInRange())
+                if (GetEnemyController(animator).damageDetectRadar.TargetInRange())
                     GetEnemyController(animator).navMeshAgent.SetDestination(animator.transform.parent.position);
                 else
-                    GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).target.position);
+                    GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).GetTarget.position);
             }
 
 
@@ -83,7 +84,7 @@ public class AI_AttackState : AI_BaseState
                 if (!changeState)
                 {
                     changeState = true;
-                    if (GetEnemyController(animator).detectRadar.TargetInRange()) inRangeTransiton.Execute(animator);
+                    if (GetEnemyController(animator).damageDetectRadar.TargetInRange()) inRangeTransiton.Execute(animator);
                     else OutRangeTransiton.Execute(animator);
                 }
             }
@@ -93,8 +94,8 @@ public class AI_AttackState : AI_BaseState
         {
             if (followPlayer && GetEnemyController(animator).canMove)
             {
-                if (stateInfo.normalizedTime > followTime && !GetEnemyController(animator).detectRadar.TargetInRange())
-                    GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).target.position);
+                if (stateInfo.normalizedTime > followTime && !GetEnemyController(animator).damageDetectRadar.TargetInRange())
+                    GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).GetTarget.position);
             }
 
             if (followPlayer && !stoppedMoving && stateInfo.normalizedTime >= stopFollowAnimationTime)
@@ -106,7 +107,7 @@ public class AI_AttackState : AI_BaseState
             if (stateInfo.normalizedTime >= 0.9 && !changeState)
             {
                 changeState = true;
-                if (GetEnemyController(animator).detectRadar.TargetInRange()) inRangeTransiton.Execute(animator);
+                if (GetEnemyController(animator).damageDetectRadar.TargetInRange()) inRangeTransiton.Execute(animator);
                 else OutRangeTransiton.Execute(animator);
             }
         }
@@ -119,6 +120,7 @@ public class AI_AttackState : AI_BaseState
             if (Invulnerable) GetEnemyController(animator).healthController.SetVulnerable(false);
             GetEnemyController(animator).ToggleAttackIndicator(attackIndicatorIndex, false);
             GetEnemyController(animator).cannotStopAttack = false;
+            GetEnemyController(animator).SetIsAttacking(false);
         }
 
         changeState = false;
