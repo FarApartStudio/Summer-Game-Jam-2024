@@ -34,7 +34,7 @@ public class AI_ChaseState : AI_BaseState
     {
         if (!GetEnemyController(animator).canMove || GetEnemyController(animator).isDead) return;
 
-        if (GetEnemyController(animator).detectRadar.TargetInRange())
+        if (GetEnemyController(animator).damageDetectRadar.TargetInRange())
         {
             if(!changeState)
             {
@@ -46,8 +46,8 @@ public class AI_ChaseState : AI_BaseState
         }
         else
         {
-            GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).target.position);
-            GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).target);
+            GetEnemyController(animator).navMeshAgent.SetDestination(GetEnemyController(animator).GetTarget.position);
+            GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).GetTarget);
 
             if (!canPerfromActionDuringChase) return;
 

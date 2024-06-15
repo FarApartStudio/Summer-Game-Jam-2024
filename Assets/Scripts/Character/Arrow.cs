@@ -40,6 +40,7 @@ public class Arrow : MonoBehaviour
     private Vector3 _direction;
     private float _speed;
     private bool _isHit;
+    private bool _canMove = true;
     private JuicerRuntimeCore<Vector3> _scaleEffect;
     private Coroutine _deSpawnRoutine;
 
@@ -57,6 +58,7 @@ public class Arrow : MonoBehaviour
         _trail.gameObject.SetActive(true);
         _deSpawnRoutine = StartCoroutine(DeSpawn(_lifeTime));
         _isHit = false;
+        _canMove = true;
     }
 
     public bool RayTraceForward (out ArrowHit hit)
@@ -79,10 +81,10 @@ public class Arrow : MonoBehaviour
 
     private void Update()
     {
-        if (_isHit)
-            return;
+        if (_canMove)
         transform.position += _direction * _speed * Time.deltaTime;
-        if (RayTraceForward(out ArrowHit hit))
+
+        if (!_isHit && RayTraceForward(out ArrowHit hit))
         {
             Hit(hit);
         }
@@ -91,6 +93,19 @@ public class Arrow : MonoBehaviour
     private void Hit(ArrowHit hit)
     {
         OnHit?.Invoke(hit);
+
+        if (hit.Collider.TryGetComponent(out DamageDefector defector))
+        {
+            defector.Defect(transform.position);
+
+            if (_deSpawnRoutine != null)
+                StopCoroutine(_deSpawnRoutine);
+            _deSpawnRoutine = StartCoroutine(DeSpawn(_afterHitLifeTime));
+
+            return;
+        }
+
+        _canMove = false;
         transform.SetParent(hit.Collider.transform, true);
 
         IEnumerator HideTrail()
@@ -112,6 +127,7 @@ public class Arrow : MonoBehaviour
     IEnumerator DeSpawn(float time)
     {
         yield return new WaitForSeconds(time);
+        _trail.gameObject.SetActive(false);
         transform.SetParent(null);
         ObjectPoolManager.ReleaseObject(gameObject);
     }

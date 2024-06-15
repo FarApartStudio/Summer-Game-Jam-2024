@@ -17,7 +17,7 @@ public class AI_RootMotion : AI_BaseState
     {
         if (!GetEnemyController(animator).navMeshAgent.isActiveAndEnabled) return;
 
-        if (disableMovementIfInRange && GetEnemyController(animator).detectRadar.TargetInRange()) return;
+        if (disableMovementIfInRange && GetEnemyController(animator).damageDetectRadar.TargetInRange()) return;
 
         Vector3 position = animator.rootPosition;
         position.y = GetEnemyController(animator).navMeshAgent.nextPosition.y;

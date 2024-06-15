@@ -162,7 +162,7 @@ public static class EnemyAIActions
         return velocity * dir.normalized; // Return a normalized vector.
     }
 
-    public static IEnumerator KnockBack(this NavMeshAgent navAgent, Vector3 direction,float knockBackDuration, float normalSpeed)
+    public static IEnumerator KnockBack(this NavMeshAgent navAgent, Vector3 direction,float knockBackDuration, float normalSpeed, float force = 20)
     {
         navAgent.speed = 10;
         navAgent.angularSpeed = 0;//Keeps the enemy facing forwad other than spinning
@@ -173,7 +173,7 @@ public static class EnemyAIActions
         while (currentDuration > 0)
         {
             currentDuration -= Time.deltaTime;
-            navAgent.velocity = direction * 20;//Knocks the enemy back when appropriate 
+            navAgent.velocity = direction * force;//Knocks the enemy back when appropriate 
 
             yield return null;
         }

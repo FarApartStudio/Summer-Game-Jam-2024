@@ -22,9 +22,9 @@ public class AI_IdleState : AI_BaseState
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).target);
+        GetEnemyController(animator).transform.LookAtTargetSmooth(GetEnemyController(animator).GetTarget);
 
-        if (GetEnemyController(animator).detectRadar.TargetInRange())
+        if (GetEnemyController(animator).damageDetectRadar.TargetInRange())
         {
             if (!changeState && GetEnemyController(animator).canAttack)
             {
