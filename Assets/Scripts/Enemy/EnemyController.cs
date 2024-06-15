@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     public HealthController healthController { get; private set; }
     public Transform GetTarget => target;
     public bool canAttack { get; private set; }
-    public bool isDead { get; private set; }
+    public bool IsDead => !healthController.IsAlive;
     public bool isRaging { get; private set; }
     public bool canMove { get; private set; }
     public bool IsAttacking  => isAttacking;
@@ -61,7 +61,12 @@ public class EnemyController : MonoBehaviour
     WaitForSeconds hitDelayTime;
     NavMeshObstacle navMeshObs;
     DamageDefector damageDefector;
-    //EnemyManager enemyManager
+    public EnemyData GetEnemyData() => enemyData;
+    public void SwapSkin() => enemyData.skinSets.SelectRandomSkin(bodyParts);
+    public void ToggleAttacking(bool newState) => canAttack = newState;
+    public void ToggleStunVfx(bool newState) { stunVfx.SetActive(newState); }
+    public void ToggleAttackIndicator(int index, bool newState) { attackIndicators[index].SetActive(newState); }
+    public void ToggleRaging(bool newState) => isRaging = newState;
 
     private void Awake()
     {
@@ -95,13 +100,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnDamageDefect()
     {
-        if (isAttacking) return;
+        if (!healthController.IsAlive ||  isAttacking) return;
         animator.CrossFade("Dodge", 0.1f);
     }
 
     private void OnEnable()
     {
-        isDead = false;
         //col.enabled = true;
         healthController.enabled = true;
         navMeshObs.enabled = false;
@@ -174,13 +178,11 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator DeathSequence()
     {
-        isDead = true;
-
         navMeshObs.enabled = false;
 
         yield return new WaitForSecondsRealtime(.15f);
 
-        animator.SetTrigger("Die");
+        animator.CrossFade("Death" , 0.1f);
        // dissolveMat.StartDissolve();
 
         //col.enabled = false;
@@ -315,11 +317,4 @@ public class EnemyController : MonoBehaviour
         yield return null;
         if (OnFinish != null) OnFinish.Invoke();
     }
-
-    public EnemyData GetEnemyData() => enemyData;
-    public void SwapSkin() => enemyData.skinSets.SelectRandomSkin(bodyParts);
-    public void ToggleAttacking(bool newState) => canAttack = newState;
-    public void ToggleStunVfx(bool newState){ stunVfx.SetActive(newState);}
-    public void ToggleAttackIndicator(int index, bool newState) { attackIndicators[index].SetActive(newState); }
-    public void ToggleRaging(bool newState) => isRaging = newState;
 }

@@ -62,7 +62,7 @@ public class AI_AttackState : AI_BaseState
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (GetEnemyController(animator).isDead) return;
+        if (GetEnemyController(animator).IsDead) return;
 
         if (followPlayer && !GetEnemyController(animator).canMove  && stateInfo.normalizedTime <= 0.3) return;
 

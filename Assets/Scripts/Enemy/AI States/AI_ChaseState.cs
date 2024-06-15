@@ -32,7 +32,7 @@ public class AI_ChaseState : AI_BaseState
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!GetEnemyController(animator).canMove || GetEnemyController(animator).isDead) return;
+        if (!GetEnemyController(animator).canMove || GetEnemyController(animator).IsDead) return;
 
         if (GetEnemyController(animator).damageDetectRadar.TargetInRange())
         {

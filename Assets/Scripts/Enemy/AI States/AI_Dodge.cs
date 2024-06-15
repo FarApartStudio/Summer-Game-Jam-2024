@@ -45,7 +45,7 @@ public class AI_Dodge : AI_BaseState
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (GetEnemyController(animator).isDead) return;
+        if (GetEnemyController(animator).IsDead) return;
 
         if (stateInfo.normalizedTime >= normalisedAnimationExitTime && !changeState)
         {

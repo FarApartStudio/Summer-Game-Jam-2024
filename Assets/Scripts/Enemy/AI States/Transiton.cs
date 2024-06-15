@@ -12,6 +12,6 @@ public class Transiton
     public void Execute(Animator animator)
     {
         EnemyController enemyController = animator.GetComponentInParent<EnemyController>();
-        if(!enemyController.isDead) animator.CrossFade(animationName, transitionDuration);
+        if(!enemyController.IsDead) animator.CrossFade(animationName, transitionDuration);
     }
 }
