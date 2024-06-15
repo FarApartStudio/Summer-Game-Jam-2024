@@ -51,6 +51,7 @@ MonoBehaviour:
   _detectOffset: {x: 0, y: 0, z: 0.44}
   _detectRadius: 0.05
   _lifeTime: 0
+  _trail: {fileID: 2488935897088984726}
 --- !u!1001 &4425470932556058092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +228,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cb2938c45a92484382ae7e123909e6c, type: 3}
+--- !u!1 &2488935897088984726 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6559645680796326394, guid: 0cb2938c45a92484382ae7e123909e6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8755825594693803884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3556972091340324617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5250660301357850725, guid: 0cb2938c45a92484382ae7e123909e6c,
