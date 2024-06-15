@@ -57,12 +57,12 @@ namespace GameProject
                 ringUI.GetRing.transform.localRotation = Quaternion.Euler(0f, 0f, -step / 2f + _gap / 2f + i * step);
                 ringUI.GetRing.color = new Color(1f, 1f, 1f, 0.5f);
 
-                //ringUI.GetIcon.transform.localPosition = ringUI.GetRing.transform.localPosition + Quaternion.AngleAxis(i * step, Vector3.forward) * Vector3.up * _iconDistance;
+                ringUI.GetIcon.transform.localPosition = ringUI.GetRing.transform.localPosition + Quaternion.AngleAxis(i * step, Vector3.forward) * Vector3.up * _iconDistance;
                 //ringUI.GetIcon.sprite = _trapVisualDataList[i].GetSprite;
 
-                //float openDelay = .25f / _numberOfSlots * i;
+                float openDelay = .25f / _numberOfSlots * i;
 
-                //ringUI.Init(openDelay);
+                ringUI.Init(openDelay);
 
                 //TrapSO trapSO = _trapVisualDataList[i];
                 //ringUI.OnSelected = ()=>

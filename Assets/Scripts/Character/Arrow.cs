@@ -80,7 +80,7 @@ public class Arrow : MonoBehaviour
     {
         _isHit = true;
         transform.SetParent(hit.Collider.transform, true);
-        _scaleEffect.Start();
+       // _scaleEffect.Start();
     }
 
     private Vector3 GetOffsetPosition()

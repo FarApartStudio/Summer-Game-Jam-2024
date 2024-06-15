@@ -8,6 +8,9 @@ using UnityEngine.Windows;
 
 public class MovementController : MonoBehaviour
 {
+    public Func<bool> CanMove;
+    public Func<bool> CanRotate;
+    public Func<bool> CanSprint;
     public event Action<bool> OnSprintChange;
 
     [SerializeField] private bool analogMovement;
@@ -124,7 +127,6 @@ public class MovementController : MonoBehaviour
 
     private void GroundedCheck()
     {
-        // set sphere position, with offset
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - groundedOffset,
             transform.position.z);
         grounded = Physics.CheckSphere(spherePosition, groundedRadius, groundLayers,
@@ -133,6 +135,10 @@ public class MovementController : MonoBehaviour
 
     private void Move()
     {
+
+        if (CanMove != null && !CanMove())
+            return;
+
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = sprint ? sprintSpeed : moveSpeed;
 
@@ -151,25 +157,9 @@ public class MovementController : MonoBehaviour
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
-        float speedOffset = 0.1f;
         float inputMagnitude = analogMovement ? move.magnitude : 1f;
 
-        // accelerate or decelerate to target speed
-        if (currentHorizontalSpeed < targetSpeed - speedOffset ||
-            currentHorizontalSpeed > targetSpeed + speedOffset)
-        {
-            // creates curved result rather than a linear one giving a more organic speed change
-            // note T in Lerp is clamped, so we don't need to clamp our speed
-            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
-                Time.deltaTime * speedChangeRate);
-
-            // round speed to 3 decimal places
-            _speed = Mathf.Round(_speed * 1000f) / 1000f;
-        }
-        else
-        {
-            _speed = targetSpeed;
-        }
+        _speed = targetSpeed; 
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * speedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
@@ -189,6 +179,9 @@ public class MovementController : MonoBehaviour
                 rotationSmoothTime);
 
             // rotate to face input direction relative to camera position
+
+            if (CanRotate != null && !CanRotate())
+                return;
 
             if (rotateOnMove)
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);

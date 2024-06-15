@@ -11,6 +11,7 @@ public class ResetActionFlags : StateMachineBehaviour
     {
         characterManager = characterManager ?? animator.GetComponentInParent<CharacterManager>();
         characterManager.ResetActions();
+        //animator.SetLayerWeight(layerIndex, 0);
         animator.SetLayerWeight(1, 1);
     }
 
@@ -21,10 +22,10 @@ public class ResetActionFlags : StateMachineBehaviour
     //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+      //  animator.SetLayerWeight(layerIndex, 1);
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
