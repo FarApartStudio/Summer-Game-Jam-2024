@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 3400800735120970492}
   - component: {fileID: 4076542084799719622}
   m_Layer: 0
-  m_Name: Model
+  m_Name: HappyCloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b06c1ee576c5474e911e5bd0168e90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startDelay: {x: 0, y: 0}
   _moveDistance: {x: 0, y: 3, z: 0}
   _movementDuration: 2
   _movementEaseType: 24
