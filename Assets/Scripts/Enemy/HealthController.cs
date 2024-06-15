@@ -8,18 +8,12 @@ using System.Linq;
 using Pelumi.Juicer;
 using Pelumi.ObjectPool;
 
-public struct DamageInfo
+public struct DamageData
 {
     public IHealth instigator;
     public int damage;
     public bool critical;
     public DamageType damageType;
-}
-
-public enum DamageType
-{
-    Normal,
-    Special
 }
 
 public interface IHealth
@@ -45,6 +39,9 @@ public interface IBreakable
 
 public class HealthController : MonoBehaviour, IHealth
 {
+    public static event Action<HealthController> OnSetUp;
+    public static event Action<HealthController> OnDespawn;
+
     public event Action<IHealth> OnHealthChanged;
     public event Action<DamageInfo> OnHit;
     public event Action<int> OnHeal;
@@ -81,6 +78,7 @@ public class HealthController : MonoBehaviour, IHealth
     {
         StopDamageEffects();
         SetMaxHealth(maxHealth);
+        OnSetUp?.Invoke(this);
     }
 
     public void SetMaxHealth(int amount)
@@ -114,6 +112,7 @@ public class HealthController : MonoBehaviour, IHealth
         else
         {
             OnDie?.Invoke(damageInfo);
+            OnDespawn?.Invoke(this);
         }
     }
 
