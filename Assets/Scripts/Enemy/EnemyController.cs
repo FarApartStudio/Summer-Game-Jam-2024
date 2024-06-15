@@ -39,6 +39,9 @@ public class EnemyController : MonoBehaviour
     [Header("Vfx Raders")]
     public GameObject stunVfx;
 
+    [Header("Hit Points")]
+    HitPoint[] hitPoints;
+
     [Header("Attack Indicators")]
     public GameObject[] attackIndicators;
 
@@ -76,14 +79,14 @@ public class EnemyController : MonoBehaviour
 
         damageDefector = GetComponentInChildren<DamageDefector>();
 
-       // enemyManager = EnemyManager.Instance;
+        hitPoints = GetComponentsInChildren<HitPoint>();
     }
 
     private void Start()
     {
        // target = Player.Instance.transform;
 
-        navMeshAgent.updateRotation = false;
+        //navMeshAgent.updateRotation = false;
 
         hitDelayTime = new WaitForSeconds(hitDelay);
         damageDefector.OnDefect = OnDamageDefect;
@@ -125,19 +128,33 @@ public class EnemyController : MonoBehaviour
 
     public void AssignEvents()
     {
-        //healthController.OnReceiveDamage.AddListener(DamageReceived);
-        //healthController.OnHit.AddListener(Hit);
-        //healthController.OnHeal.AddListener(Heal);
-        //healthController.OnDied.AddListener(Die);
+        healthController.OnHit += OnHit;
+        healthController.OnDie += OnDie;
+
+        foreach (HitPoint hitPoint in hitPoints)
+        {
+            hitPoint.AssignHealthSystem(healthController);
+            hitPoint.OnHit += OnBodyHit;
+        }
     }
 
-    private void DamageReceived(DamageInfo damageInfo)
-    {
-      //  UIManager.Instance.SetEnemyHealth(enemyData.enemyName, damageable.GetHealthPercent());
 
-        CheckRageStatus();
-        if (damageInfo.knockback) KnockBack(damageInfo.hitDirection);
-        if (damageInfo.stun) Stun();
+    private void OnHit(DamageInfo damageInfo)
+    {
+
+    }
+
+    private void OnBodyHit(DamageInfo damageInfo, Vector3 damagePos)
+    {
+        // CheckRageStatus();
+        // if (damageInfo.knockback) KnockBack(damageInfo.hitDirection);
+        // if (damageInfo.stun) Stun();
+    }
+
+    private void OnDie(DamageInfo info)
+    {
+        StopAllCoroutines();
+        StartCoroutine(DeathSequence());
     }
 
     private void Hit()
@@ -153,12 +170,6 @@ public class EnemyController : MonoBehaviour
     private void Heal()
     {
       //  UIManager.Instance.SetEnemyHealth(enemyData.enemyName, damageable.GetHealthPercent());
-    }
-
-    private void Die()
-    {
-        StopAllCoroutines();
-        StartCoroutine(DeathSequence());    
     }
 
     private IEnumerator DeathSequence()

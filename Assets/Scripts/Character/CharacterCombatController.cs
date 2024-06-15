@@ -214,7 +214,13 @@ public class CharacterCombatController : MonoBehaviour
 
         if (arrowHit.Collider.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-
+            DamageInfo damageInfo = new DamageInfo();
+            damageInfo.damage = 10;
+            damageInfo.hitDirection = arrowHit.HitDirection;
+            damageInfo.damageType = DamageType.Projectile;
+            damageInfo.critical = false;
+            damageInfo.knockback = false;
+            damageable.Damage(damageInfo, arrowHit.HitPoint);
         }
     }
 
