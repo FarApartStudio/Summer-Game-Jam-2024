@@ -166,6 +166,7 @@ public class CharacterCombatController : MonoBehaviour
         Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position,transform.rotation);
         arrowInstance.OnHit += HitDetection;
         arrowInstance.Init(shootDirection, arrowSpeed);
+        currentBow.OnFire();
     }
 
     public void HitDetection(ArrowHit arrowHit)

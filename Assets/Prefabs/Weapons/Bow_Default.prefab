@@ -133,6 +133,10 @@ MonoBehaviour:
   _firePoint: {fileID: 5687110246210761699}
   _normalString: {fileID: 7943051511969223464}
   _pullString: {fileID: 624962503907430944}
+  _visual: {fileID: 4154117920126654803}
+  _scaleEffectSize: {x: 1.25, y: 1.25, z: 1.25}
+  _scaleEffectDuration: 0.15
+  _ease: 0
   _projectilePrefab: {fileID: 0}
   _projectileSpeed: 0
   _fireRate: 0
