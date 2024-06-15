@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textSequences:
   - messages: Do you want to go down this route
-    audioClip: {fileID: 8300000, guid: 78ddcc7aacd95b04cbef856166a57364, type: 3}
+    audioClip: {fileID: 8300000, guid: 7ecf53d7a5a11b943bbb77ff176e89b3, type: 3}
     textDuration: 0

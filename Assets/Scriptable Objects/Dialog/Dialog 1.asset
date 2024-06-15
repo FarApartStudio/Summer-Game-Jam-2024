@@ -16,3 +16,6 @@ MonoBehaviour:
   - messages: Hey there
     audioClip: {fileID: 8300000, guid: 8fffcaaf077b8304f9ed71b425df0062, type: 3}
     textDuration: 0
+  - messages: dawdwada
+    audioClip: {fileID: 8300000, guid: 78ddcc7aacd95b04cbef856166a57364, type: 3}
+    textDuration: 0
