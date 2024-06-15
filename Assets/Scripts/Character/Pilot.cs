@@ -26,11 +26,12 @@ public class Pilot : CharacterManager
     {
         movementController.OnSprintChange += OnSprintChange;
         pilotAnimatorController.OnShootTriggered += OnFire;
-    }
 
-    private void OnCameraRecoil(Vector2 vector)
-    {
-        cameraController.AddRecoil(vector);
+        movementController.CanSprint = () => characterCombatController.GetAimMode == ViewMode.HipFire;
+        movementController.CanMove = () => canMove;
+        movementController.CanRotate = () => canRotate;
+
+        ResetActions();
     }
 
     private void Update()
@@ -72,6 +73,11 @@ public class Pilot : CharacterManager
         {
 
         }
+    }
+
+    private void OnCameraRecoil(Vector2 vector)
+    {
+        cameraController.AddRecoil(vector);
     }
 
     public void ChangeCameraDirection(CameraDirection direction)

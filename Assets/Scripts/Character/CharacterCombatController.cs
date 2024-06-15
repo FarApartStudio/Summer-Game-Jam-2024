@@ -153,7 +153,6 @@ public class CharacterCombatController : MonoBehaviour
 
     public void SpawnArrow ()
     {
-        ModifyCrosshair?.Invoke(0);
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
         shootDirection = (targetDetectPos - firePos.position);
         shootDirection.Normalize();

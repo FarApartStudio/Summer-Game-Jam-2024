@@ -8,6 +8,9 @@ using UnityEngine.Windows;
 
 public class MovementController : MonoBehaviour
 {
+    public Func<bool> CanMove;
+    public Func<bool> CanRotate;
+    public Func<bool> CanSprint;
     public event Action<bool> OnSprintChange;
 
     [SerializeField] private bool analogMovement;
@@ -124,7 +127,6 @@ public class MovementController : MonoBehaviour
 
     private void GroundedCheck()
     {
-        // set sphere position, with offset
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - groundedOffset,
             transform.position.z);
         grounded = Physics.CheckSphere(spherePosition, groundedRadius, groundLayers,
@@ -133,6 +135,10 @@ public class MovementController : MonoBehaviour
 
     private void Move()
     {
+
+        if (CanMove != null && !CanMove())
+            return;
+
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = sprint ? sprintSpeed : moveSpeed;
 
@@ -174,6 +180,9 @@ public class MovementController : MonoBehaviour
 
             // rotate to face input direction relative to camera position
 
+            if (CanRotate != null && !CanRotate())
+                return;
+
             if (rotateOnMove)
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
@@ -184,8 +193,6 @@ public class MovementController : MonoBehaviour
         // move the player
         _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
-        Debug.Log("Speed: " + _speed);
 
         _inputMagnitude = inputMagnitude;
     }
