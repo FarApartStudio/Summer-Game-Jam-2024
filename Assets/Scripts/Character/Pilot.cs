@@ -34,6 +34,8 @@ public class Pilot : CharacterManager
         characterCombatController.CamAim = ()=> !IsPerformingAction;
 
         ResetActions();
+
+        CameraManager.Instance.Follow (cameraTargetTransfrom);
     }
 
     private void Update()

@@ -23,12 +23,13 @@ public class CharacterManager : MonoBehaviour
     public CharacterController GetCharacterController => characterController;
     public CharacterAnimatorController GetCharacterAnimatorController => characterAnimatorController;
 
-    protected bool isPerformingAction;
-    protected bool canRotate;
-    protected bool canMove;
-    protected bool applyRootMotion;
-    protected bool applyRootGravity;
-    protected bool showWeapon;
+    [Header("Character Flags")]
+    [SerializeField] protected bool isPerformingAction;
+    [SerializeField] protected bool canRotate;
+    [SerializeField] protected bool canMove;
+    [SerializeField] protected bool applyRootMotion;
+    [SerializeField] protected bool applyRootGravity;
+    [SerializeField] protected bool showWeapon;
 
     public bool IsPerformingAction => isPerformingAction;
     public bool CanRotate => canRotate;

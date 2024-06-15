@@ -101,19 +101,15 @@ public class MovementController : MonoBehaviour
 
     public void OnSprint(bool value)
     {
-        sprint = value && move.magnitude > 0.1f;
+        sprint = value && CanSprint.Invoke() && move.magnitude > 0.1f;
         OnSprintChange?.Invoke(sprint);
-    }
-
-    private void Awake()
-    {
-        _mainCamera = Camera.main.gameObject;
-        _controller = GetComponent<CharacterController>();
     }
 
     private void Start()
     {
-        // reset our timeouts on start
+        _mainCamera = Camera.main.gameObject;
+        _controller = GetComponent<CharacterController>();
+
         _jumpTimeoutDelta = jumpTimeout;
         _fallTimeoutDelta = fallTimeout;
     }

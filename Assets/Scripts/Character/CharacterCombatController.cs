@@ -3,6 +3,7 @@ using Pelumi.SurfaceSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -41,12 +42,14 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
     [SerializeField] private Transform aimTargetDebug;
 
-    [Header("Weapon")]
+    [Header("WeaponToEdit")]
     [SerializeField] private Transform rightHandSocket;
     [SerializeField] private Transform weaponTransform;
     [SerializeField] private Bow currentBow;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private Arrow arrow;
+    [SerializeField] private float maxRecoil = 5;
+    [SerializeField] private float stabilityDuration = 2f;
     [SerializeField] private float arrowSpeed = 25;
     [SerializeField] private float fireRate = 0.1f;
 
@@ -76,6 +79,8 @@ public class CharacterCombatController : MonoBehaviour
     private float shootingRigWeight = 0f;
     private float turnThreshold = 0.002f;
     private bool reloaded = false;
+    private bool cancelShot = false;
+    private float lastHoldTime = 0;
 
     public ViewMode GetAimMode => aimMode;
     public WeaponState GetWeaponState => weaponState;
@@ -105,13 +110,18 @@ public class CharacterCombatController : MonoBehaviour
         }
 
         aimingRig.weight = Mathf.Lerp(aimingRig.weight, shootingRigWeight, Time.deltaTime * aimingRigLerpSpeed);
-        pilotAnimatorController.SetBool("InAction", isTriggerHeld || aimInput);
+        pilotAnimatorController.SetBool("InAction", aimInput);
         pilotAnimatorController.Animator.SetFloat("Turn", turnValue, .2f, Time.deltaTime);
     }
 
     public void HandleInput()
     {
         SetTriggerHeld(InputManager.Instance.GetAttackInputAction().IsPressed());
+
+        if (InputManager.Instance.GetAimInput())
+        {
+            TryCancleShoot();
+        }
     }
 
     public void SetTriggerHeld(bool trigger)
@@ -124,6 +134,9 @@ public class CharacterCombatController : MonoBehaviour
         if (trigger && !CamAim()) 
             return;
 
+        if (trigger && cancelShot)
+            return;
+
         if (isTriggerHeld)
         {
             currentTriggerHoldTime += Time.deltaTime;
@@ -131,10 +144,12 @@ public class CharacterCombatController : MonoBehaviour
 
         if (isTriggerHeld && !trigger)
         {
+            lastHoldTime = currentTriggerHoldTime;
             currentTriggerHoldTime = 0;
             ModifyCrosshair?.Invoke(0);
             isTriggerReleased = true;
             currentFireRate = fireRate;
+            cancelShot = false;
         }
 
         isTriggerHeld = trigger;
@@ -149,6 +164,16 @@ public class CharacterCombatController : MonoBehaviour
         }
     }
 
+    public void TryCancleShoot()
+    {
+        if (aimMode != ViewMode.Aim) 
+            return;
+
+        cancelShot = true;
+        pilotAnimatorController.PlayAnimation(1, "Default", 0.2f);
+        HandleAim(false);
+    }
+
     public void HandleAim(bool aim)
     {
         if (aim == aimInput) return;
@@ -161,7 +186,13 @@ public class CharacterCombatController : MonoBehaviour
     public void SpawnArrow ()
     {
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
-        shootDirection = (targetDetectPos - currentBow.GetFirePoint().position);
+
+        Debug.Log("targetDetectPos " + targetDetectPos);
+        Debug.Log("Stability " + lastHoldTime / stabilityDuration);
+        Vector3 finalDestination = GetBulletSpread(targetDetectPos, maxRecoil, lastHoldTime / stabilityDuration);
+        Debug.Log("finalDestination " + finalDestination);
+
+        shootDirection = finalDestination - currentBow.GetFirePoint().position;
         shootDirection.Normalize();
         Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position,transform.rotation);
         arrowInstance.OnHit += HitDetection;
@@ -262,6 +293,17 @@ public class CharacterCombatController : MonoBehaviour
                 turnValue = Mathf.Lerp(turnValue, crossProduct > 0 ? 1 : -1, Time.deltaTime * 20);
             }
         }
+    }
+
+    public Vector3 GetBulletSpread(Vector3 screenCenterPoint,float spreadRange, float normalisedStability)
+    {
+        float normalsiedXSpread = Mathf.Lerp(spreadRange, 0, normalisedStability);
+        float normalsiedYSpread = Mathf.Lerp(spreadRange,0, normalisedStability);
+
+        screenCenterPoint.x += UnityEngine.Random.Range(-normalsiedXSpread, normalsiedXSpread);
+        screenCenterPoint.y += UnityEngine.Random.Range(-normalsiedYSpread, normalsiedYSpread);
+
+        return screenCenterPoint;
     }
 
     public bool IsFacingTarget()

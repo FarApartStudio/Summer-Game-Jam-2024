@@ -111,6 +111,11 @@ public abstract class CharacterAnimatorController : MonoBehaviour
         animator.SetTrigger(parameter);
     }
 
+    public void PlayAnimation (int layer, string animation, float transitionDuration = 0.2f)
+    {      
+        animator.CrossFade(animation, transitionDuration, layer);
+    }
+
     private void OnFootstep(AnimationEvent animationEvent)
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)

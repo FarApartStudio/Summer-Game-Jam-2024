@@ -79,7 +79,6 @@ GameObject:
   - component: {fileID: 3697906092153187270}
   - component: {fileID: 2495128076503502575}
   - component: {fileID: 8715130316006574714}
-  - component: {fileID: 4827178410927133484}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -220,6 +219,12 @@ MonoBehaviour:
   cameraController: {fileID: 7308789233340736278}
   animator: {fileID: 3863470334873653690}
   canControl: 1
+  isPerformingAction: 0
+  canRotate: 0
+  canMove: 0
+  applyRootMotion: 0
+  applyRootGravity: 0
+  showWeapon: 0
   currentCameraDirection: 0
   pilotAnimatorController: {fileID: 62042857860961748}
   aimVirtualCamera: {fileID: 0}
@@ -247,6 +252,12 @@ MonoBehaviour:
   cameraController: {fileID: 7308789233340736278}
   animator: {fileID: 3863470334873653690}
   canControl: 1
+  isPerformingAction: 0
+  canRotate: 0
+  canMove: 0
+  applyRootMotion: 0
+  applyRootGravity: 0
+  showWeapon: 0
 --- !u!114 &2495128076503502575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +279,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   arrow: {fileID: 8349473470084570783, guid: 03578d52053a2184c97697672507e17b, type: 3}
+  maxRecoil: 0.1
+  stabilityDuration: 1.5
   arrowSpeed: 30
   fireRate: 0.5
   aimRotateSpeed: 50
@@ -280,21 +293,6 @@ MonoBehaviour:
   currentTriggerHoldTime: 0
   currentFireRate: 0
 --- !u!114 &8715130316006574714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3843559297540417718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f9a7dfc1fd79a4995e29f4a7a43a01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dodgeDuration: 1
-  dodgeCooldown: 1
-  characterManager: {fileID: 8046655933381770757}
---- !u!114 &4827178410927133484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -358,7 +356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3784817954582246277
 Transform:
   m_ObjectHideFlags: 0
