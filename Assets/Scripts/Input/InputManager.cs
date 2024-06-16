@@ -22,10 +22,6 @@ public class InputManager : MonoBehaviour
             playerControls.Player.Aim.performed += Aim_performed;
             playerControls.Player.Aim.canceled += Aim_canceled;
         }
-        else
-        {
-            Destroy(this);
-        }
     }
 
     private void Start()

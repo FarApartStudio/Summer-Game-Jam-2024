@@ -72,6 +72,9 @@ public class HealthController : MonoBehaviour, IHealth
     {
         if (HasDamageDelay)
         damageDelay = new WaitForSeconds(damageDelayDuration);
+
+        // to remove 
+        OnSetUp?.Invoke(this);
     }
 
     public void SetUp(int maxHealth)
