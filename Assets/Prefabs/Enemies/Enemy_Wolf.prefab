@@ -1779,7 +1779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344a2676f8d84d6418152a20895712f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defectActiveTimeRange: {x: 3, y: 7}
+  _defectChance: 0.8
 --- !u!1 &8178679187380970641
 GameObject:
   m_ObjectHideFlags: 0
