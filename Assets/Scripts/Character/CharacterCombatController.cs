@@ -64,6 +64,7 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private float aimResetDelay = 0.5f;
     [SerializeField] private Rig aimingRig;
     [SerializeField] private float aimingRigLerpSpeed = 20;
+    [SerializeField] private float minDetectRange = 20f;
 
     [Header("Debug Gun Controls")]
     [SerializeField] private bool autoHideMouse = false;
@@ -308,6 +309,11 @@ public class CharacterCombatController : MonoBehaviour
         }
     }
 
+    public bool IsWithinRange(Vector3 position)
+    {
+        return Vector3.Distance(transform.position, position) < minDetectRange;
+    }   
+
     public int CalculateDamage()
     {
         return (int)Mathf.Lerp(_damageRange.x, _damageRange.y, GetLastAimAccuracy());
@@ -332,5 +338,12 @@ public class CharacterCombatController : MonoBehaviour
         Vector3 direction = (targetDetectPos - transform.position).normalized;
         float dot = Vector3.Dot(transform.forward, direction);
         return dot > 0.7f;
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, minDetectRange);
     }
 }

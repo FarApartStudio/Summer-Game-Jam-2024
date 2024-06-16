@@ -7,7 +7,7 @@ using UnityEngine.AI;
 //[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
- 
+    public Action<EnemyController> OnKilled;
 
     public AttackInfoManager attackInfoManager { get; private set; }
     //public Collider col { get; private set; }
@@ -24,9 +24,10 @@ public class EnemyController : MonoBehaviour
     public DamageDefector GetDamageDefector => damageDefector;
 
     [Header("Enemy Properties")]
-    [SerializeField] float hitDelay;
+    [SerializeField] float hitAnimationDelay;
     [SerializeField] float attackRate;
     [SerializeField] int rageAmount;
+    [SerializeField] float despawnDelay = 1;
 
     [Header("Enemy Data")]
     [SerializeField] EnemyData enemyData;
@@ -93,7 +94,7 @@ public class EnemyController : MonoBehaviour
     {
        // target = Player.Instance.transform;
         //navMeshAgent.updateRotation = false;
-        hitDelayTime = new WaitForSeconds(hitDelay);
+        hitDelayTime = new WaitForSeconds(hitAnimationDelay);
         damageDefector.OnDefect = OnDamageDefect;
         AssignEvents();
     }
@@ -109,7 +110,13 @@ public class EnemyController : MonoBehaviour
         AttackTimer();
     }
 
-    public void SetUpEnemy(EnemyData enemyData, Transform target)
+    public void Activate()
+    {
+        SetUpEnemy (enemyData);
+        //OnActivated?.Invoke(this);
+    }
+
+    public void SetUpEnemy(EnemyData enemyData)
     {
         this.enemyData = enemyData;
         healthController.enabled = true;
@@ -176,6 +183,10 @@ public class EnemyController : MonoBehaviour
 
         animator.CrossFade("Death" , 0.1f);
         navMeshAgent.enabled = false;
+
+        yield return new WaitForSecondsRealtime(despawnDelay);
+
+        OnKilled?.Invoke(this);
     }
 
     private void KnockBack(Vector3 direction)

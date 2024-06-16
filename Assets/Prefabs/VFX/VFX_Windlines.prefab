@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1372587826860946
+--- !u!1 &5918182125578847523
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4806933456362814}
-  - component: {fileID: 198367806785592204}
-  - component: {fileID: 199903620583063622}
-  - component: {fileID: 5654877946485093315}
+  - component: {fileID: 4551192034791566036}
+  - component: {fileID: 320768241056619572}
+  - component: {fileID: 8115161717860850779}
+  - component: {fileID: 563756001746810986}
   m_Layer: 0
-  m_Name: Windlines
+  m_Name: VFX_Windlines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4806933456362814
+--- !u!4 &4551192034791566036
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372587826860946}
+  m_GameObject: {fileID: 5918182125578847523}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.75, y: 3.98, z: 3.209}
   m_LocalScale: {x: 0.50472, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 0}
---- !u!198 &198367806785592204
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &320768241056619572
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372587826860946}
+  m_GameObject: {fileID: 5918182125578847523}
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
@@ -4850,14 +4850,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &199903620583063622
+--- !u!199 &8115161717860850779
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372587826860946}
+  m_GameObject: {fileID: 5918182125578847523}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -4925,18 +4925,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5654877946485093315
+--- !u!114 &563756001746810986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1372587826860946}
+  m_GameObject: {fileID: 5918182125578847523}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f376b26a221f1f42bdf34c616c1e790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useForward: 1
   offset: {x: -3.32, y: 0.67, z: 6.96}
   speed: 50
   target: {fileID: 0}

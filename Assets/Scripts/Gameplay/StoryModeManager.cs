@@ -3,25 +3,62 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class StoryModeManager : MonoBehaviour
 {
-    [SerializeField] private Pilot _player;
-    [SerializeField] private GameMenu _gameMenu;
+    [SerializeField] private Pilot _playerPrefab;
+    [SerializeField] private Transform spawnPos;
+
+    [Header("Effect")]
+    [SerializeField] FollowTransfrom _rainStormPrefab;
+    [SerializeField] FollowTransfrom _windlinesPrefab;
+
+    [Header("Enemy")]
+    [SerializeField] private List<EnemyActivator> _enemyActivators;
+
+    private Pilot _player;
+    private FollowTransfrom  _rainStorm;
+    private FollowTransfrom _windlines;
+
+
+    private GameMenu _gameMenu;
 
     private void Start()
     {
+        SpawnCharacter();
         _gameMenu = UIManager.GetMenu<GameMenu>();
+        _gameMenu.Open();
+    }
+
+    public void SpawnCharacter ()
+    {
+        _player = Instantiate(_playerPrefab, spawnPos.position, spawnPos.rotation);
+
+        _rainStorm = Instantiate(_rainStormPrefab, _player.transform.position,Quaternion.identity);
+        _rainStorm.SetTarget(_player.transform);
+        _windlines = Instantiate(_windlinesPrefab, _player.transform.position, Quaternion.identity);
+        _windlines.SetTarget(_player.transform);
+
         _player.GetCharacterCombatController.OnAimModeChanged += OnAimModeChanged;
         _player.GetCharacterCombatController.OnAimAccuracyChanged += OnAimAccuracyChanged;
         _player.GetCharacterCombatController.OnSuccessfulHit += OnSuccessfulHit;
-        _gameMenu.Open();
+    }
+
+    public void ActivateEnemies()
+    {
+        foreach (var activator in _enemyActivators)
+        {
+            activator.OnActivated += OnEnemyActivated;
+        }
+    }
+
+    private void OnEnemyActivated(EnemyController controller)
+    {
+
     }
 
     private void OnSuccessfulHit()
     {
-        Debug.Log("Hit");
         _gameMenu.PlayHitMarker();
     }
 

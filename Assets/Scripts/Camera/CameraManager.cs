@@ -110,4 +110,9 @@ public class CameraManager : MonoBehaviour
         // Ensure the final FOV is set exactly
         virtualCamera.m_Lens.FieldOfView = newFOV;
     }
+
+    public void ToggleAimCamera(bool value)
+    {
+        aimVirtualCamera.gameObject.SetActive(value);
+    }
 }

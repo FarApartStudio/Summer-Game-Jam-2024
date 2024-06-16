@@ -14,7 +14,6 @@ public class Pilot : CharacterManager
 {
     [SerializeField] private CameraDirection currentCameraDirection;
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
-    [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
     [SerializeField] private CharacterCombatController characterCombatController;
 
     [SerializeField] private Vector3 hipCameraTargetPos;
@@ -112,11 +111,11 @@ public class Pilot : CharacterManager
         switch (mode)
         {
             case ViewMode.HipFire:
-                aimVirtualCamera.gameObject.SetActive(false);
+                CameraManager.Instance.ToggleAimCamera(false);
                 movementController.SetRotateOnMove(true);
                 break;
             case ViewMode.Aim:
-                aimVirtualCamera.gameObject.SetActive(true);
+                CameraManager.Instance.ToggleAimCamera(true);
                 movementController.SetRotateOnMove(false);
                 break;
         }
