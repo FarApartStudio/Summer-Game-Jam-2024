@@ -10,6 +10,10 @@ public class HitObserver : MonoBehaviour, IDamageable
     [SerializeField] private UnityEvent <bool> OnHitToggle;
     private bool isHit = false;
 
+    public bool IsHit => isHit;
+
+    public UnityEvent GetOnHit => OnHit;
+
     public void Damage(DamageInfo damageInfo, Vector3 damagePosition)
     {
         if (oneTimeUse && isHit) return;
