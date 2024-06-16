@@ -1,5 +1,6 @@
 using Pelumi.ObjectPool;
 using Pelumi.SurfaceSystem;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ public class CharacterCombatController : MonoBehaviour
     public event Action OnFire;
     public event Action<float> OnAimAccuracyChanged;
     public event Action<float> OnAmmoUpdate;
+    public event Action OnSuccessfulHit;
 
     public event Action OnReloadStart;
     public event Action<float> OnReloading;
@@ -43,12 +45,15 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
     [SerializeField] private Transform aimTargetDebug;
 
-    [Header("WeaponToEdit")]
+    [Header("Weapon")]
     [SerializeField] private Transform rightHandSocket;
     [SerializeField] private Transform weaponTransform;
+    [SerializeField] private LayerMask detectLayer;
     [SerializeField] private Bow currentBow;
-    [SerializeField] private LayerMask hitLayer;
+
+    [Header("WeaponToEdit")]
     [SerializeField] private Arrow arrow;
+    [MinMaxSlider(0, 100, true)][SerializeField] private Vector2 _damageRange;
     [SerializeField] private float maxRecoil = 5;
     [SerializeField] private float stabilityDuration = 2f;
     [SerializeField] private float arrowSpeed = 25;
@@ -215,12 +220,16 @@ public class CharacterCombatController : MonoBehaviour
         if (arrowHit.Collider.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             DamageInfo damageInfo = new DamageInfo();
-            damageInfo.damage = 10;
+            damageInfo.damage = CalculateDamage();
             damageInfo.hitDirection = arrowHit.HitDirection;
             damageInfo.damageType = DamageType.Projectile;
             damageInfo.critical = false;
             damageInfo.knockback = false;
             damageable.Damage(damageInfo, arrowHit.HitPoint);
+
+            PopUpTextManager.Instance.PopUpAtTextPosition(PopUpTextManager.PopUpType.UI, arrowHit.HitPoint,Vector3.zero, damageInfo.damage.ToString(), Color.red);
+
+            OnSuccessfulHit?.Invoke();
         }
     }
 
@@ -246,7 +255,7 @@ public class CharacterCombatController : MonoBehaviour
         screeCenterPoint = new Vector2(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2);
         Ray ray = cam.ScreenPointToRay(screeCenterPoint);
 
-        if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, hitLayer))
+        if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer))
         {
             mouseWorldPosition = screeCenterHit.point;
         }
@@ -258,7 +267,7 @@ public class CharacterCombatController : MonoBehaviour
 
         Debug.DrawLine(currentBow.GetFirePoint().position, mouseWorldPosition, Color.red, 1f);
 
-        if (Physics.Linecast(currentBow.GetFirePoint().position, mouseWorldPosition, out RaycastHit linecastHit, hitLayer)
+        if (Physics.Linecast(currentBow.GetFirePoint().position, mouseWorldPosition, out RaycastHit linecastHit, detectLayer)
             && linecastHit.point != mouseWorldPosition
             )
         {
@@ -301,15 +310,13 @@ public class CharacterCombatController : MonoBehaviour
         }
     }
 
-    public float GetLastAimAccuracy()
+    public int CalculateDamage()
     {
-        return Mathf.Clamp(lastHoldTime / stabilityDuration, 0, 1);
+        return (int)Mathf.Lerp(_damageRange.x, _damageRange.y, GetLastAimAccuracy());
     }
 
-    public float GetCurrentAimAccuracy()
-    {
-        return Mathf.Clamp(currentTriggerHoldTime / stabilityDuration, 0, 1);
-    }
+    public float GetLastAimAccuracy() => Mathf.Clamp(lastHoldTime / stabilityDuration, 0, 1);
+    public float GetCurrentAimAccuracy() => Mathf.Clamp(currentTriggerHoldTime / stabilityDuration, 0, 1);
 
     public Vector3 GetBulletSpread(Vector3 screenCenterPoint,float spreadRange, float normalisedStability)
     {

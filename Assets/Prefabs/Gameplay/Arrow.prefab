@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collisionLayer:
     serializedVersion: 2
-    m_Bits: 25
+    m_Bits: 137
   _detectOffset: {x: 0, y: 0, z: 0.44}
   _detectRadius: 0.05
   _lifeTime: 30

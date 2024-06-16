@@ -11,6 +11,12 @@ public class HitPoint : MonoBehaviour,IDamageable
     public event OnHitEventHandler OnHit;
 
     IHealth _health;
+    Collider _collider;
+
+    private void Awake()
+    {
+        _collider = GetComponent<Collider>();
+    }
 
     public void AssignHealthSystem(IHealth health)
     {
@@ -34,13 +40,8 @@ public class HitPoint : MonoBehaviour,IDamageable
         return false;
     }
 
-    public void Activate()
+    public void ToggleActive (bool active)
     {
-        gameObject.SetActive(true);
-    }
-
-    public void Deactivate()
-    {
-        gameObject.SetActive(false);
+        _collider.enabled = active;
     }
 }

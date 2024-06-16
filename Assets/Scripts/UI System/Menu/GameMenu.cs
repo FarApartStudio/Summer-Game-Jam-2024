@@ -21,6 +21,7 @@ public class GameMenu : GenericMenu<GameMenu>
 
     protected override void OnCreated()
     {
+        _hitMarker.localScale = Vector3.zero;
         _hitMarkerEffect = _hitMarker.JuicyScale(1f, .25f);
         _hitMarkerEffect.SetLoop(2);
 

@@ -15,7 +15,14 @@ public class StoryModeManager : MonoBehaviour
         _gameMenu = UIManager.GetMenu<GameMenu>();
         _player.GetCharacterCombatController.OnAimModeChanged += OnAimModeChanged;
         _player.GetCharacterCombatController.OnAimAccuracyChanged += OnAimAccuracyChanged;
+        _player.GetCharacterCombatController.OnSuccessfulHit += OnSuccessfulHit;
         _gameMenu.Open();
+    }
+
+    private void OnSuccessfulHit()
+    {
+        Debug.Log("Hit");
+        _gameMenu.PlayHitMarker();
     }
 
     private void OnAimAccuracyChanged(float value)

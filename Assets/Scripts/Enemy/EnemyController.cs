@@ -112,6 +112,7 @@ public class EnemyController : MonoBehaviour
         navMeshAgent.enabled = true;
         canMove = true;
         canPlayHit = true;
+        ToggleHitPoints (true);
     }
 
     private void Update()
@@ -179,6 +180,8 @@ public class EnemyController : MonoBehaviour
     private IEnumerator DeathSequence()
     {
         navMeshObs.enabled = false;
+
+        ToggleHitPoints (false);
 
         yield return new WaitForSecondsRealtime(.15f);
 
@@ -283,7 +286,6 @@ public class EnemyController : MonoBehaviour
 
         if (status)
         {
-            navMeshObs.enabled = false;
             StartCoroutine(nameof( EnableMovement));
         }
         else
@@ -295,9 +297,38 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator EnableMovement()
     {
-        yield return new WaitForSecondsRealtime(0.1f);
+        navMeshObs.enabled = false;
+        yield return new WaitForSecondsRealtime(0.05f);
         navMeshAgent.enabled = true;
         canMove = true;
+    }
+
+    void ToggleHitPoints (bool state)
+    {
+        foreach (HitPoint hitBox in hitPoints)
+        {
+            hitBox.ToggleActive(state);
+        }
+    }
+
+    void SetRigidBodyState(bool state)
+    {
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = state;
+        }
+    }
+
+    void SetColliderState(bool state)
+    {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+
+        foreach (Collider col in colliders)
+        {
+            col.isTrigger = state;
+        }
     }
 
     public IEnumerator LerpPosition(Vector3 targetPosition, float duration, Action OnStart, Action OnFinish)

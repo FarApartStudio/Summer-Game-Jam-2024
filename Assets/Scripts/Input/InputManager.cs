@@ -17,7 +17,6 @@ public class InputManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             playerControls = new PlayerControls();
 
             playerControls.Player.Aim.performed += Aim_performed;

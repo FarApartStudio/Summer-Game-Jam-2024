@@ -30,15 +30,15 @@ public class EnemyData : ScriptableObject
     [HorizontalGroup("Game Data", 75)]
     [PreviewField(75)]
     [HideLabel]
-    public GameObject enemyModel;
+    public EnemyController enemyController;
 
     [VerticalGroup("Game Data/ Stats")]
     [LabelWidth(100)]
-    public float damageModifier = 1;
+    public float damage;
 
     [VerticalGroup("Game Data/ Stats")]
     [LabelWidth(100)]
-    public float healthModifier = 1;
+    public float health;
 
     [VerticalGroup("Game Data/ Stats")]
     [LabelWidth(100)]

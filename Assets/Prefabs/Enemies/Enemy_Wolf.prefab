@@ -1724,7 +1724,7 @@ GameObject:
   - component: {fileID: 8073335426561725456}
   - component: {fileID: 6916599364923978120}
   - component: {fileID: 2749978480476347226}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Damage Defector
   m_TagString: Untagged
   m_Icon: {fileID: 0}

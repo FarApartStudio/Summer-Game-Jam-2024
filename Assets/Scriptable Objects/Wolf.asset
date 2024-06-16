@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c001b42f85f8744978d1c465145de1, type: 3}
   m_Name: Wolf
   m_EditorClassIdentifier: 
-  enemyName: 
+  enemyName: Wolf
   description: 
   enemyIcon: {fileID: 0}
-  enemyModel: {fileID: 0}
-  damageModifier: 1
-  healthModifier: 1
+  enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+    type: 3}
+  damage: 10
+  health: 100
   enemyType: 0
   skinSets:
     materials:
     - materials:
-      - {fileID: 0}
+      - {fileID: 2100000, guid: 44ce57ec726a7eb40a3cdf6807f24c6f, type: 2}
   hasRage: 0
   canKnockBack: 0
