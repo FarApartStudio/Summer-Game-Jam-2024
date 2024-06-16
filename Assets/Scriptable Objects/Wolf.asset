@@ -24,5 +24,6 @@ MonoBehaviour:
     materials:
     - materials:
       - {fileID: 2100000, guid: 44ce57ec726a7eb40a3cdf6807f24c6f, type: 2}
+      - {fileID: 2100000, guid: 19461c46b7b97da40a2516045ad799e1, type: 2}
   hasRage: 0
   canKnockBack: 0

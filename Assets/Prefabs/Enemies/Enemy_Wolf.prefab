@@ -1330,6 +1330,7 @@ GameObject:
   - component: {fileID: 2161413065947672640}
   - component: {fileID: 8053882484329318810}
   - component: {fileID: 6280644332929588971}
+  - component: {fileID: 5132707299793671867}
   m_Layer: 0
   m_Name: Enemy_Wolf
   m_TagString: Untagged
@@ -1444,6 +1445,20 @@ MonoBehaviour:
   isInvulnerable: 0
   canDealDamage: 1
   _damageEffects: []
+--- !u!114 &5132707299793671867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670772718573302711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0c86c002c25d743a9386af8ee8d699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _surfaceType: 3
+  _friction: 0.5
 --- !u!1 &6795615388388023866
 GameObject:
   m_ObjectHideFlags: 0
