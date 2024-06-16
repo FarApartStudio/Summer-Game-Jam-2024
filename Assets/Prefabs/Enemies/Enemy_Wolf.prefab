@@ -2189,6 +2189,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitBox_Head
       objectReference: {fileID: 0}
+    - target: {fileID: 1087032014969728263, guid: 8830264bddf8fa94fa0a3f4f3aeca3f3,
+        type: 3}
+      propertyPath: damageMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3371703071837939634, guid: 8830264bddf8fa94fa0a3f4f3aeca3f3,
         type: 3}
       propertyPath: m_LocalPosition.x

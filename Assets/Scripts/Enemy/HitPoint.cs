@@ -7,11 +7,14 @@ public class HitPoint : MonoBehaviour,IDamageable
 {
     public int damageMultiplier = 1;
 
-    public delegate void OnHitEventHandler(DamageInfo damageInfo, Vector3 damagePos);
-    public event OnHitEventHandler OnHit;
+    public event Action<HitPoint> OnHit;
 
     IHealth _health;
     Collider _collider;
+    DamageInfo damageInfo;
+
+    public int GetDamageMultiplier => damageMultiplier;
+    public DamageInfo GetDamageInfo => damageInfo;
 
     private void Awake()
     {
@@ -25,9 +28,12 @@ public class HitPoint : MonoBehaviour,IDamageable
 
     public void Damage(DamageInfo damageInfo, Vector3 damagePos)
     {
+        this.damageInfo = damageInfo;
         damageInfo.damage = (damageInfo.damage * damageMultiplier);
         _health.DealDamage(damageInfo);
-        OnHit?.Invoke(damageInfo, damagePos);
+        OnHit?.Invoke(this);
+
+        PopUpTextManager.Instance.PopUpAtTextPosition(PopUpTextManager.PopUpType.UI, damagePos, Vector3.zero, damageInfo.damage.ToString(), damageMultiplier == 1 ? Color.yellow : Color.red);
     }
 
     public bool LastKillShot(int damage)

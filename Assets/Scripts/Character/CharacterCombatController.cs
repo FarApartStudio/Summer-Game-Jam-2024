@@ -227,8 +227,6 @@ public class CharacterCombatController : MonoBehaviour
             damageInfo.knockback = false;
             damageable.Damage(damageInfo, arrowHit.HitPoint);
 
-            PopUpTextManager.Instance.PopUpAtTextPosition(PopUpTextManager.PopUpType.UI, arrowHit.HitPoint,Vector3.zero, damageInfo.damage.ToString(), Color.yellow);
-
             OnSuccessfulHit?.Invoke();
         }
     }

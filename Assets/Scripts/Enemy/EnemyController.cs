@@ -7,6 +7,8 @@ using UnityEngine.AI;
 //[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
+ 
+
     public AttackInfoManager attackInfoManager { get; private set; }
     //public Collider col { get; private set; }
     public NavMeshAgent navMeshAgent { get; private set; }
@@ -90,9 +92,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
        // target = Player.Instance.transform;
-
         //navMeshAgent.updateRotation = false;
-
         hitDelayTime = new WaitForSeconds(hitDelay);
         damageDefector.OnDefect = OnDamageDefect;
         AssignEvents();
@@ -139,17 +139,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
-    private void OnHit(DamageInfo damageInfo)
+    private void OnBodyHit(HitPoint hitPoint)
     {
 
     }
 
-    private void OnBodyHit(DamageInfo damageInfo, Vector3 damagePos)
+    private void OnHit(DamageInfo damageInfo)
     {
-        // CheckRageStatus();
-        // if (damageInfo.knockback) KnockBack(damageInfo.hitDirection);
-        // if (damageInfo.stun) Stun();
+
     }
 
     private void OnDie(DamageInfo info)
@@ -160,18 +157,12 @@ public class EnemyController : MonoBehaviour
 
     private void Hit()
     {
-
         if (!canPlayHit || isStuned || cannotStopAttack) return;
 
         if (chanceToStopAttack && UnityEngine.Random.Range(0, 10) > 5) return;
 
         animator.SetTrigger("Hit");
         StartCoroutine(nameof(HitDelay));
-    }
-
-    private void Heal()
-    {
-      //  UIManager.Instance.SetEnemyHealth(enemyData.enemyName, damageable.GetHealthPercent());
     }
 
     private IEnumerator DeathSequence()
@@ -183,13 +174,7 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSecondsRealtime(.15f);
 
         animator.CrossFade("Death" , 0.1f);
-       // dissolveMat.StartDissolve();
-
-        //col.enabled = false;
-       // damageable.enabled = false;
         navMeshAgent.enabled = false;
-
-       // if (enemyManager != null) enemyManager.RemoveEnemy(this);
     }
 
     private void KnockBack(Vector3 direction)
