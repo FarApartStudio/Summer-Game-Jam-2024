@@ -109,8 +109,9 @@ public class EnemyController : MonoBehaviour
         AttackTimer();
     }
 
-    public void SetUpEnemy(int health, int damage)
+    public void SetUpEnemy(EnemyData enemyData, Transform target)
     {
+        this.enemyData = enemyData;
         healthController.enabled = true;
         navMeshObs.enabled = false;
         navMeshAgent.enabled = true;
@@ -118,11 +119,11 @@ public class EnemyController : MonoBehaviour
         canPlayHit = true;
         ToggleHitPoints(true);
 
-        healthController.SetUp(health);
+        healthController.SetUp(enemyData.health);
 
         foreach (GameObject attackIndicator in attackIndicators) attackIndicator.SetActive(false);
 
-        attackInfoManager.SetDamagerInfo(this, damage, 0, 0);
+        attackInfoManager.SetDamagerInfo(this, enemyData.damage, 0, 0);
 
         SwapSkin();
     }
