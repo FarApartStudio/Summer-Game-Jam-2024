@@ -104,17 +104,6 @@ public class EnemyController : MonoBehaviour
         animator.CrossFade("Dodge", 0.1f);
     }
 
-    private void OnEnable()
-    {
-        //col.enabled = true;
-        healthController.enabled = true;
-        navMeshObs.enabled = false;
-        navMeshAgent.enabled = true;
-        canMove = true;
-        canPlayHit = true;
-        ToggleHitPoints (true);
-    }
-
     private void Update()
     {
         AttackTimer();
@@ -122,6 +111,13 @@ public class EnemyController : MonoBehaviour
 
     public void SetUpEnemy(int health, int damage)
     {
+        healthController.enabled = true;
+        navMeshObs.enabled = false;
+        navMeshAgent.enabled = true;
+        canMove = true;
+        canPlayHit = true;
+        ToggleHitPoints(true);
+
         healthController.SetUp(health);
 
         foreach (GameObject attackIndicator in attackIndicators) attackIndicator.SetActive(false);

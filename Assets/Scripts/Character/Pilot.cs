@@ -56,17 +56,17 @@ public class Pilot : CharacterManager
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                switch (currentCameraDirection)
-                {
-                    case CameraDirection.Left:
-                        ChangeCameraDirection(CameraDirection.Right);
-                        break;
-                    case CameraDirection.Right:
-                        ChangeCameraDirection(CameraDirection.Left);
-                        break;
-                    default:
-                        break;
-                }
+                //switch (currentCameraDirection)
+                //{
+                //    case CameraDirection.Left:
+                //        ChangeCameraDirection(CameraDirection.Right);
+                //        break;
+                //    case CameraDirection.Right:
+                //        ChangeCameraDirection(CameraDirection.Left);
+                //        break;
+                //    default:
+                //        break;
+                //}
             }
         }
 
