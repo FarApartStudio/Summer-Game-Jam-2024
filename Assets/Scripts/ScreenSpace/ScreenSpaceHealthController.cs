@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pelumi.ObjectPool;
 
 public class ScreenSpaceHealthController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class ScreenSpaceHealthController : MonoBehaviour
 
     private void HandleHealthControllerCreated(HealthController controller)
     {
-        HealthUI screenHealth = Instantiate(screenHealthPrefab, transform);
+        HealthUI screenHealth = ObjectPoolManager.SpawnObject(screenHealthPrefab, transform);
         screenHealth.Spawn(controller.transform);
         controller.OnHealthChanged += screenHealth.ChangeValue;
         screenHealths.Add(controller, screenHealth);

@@ -72,7 +72,10 @@ public class HealthController : MonoBehaviour, IHealth
     {
         if (HasDamageDelay)
         damageDelay = new WaitForSeconds(damageDelayDuration);
+    }
 
+    private void Start()
+    {
         // to remove 
         OnSetUp?.Invoke(this);
     }
