@@ -17,9 +17,8 @@ public class HitObserver : MonoBehaviour, IDamageable
     public void Damage(DamageInfo damageInfo, Vector3 damagePosition)
     {
         if (oneTimeUse && isHit) return;
-
-        OnHit.Invoke();
         isHit = !isHit ? true : false;
+        OnHit.Invoke();
         OnHitToggle.Invoke(isHit);
 
     }

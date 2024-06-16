@@ -21,9 +21,14 @@ public class MultiHitObserver : MonoBehaviour
     {
         foreach (HitObserver hitObserver in hitObservers)
         {
-            if (!hitObserver.IsHit) return;
+            if (!hitObserver.IsHit)
+            {
+                Debug.Log("Not all hit observers are hit");
+                return;
+            }
         }
 
+        Debug.Log("All hit observers are hit");
         OnComplete.Invoke();
     }
 }
