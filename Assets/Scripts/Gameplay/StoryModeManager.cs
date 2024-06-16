@@ -23,6 +23,11 @@ public class StoryModeManager : MonoBehaviour
 
     private GameMenu _gameMenu;
 
+    private void Awake()
+    {
+
+    }
+
     private void Start()
     {
         SpawnCharacter();
@@ -42,6 +47,8 @@ public class StoryModeManager : MonoBehaviour
         _player.GetCharacterCombatController.OnAimModeChanged += OnAimModeChanged;
         _player.GetCharacterCombatController.OnAimAccuracyChanged += OnAimAccuracyChanged;
         _player.GetCharacterCombatController.OnSuccessfulHit += OnSuccessfulHit;
+
+        ActivateEnemies();
     }
 
     public void ActivateEnemies()
@@ -49,12 +56,13 @@ public class StoryModeManager : MonoBehaviour
         foreach (var activator in _enemyActivators)
         {
             activator.OnActivated += OnEnemyActivated;
+            activator.Init();
         }
     }
 
     private void OnEnemyActivated(EnemyController controller)
     {
-
+        controller.SetTarget(_player.transform);
     }
 
     private void OnSuccessfulHit()

@@ -227,7 +227,6 @@ MonoBehaviour:
   showWeapon: 0
   currentCameraDirection: 0
   pilotAnimatorController: {fileID: 62042857860961748}
-  aimVirtualCamera: {fileID: 0}
   characterCombatController: {fileID: 2495128076503502575}
   hipCameraTargetPos: {x: 0, y: 1.31, z: 0}
   aimLeftCameraTargetPos: {x: 0.5, y: 1.31, z: 0}
@@ -276,7 +275,7 @@ MonoBehaviour:
   weaponTransform: {fileID: 8887122210938452048}
   detectLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   currentBow: {fileID: 1335592831006303342}
   arrow: {fileID: 8349473470084570783, guid: 03578d52053a2184c97697672507e17b, type: 3}
   _damageRange: {x: 10, y: 50}
@@ -288,6 +287,7 @@ MonoBehaviour:
   aimResetDelay: 0.5
   aimingRig: {fileID: 7879682714115200223}
   aimingRigLerpSpeed: 20
+  minDetectRange: 2
   autoHideMouse: 0
   isTriggerHeld: 0
   isTriggerReleased: 1

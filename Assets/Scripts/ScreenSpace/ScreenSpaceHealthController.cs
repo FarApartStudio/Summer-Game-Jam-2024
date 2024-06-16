@@ -11,14 +11,14 @@ public class ScreenSpaceHealthController : MonoBehaviour
 
     private void Awake()
     {
-        HealthController.OnSetUp += HandleHealthControllerCreated;
-        HealthController.OnDespawn += HandleHealthControllerDestroyed;
+      //  HealthController.OnSetUp += HandleHealthControllerCreated;
+       // HealthController.OnDespawn += HandleHealthControllerDestroyed;
     }
 
     private void OnDestroy()
     {
-        HealthController.OnSetUp -= HandleHealthControllerCreated;
-        HealthController.OnDespawn -= HandleHealthControllerDestroyed;
+      //  HealthController.OnSetUp -= HandleHealthControllerCreated;
+      //  HealthController.OnDespawn -= HandleHealthControllerDestroyed;
     }
 
     private void HandleHealthControllerCreated(HealthController controller)

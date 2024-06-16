@@ -10,7 +10,7 @@ public class EnemyActivator : MonoBehaviour
 
     [SerializeField] private List<EnemyController> enemies;
 
-    private void Start()
+    public void Init()
     {
         foreach (var enemy in enemies)
         {

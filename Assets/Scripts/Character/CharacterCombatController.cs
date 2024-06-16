@@ -256,7 +256,8 @@ public class CharacterCombatController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer))
         {
-            mouseWorldPosition = screeCenterHit.point;
+            mouseWorldPosition = Vector3.Lerp (mouseWorldPosition , IsTooClose(screeCenterHit.point) ? ray.GetPoint(100) : screeCenterHit.point, Time.deltaTime * 20);
+            //mouseWorldPosition = IsTooClose (screeCenterHit.point) ? ray.GetPoint(1000) : screeCenterHit.point;
         }
         else
         {
@@ -309,7 +310,7 @@ public class CharacterCombatController : MonoBehaviour
         }
     }
 
-    public bool IsWithinRange(Vector3 position)
+    public bool IsTooClose(Vector3 position)
     {
         return Vector3.Distance(transform.position, position) < minDetectRange;
     }   
@@ -344,6 +345,6 @@ public class CharacterCombatController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, minDetectRange);
+        Gizmos.DrawWireSphere(transform.position, minDetectRange);
     }
 }

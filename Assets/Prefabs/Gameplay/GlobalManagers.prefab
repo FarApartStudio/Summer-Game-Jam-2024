@@ -52,4 +52,3 @@ MonoBehaviour:
   unPersitentManagers:
   - {fileID: 3053106700685776985, guid: 8e8d77bd0e672134a9ea298f00ccc807, type: 3}
   - {fileID: 2317962867235660225, guid: 22f1f732566d10e419641bca0e3312f3, type: 3}
-  - {fileID: 368426336874320560, guid: 3498cc926767e564c8b69f661ec4dca0, type: 3}

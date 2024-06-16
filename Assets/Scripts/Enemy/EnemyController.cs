@@ -130,7 +130,7 @@ public class EnemyController : MonoBehaviour
 
         foreach (GameObject attackIndicator in attackIndicators) attackIndicator.SetActive(false);
 
-        attackInfoManager.SetDamagerInfo(this, enemyData.damage, 0, 0);
+       // attackInfoManager.SetDamagerInfo(this, enemyData.damage, 0, 0);
 
         SwapSkin();
     }
