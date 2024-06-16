@@ -14597,7 +14597,7 @@ GameObject:
   - component: {fileID: 5866956569127135671}
   - component: {fileID: 1315565907597665941}
   - component: {fileID: 5705220323122347409}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19608,7 +19608,7 @@ GameObject:
   - component: {fileID: 7356837607807738140}
   - component: {fileID: 620606194022093039}
   m_Layer: 0
-  m_Name: Visuals
+  m_Name: Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
