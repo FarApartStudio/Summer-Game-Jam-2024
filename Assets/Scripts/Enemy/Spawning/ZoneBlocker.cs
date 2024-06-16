@@ -5,37 +5,32 @@ using UnityEngine;
 public class ZoneBlocker : MonoBehaviour
 {
     [SerializeField] ParticleSystem vfxEffect;
+    [SerializeField] private Animator animator;
+    private BoxCollider boxCollider;
 
-    private void OnEnable()
+    private void Awake()
     {
-        
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (BaseHero.PlayerHero && other.gameObject == BaseHero.PlayerHero.gameObject)
-        //{
-        //    Vector3 offset = new Vector3(0, 1, 0);
-        //    vfxEffect.transform.position = GetComponent<BoxCollider>().ClosestPoint(other.transform.position + offset);
-        //    vfxEffect.Play();
-
-        //    MessagePopUp.Instance.ShowMessage("Kill all enemies");
-        //}
+        if (other.TryGetComponent(out Pilot pilot))
+        {
+            Vector3 offset = new Vector3(0, 1, 0);
+            vfxEffect.transform.position = boxCollider.ClosestPoint(other.transform.position + offset);
+            vfxEffect.Play();
+        }
     }
 
-    public void EnableWall()
+    public void Open()
     {
-        gameObject.SetActive(true);
+        animator.CrossFade("Open", 0.1f);
     }
 
-    public void DisableWall()
+    public void Close()
     {
-        gameObject.SetActive(false);
-    }
-
-    private void OnDisable()
-    {
-        
+        animator.CrossFade("Close", 0.1f);
     }
 
     private void OnDrawGizmosSelected()
