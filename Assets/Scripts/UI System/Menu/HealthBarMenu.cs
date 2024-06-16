@@ -1,36 +1,52 @@
+using Pelumi.Juicer;
+using Pelumi.ObjectPool;
+using Pelumi.UISystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pelumi.ObjectPool;
 
-public class ScreenSpaceHealthController : MonoBehaviour
+public class HealthBarMenu : GenericMenu<GameMenu>
 {
     [SerializeField] private HealthUI screenHealthPrefab;
+    [SerializeField] private Transform spawnPos;
     [SerializeField] private ScreenSpaceUIController screenSpaceUIController;
     private Dictionary<HealthController, HealthUI> screenHealths = new Dictionary<HealthController, HealthUI>();
 
-    private void Awake()
+    protected override void OnCreated()
     {
-        HealthController.OnSetUp += HandleHealthControllerCreated;
-        HealthController.OnDespawn += HandleHealthControllerDestroyed;
+
     }
 
-    private void OnDestroy()
+    protected override void OnOpened()
     {
-        HealthController.OnSetUp -= HandleHealthControllerCreated;
-        HealthController.OnDespawn -= HandleHealthControllerDestroyed;
+
     }
 
-    private void HandleHealthControllerCreated(HealthController controller)
+    protected override void OnClosed()
     {
-        HealthUI screenHealth = ObjectPoolManager.SpawnObject(screenHealthPrefab, transform);
+
+    }
+
+    protected override void OnDestoryInvoked()
+    {
+
+    }
+
+    public override void ResetMenu()
+    {
+
+    }
+
+    public void HandleHealthControllerCreated(HealthController controller)
+    {
+        HealthUI screenHealth = ObjectPoolManager.SpawnObject(screenHealthPrefab, spawnPos);
         screenHealth.Spawn(controller.transform);
         controller.OnHealthChanged += screenHealth.ChangeValue;
         screenHealths.Add(controller, screenHealth);
         screenSpaceUIController.Add(screenHealth);
     }
 
-    private void HandleHealthControllerDestroyed(HealthController controller)
+    public void HandleHealthControllerDestroyed(HealthController controller)
     {
         HealthUI healthUI = screenHealths[controller];
 
@@ -39,4 +55,5 @@ public class ScreenSpaceHealthController : MonoBehaviour
         screenHealths.Remove(controller);
         ObjectPoolManager.ReleaseObject(healthUI);
     }
+
 }

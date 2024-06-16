@@ -34,11 +34,11 @@ public class EnemyData : ScriptableObject
 
     [VerticalGroup("Game Data/ Stats")]
     [LabelWidth(100)]
-    public float damage;
+    public int damage;
 
     [VerticalGroup("Game Data/ Stats")]
     [LabelWidth(100)]
-    public float health;
+    public int health;
 
     [VerticalGroup("Game Data/ Stats")]
     [LabelWidth(100)]
