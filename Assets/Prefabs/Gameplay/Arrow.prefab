@@ -52,8 +52,10 @@ MonoBehaviour:
   _detectRadius: 0.05
   _lifeTime: 30
   _afterHitLifeTime: 5
+  _maxHitCount: 5
   _trailHideDelay: 1
   _trail: {fileID: 2488935897088984726}
+  hits: []
 --- !u!1001 &4425470932556058092
 PrefabInstance:
   m_ObjectHideFlags: 0

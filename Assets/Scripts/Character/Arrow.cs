@@ -32,6 +32,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] float _detectRadius;
     [SerializeField] float _lifeTime = 20;
     [SerializeField] float _afterHitLifeTime = 5;
+    [SerializeField] int _maxHitCount = 2;
 
     [Header("Trail")]
     [SerializeField] float _trailHideDelay;
@@ -43,11 +44,17 @@ public class Arrow : MonoBehaviour
     private bool _canMove = true;
     private JuicerRuntimeCore<Vector3> _scaleEffect;
     private Coroutine _deSpawnRoutine;
+    private DamageDefector checkedDefector;
+
+    [Header("Debug")]
+    [SerializeField] private Collider[] hits;
 
     private void Awake()
     {
         _scaleEffect = transform.JuicyScale(Vector3.one * 1.5f, 0.15f);
         _scaleEffect.SetLoop(2);
+
+        hits = new Collider[_maxHitCount];
     }
 
     public void Init(Vector3 direction, float speed)
@@ -59,23 +66,17 @@ public class Arrow : MonoBehaviour
         _deSpawnRoutine = StartCoroutine(DeSpawn(_lifeTime));
         _isHit = false;
         _canMove = true;
+        checkedDefector = null;
     }
 
-    public bool RayTraceForward (out ArrowHit hit)
+    public void Trace()
     {
-        Collider[] collider = Physics.OverlapSphere(GetOffsetPosition(), _detectRadius, _collisionLayer);
-        if (collider.Length > 0)
+        if (_isHit) return;
+
+        int hitCount = Physics.OverlapSphereNonAlloc(GetOffsetPosition(), _detectRadius, hits, _collisionLayer);
+        if (hitCount > 0)
         {
-            _isHit = true;
-            hit = new ArrowHit();
-            Vector3 hitDirection = (collider[0].transform.position - transform.position).normalized;
-            hit.Set(this, collider[0], collider[0].ClosestPoint(transform.position), collider[0].ClosestPointOnBounds(transform.position), hitDirection);
-            return true;
-        }
-        else
-        {
-            hit = new ArrowHit();
-            return false;
+            ProcessHits (hitCount);
         }
     }
 
@@ -84,28 +85,60 @@ public class Arrow : MonoBehaviour
         if (_canMove)
         transform.position += _direction * _speed * Time.deltaTime;
 
-        if (!_isHit && RayTraceForward(out ArrowHit hit))
+        Trace();
+    }
+
+    public void ProcessHits(int hitCount)
+    {
+        for (int i = 0; i < hitCount; i++)
         {
-            Hit(hit);
+            if (_isHit)
+                break;
+
+            if (hits[i] == null)
+                continue;
+
+            if (hits[i].TryGetComponent(out DamageDefector defector))
+            {
+                ProcessDefector (defector);
+            }
+            else
+            {
+                SuccesFulHit(hits[i]);
+            }
         }
     }
 
-    private void Hit(ArrowHit hit)
+    private void ProcessDefector (DamageDefector defector)
     {
-        OnHit?.Invoke(hit);
-
-        if (hit.Collider.TryGetComponent(out DamageDefector defector))
+        if (checkedDefector == defector)
         {
-            defector.Defect(transform.position);
+            return;
+        }
+
+        checkedDefector = defector;
+
+        if (defector.Defect(transform.position))
+        {
+            _isHit = true;
 
             if (_deSpawnRoutine != null)
                 StopCoroutine(_deSpawnRoutine);
             _deSpawnRoutine = StartCoroutine(DeSpawn(_afterHitLifeTime));
-
-            return;
         }
+    }
 
+    private void SuccesFulHit(Collider collider)
+    {
+        _isHit = true;
         _canMove = false;
+
+        ArrowHit hit = new ArrowHit();
+        Vector3 hitDirection = (collider.transform.position - transform.position).normalized;
+        hit.Set(this, collider, collider.ClosestPoint(transform.position), collider.ClosestPointOnBounds(transform.position), hitDirection);
+
+        OnHit?.Invoke(hit);
+
         transform.SetParent(hit.Collider.transform, true);
 
         IEnumerator HideTrail()
@@ -113,8 +146,6 @@ public class Arrow : MonoBehaviour
             yield return new WaitForSeconds(_trailHideDelay);
             _trail.gameObject.SetActive(false);
         }
-
-        // _scaleEffect.Start();
 
         StartCoroutine(HideTrail());
 

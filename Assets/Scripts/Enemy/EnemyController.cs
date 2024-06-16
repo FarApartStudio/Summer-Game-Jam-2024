@@ -164,6 +164,7 @@ public class EnemyController : MonoBehaviour
 
     private void Hit()
     {
+
         if (!canPlayHit || isStuned || cannotStopAttack) return;
 
         if (chanceToStopAttack && UnityEngine.Random.Range(0, 10) > 5) return;
