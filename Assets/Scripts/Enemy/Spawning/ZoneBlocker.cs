@@ -5,7 +5,8 @@ using UnityEngine;
 public class ZoneBlocker : MonoBehaviour
 {
     [SerializeField] ParticleSystem vfxEffect;
-    BoxCollider boxCollider;
+    [SerializeField] private Animator animator;
+    private BoxCollider boxCollider;
 
     private void Awake()
     {
@@ -22,14 +23,14 @@ public class ZoneBlocker : MonoBehaviour
         }
     }
 
-    public void EnableWall()
+    public void Open()
     {
-        gameObject.SetActive(true);
+        animator.CrossFade("Open", 0.1f);
     }
 
-    public void DisableWall()
+    public void Close()
     {
-        gameObject.SetActive(false);
+        animator.CrossFade("Close", 0.1f);
     }
 
     private void OnDrawGizmosSelected()

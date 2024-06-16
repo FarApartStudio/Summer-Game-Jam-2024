@@ -79,17 +79,17 @@ public class EnemySpawnTrigger : MonoBehaviour
 
     public void ToggleZoneBlockers(bool enable)
     {
-        foreach (var zoneBlocker in zoneBlockerArray)
-        {
-            if(enable)
-            {
-                zoneBlocker.EnableWall();
-            }
-            else
-            {
-                zoneBlocker.DisableWall();
-            }
-        }
+        //foreach (var zoneBlocker in zoneBlockerArray)
+        //{
+        //    if(enable)
+        //    {
+        //        zoneBlocker.EnableWall();
+        //    }
+        //    else
+        //    {
+        //        zoneBlocker.DisableWall();
+        //    }
+        //}
     }
 
     private void OnDisable()
