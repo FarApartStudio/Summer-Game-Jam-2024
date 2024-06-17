@@ -12,9 +12,13 @@ public enum CameraDirection
 
 public class Pilot : CharacterManager
 {
+    [SerializeField] private float normalFOV = 60;
+    [SerializeField] private float sprintFOV = 70;
     [SerializeField] private CameraDirection currentCameraDirection;
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
     [SerializeField] private CharacterCombatController characterCombatController;
+    [SerializeField] private CharacterDodge characterDodge;
+    [SerializeField] private HealthController healthController;
 
     [SerializeField] private Vector3 hipCameraTargetPos;
     [SerializeField] private Vector3 aimLeftCameraTargetPos;
@@ -33,6 +37,18 @@ public class Pilot : CharacterManager
         movementController.CanRotate = () => canRotate;
 
         characterCombatController.CamAim = ()=> !IsPerformingAction;
+
+        characterDodge.CanDodge = () => characterCombatController.GetAimMode == ViewMode.HipFire;
+
+        characterDodge.OnDodgeStart += () =>
+        {
+            healthController.SetInvisibility(true);
+        };
+
+        characterDodge.OnDodgeStop += () =>
+        {
+            healthController.SetInvisibility(false);
+        };
 
         ResetActions();
 
@@ -96,10 +112,10 @@ public class Pilot : CharacterManager
         switch (state)
         {
             case true:
-                CameraManager.Instance.ChangeFollowFOV(50, .5f);
+                CameraManager.Instance.ChangeFollowFOV(sprintFOV, .5f);
                 break;
             case false:
-                CameraManager.Instance.ChangeFollowFOV(40, .5f);
+                CameraManager.Instance.ChangeFollowFOV(normalFOV, .5f);
                 break;
         }
     }
@@ -113,10 +129,12 @@ public class Pilot : CharacterManager
             case ViewMode.HipFire:
                 CameraManager.Instance.ToggleAimCamera(false);
                 movementController.SetRotateOnMove(true);
+               // isPerformingAction = false;
                 break;
             case ViewMode.Aim:
                 CameraManager.Instance.ToggleAimCamera(true);
                 movementController.SetRotateOnMove(false);
+               // isPerformingAction = true;
                 break;
         }
     }

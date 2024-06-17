@@ -26,7 +26,7 @@ public class AI_ChargeState : AI_BaseState
         GetEnemyController(animator).CanMove(true);
         GetEnemyController(animator).navMeshAgent.speed = moveSpeed;
 
-        GetEnemyController(animator).healthController.SetVulnerable(true);
+        GetEnemyController(animator).healthController.SetInvisibility(true);
 
       //  GetEnemyController(animator).attackInfoManager.GetDamager<MeleeDamager>("ChargeAttack").ToggleConstantDamage(true);
     }
@@ -64,7 +64,7 @@ public class AI_ChargeState : AI_BaseState
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         GetEnemyController(animator).ToggleAttackIndicator(attackIndicatorIndex, false);
-        GetEnemyController(animator).healthController.SetVulnerable(false);
+        GetEnemyController(animator).healthController.SetInvisibility(false);
 
       //  GetEnemyController(animator).attackInfoManager.GetDamager<MeleeDamager>("ChargeAttack").ToggleConstantDamage(false);
 

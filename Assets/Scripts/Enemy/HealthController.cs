@@ -27,7 +27,7 @@ public interface IHealth
     bool IsInvulnerable { get; }
 
     bool IsAlive { get; }
-    void SetVulnerable(bool status);
+    void SetInvisibility(bool status);
 
     void AddDamageEffect(int damage, float damageInterval, float duration,GameObject effectPrefab = null, Action OnEffectEnd = null);
 }
@@ -46,23 +46,23 @@ public class HealthController : MonoBehaviour, IHealth
     public event Action<DamageInfo> OnHit;
     public event Action<int> OnHeal;
     public event Action<DamageInfo> OnDie;
-    public event Action<DamageInfo> OnHitWhileInvulnerable;
+    public event Action<DamageInfo> OnHitWhileInvisible;
 
     [BoxGroup("Health")] [SerializeField] private int currentHealth;
     [BoxGroup("Health")] [SerializeField] private int maxHealth;
     [BoxGroup("Health")] [SerializeField] private float damageDelayDuration;
 
-    [BoxGroup("Debug")] [SerializeField] private bool isInvulnerable = false;
+    [BoxGroup("Debug")] [SerializeField] private bool isInvisible = false;
     [BoxGroup("Debug")] [SerializeField] private bool canDealDamage = true;
     [BoxGroup("Debug")] [SerializeField] private List<DamageEffect> _damageEffects = new List<DamageEffect>();
 
     WaitForSeconds damageDelay;
 
-    public void SetVulnerable(bool status) => isInvulnerable = status;
+    public void SetInvisibility(bool status) => isInvisible = status;
     public int GetCurrentHealth => currentHealth;
     public int GetMaxHealth => maxHealth;
     public float GetNormalisedHealth => (float)currentHealth / maxHealth;
-    public bool IsInvulnerable => isInvulnerable;
+    public bool IsInvulnerable => isInvisible;
 
     public bool HasDamageDelay => damageDelayDuration > 0;
 
@@ -98,9 +98,9 @@ public class HealthController : MonoBehaviour, IHealth
         if (!canDealDamage || !IsAlive)
             return; 
 
-        if (isInvulnerable)
+        if (isInvisible)
         {
-            OnHitWhileInvulnerable?.Invoke(damageInfo);
+            OnHitWhileInvisible?.Invoke(damageInfo);
             return;
         }
 

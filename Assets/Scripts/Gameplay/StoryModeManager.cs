@@ -28,6 +28,9 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private EnemyActivator[] _enemyActivators;
     [SerializeField] private EnemySpawnTrigger[] _enemySpawnTriggers;
 
+    [Header("Debug")]
+    [SerializeField] private bool test;
+
     private Pilot _player;
     private FollowTransfrom _windlines;
     private GameMenu _gameMenu;
@@ -45,6 +48,16 @@ public class StoryModeManager : MonoBehaviour
     private void Start()
     {
         InitUI();
+
+        if (test)
+        {
+            SpawnCharacter();
+            ActivateEnemies();
+            _gameMenu.Open();
+            _healthBarMenu.Open();
+            return;
+        }
+
         IntroCutScene();
     }
 
@@ -52,7 +65,7 @@ public class StoryModeManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            PlayerHit();
         }
     }
 
@@ -69,6 +82,8 @@ public class StoryModeManager : MonoBehaviour
                 SpawnCharacter();
 
                 ActivateEnemies();
+
+                EnvironmeentEvents();
 
                 _gameMenu.Open();
                 _healthBarMenu.Open();
@@ -104,8 +119,16 @@ public class StoryModeManager : MonoBehaviour
         _player.GetCharacterCombatController.OnAimModeChanged += OnAimModeChanged;
         _player.GetCharacterCombatController.OnAimAccuracyChanged += OnAimAccuracyChanged;
         _player.GetCharacterCombatController.OnSuccessfulHit += OnSuccessfulHit;
+    }
 
+    public void EnvironmeentEvents()
+    {
         _cloudHitObserver.GetOnComplete.AddListener(OnCloudHit);
+    }
+
+    private void PlayerHit()
+    {
+        _gameMenu.SpawnDamageIndicator(_player.transform, _player.transform.position + _player.transform.forward * 2);
     }
 
     private void OnCloudHit()
