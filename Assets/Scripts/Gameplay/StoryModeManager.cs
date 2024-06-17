@@ -15,6 +15,7 @@ public class StoryModeManager : MonoBehaviour
 
     [Header("Enemy")]
     [SerializeField] private List<EnemyActivator> _enemyActivators;
+    [SerializeField] private List<EnemySpawnTrigger> _enemySpawnTriggers;
 
     private Pilot _player;
     private FollowTransfrom  _rainStorm;
@@ -22,6 +23,7 @@ public class StoryModeManager : MonoBehaviour
 
 
     private GameMenu _gameMenu;
+    private HealthBarMenu _healthBarMenu;
 
     private void Awake()
     {
@@ -30,9 +32,18 @@ public class StoryModeManager : MonoBehaviour
 
     private void Start()
     {
+        InitUI();
+
         SpawnCharacter();
-        _gameMenu = UIManager.GetMenu<GameMenu>();
+
         _gameMenu.Open();
+        _healthBarMenu.Open();
+    }
+
+    public void InitUI()
+    {
+        _gameMenu = UIManager.GetMenu<GameMenu>();
+        _healthBarMenu = UIManager.GetMenu<HealthBarMenu>();
     }
 
     public void SpawnCharacter ()
@@ -55,15 +66,31 @@ public class StoryModeManager : MonoBehaviour
     {
         foreach (var activator in _enemyActivators)
         {
-            activator.OnActivated += OnEnemyActivated;
+            activator.OnActivated = OnEnemyActivated;
+            activator.OnKilled = OnEnemyKilled;
             activator.Init();
+        }
+
+        foreach (var trigger in _enemySpawnTriggers)
+        {
+            trigger.OnActivated = OnEnemyActivated;
+            trigger.OnKilled = OnEnemyKilled;
+            trigger.Init();
         }
     }
 
     private void OnEnemyActivated(EnemyController controller)
     {
         controller.SetTarget(_player.transform);
+        _healthBarMenu.AddHealthBar(controller.healthController);
+
     }
+
+    private void OnEnemyKilled(EnemyController controller)
+    {
+        _healthBarMenu.RemoveHealthBar(controller.healthController);
+    }
+
 
     private void OnSuccessfulHit()
     {

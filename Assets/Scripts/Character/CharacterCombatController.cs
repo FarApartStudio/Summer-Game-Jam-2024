@@ -48,6 +48,7 @@ public class CharacterCombatController : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private Transform rightHandSocket;
     [SerializeField] private Transform weaponTransform;
+    [SerializeField] private LayerMask aimHelperLayerMask;
     [SerializeField] private LayerMask detectLayer;
     [SerializeField] private Bow currentBow;
 

@@ -2,101 +2,89 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawnTrigger : MonoBehaviour
 {
-    public event EventHandler OnSpawnTriggered;
-    public event EventHandler OnAllEnemiesKilled;
+    public Action<EnemyController> OnActivated;
+    public Action<EnemyController> OnKilled;
 
+    [SerializeField] private int maxEnemiesAive = 4;
     [SerializeField] private float activationDelay;
-    [SerializeField] private EnemySpawnArea[] enemySpawnAreaArray;
-    [SerializeField] private ZoneBlocker[] zoneBlockerArray;
+
+
+    [SerializeField] private UnityEvent OnTriggered;
+    [SerializeField] private UnityEvent OnClear;
+
+    private EnemySpawnArea[] enemySpawnAreaArray;
 
     [Header("Debug")]
-    private List<EnemySpawnArea> activeSpawnAreaList;
     private bool alreadyTriggered;
 
-    private void Awake()
+    public void Init()
     {
-        activeSpawnAreaList =  new List<EnemySpawnArea>();
-    }
+        enemySpawnAreaArray = GetComponentsInChildren<EnemySpawnArea>();
 
-    private void OnEnable()
-    {
         foreach (var spawnArea in enemySpawnAreaArray)
         {
-            spawnArea.OnCleared += Area_OnCleared;
+            spawnArea.CanSpawnEnemies = CanSpawnEnemies;
+            spawnArea.OnActivated = OnActivated;
+            spawnArea.OnKilled = OnKilled;
+            spawnArea.OnCleared = OnCleared;
         }
     }
 
-    private void Area_OnCleared(object sender, EventArgs e)
-    {
-        if(sender is EnemySpawnArea spawnArea)
-        {
-            if (activeSpawnAreaList.Contains(spawnArea)) activeSpawnAreaList.Remove(spawnArea);
-        }
 
+    private void OnCleared()
+    {
         CheckIfAllEnemiesCleared();
     }
 
     public void CheckIfAllEnemiesCleared()
     {
-        if (activeSpawnAreaList.Count == 0)
+        foreach (var enemySpawnArea in enemySpawnAreaArray)
         {
-            OnAllEnemiesKilled?.Invoke(this, EventArgs.Empty);
-
-            ToggleZoneBlockers(false);
+            if (!enemySpawnArea.IsCleared)
+            {
+                return;
+            }
         }
+
+        OnClear?.Invoke();
+    }
+
+    public bool CanSpawnEnemies()
+    {
+        int enemiesAlive = 0;
+
+        foreach (var spawnArea in enemySpawnAreaArray)
+        {
+            enemiesAlive += spawnArea.EnemiesCount;
+        }
+
+        return enemiesAlive < maxEnemiesAive;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (alreadyTriggered) return;
 
-        //if (other.gameObject == BaseHero.PlayerHero.gameObject)
-        //{
-        //    alreadyTriggered = true;
-
-        //    OnSpawnTriggered?.Invoke(this, EventArgs.Empty);
-
-        //    StartCoroutine(TriggerRoutine());
-        //}
+        if (other.TryGetComponent(out Pilot pilot))
+        {
+            alreadyTriggered = true;
+            StartCoroutine(TriggerRoutine());
+        }
     }
 
     IEnumerator TriggerRoutine()
     {
-        ToggleZoneBlockers(true);
+        OnTriggered?.Invoke();
 
         yield return new WaitForSeconds(activationDelay);
 
-        // Spawn areas
         foreach (var spawn in enemySpawnAreaArray)
         {
-            activeSpawnAreaList.Add(spawn);
             spawn.StartSpawn();
-        }
-    }
-
-    public void ToggleZoneBlockers(bool enable)
-    {
-        //foreach (var zoneBlocker in zoneBlockerArray)
-        //{
-        //    if(enable)
-        //    {
-        //        zoneBlocker.EnableWall();
-        //    }
-        //    else
-        //    {
-        //        zoneBlocker.DisableWall();
-        //    }
-        //}
-    }
-
-    private void OnDisable()
-    {
-        foreach (var spawnArea in enemySpawnAreaArray)
-        {
-            spawnArea.OnCleared -= Area_OnCleared;
         }
     }
 

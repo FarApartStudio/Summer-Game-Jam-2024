@@ -8,7 +8,7 @@ public interface IScreenSpaceUI
 {
     public Action<float> GetDistanceFromCamera { get; }
     public bool IsActive { get; }
-    public RectTransform Self { get; }
+    public Transform transfrom { get; }
     public Transform Target { get; }
     public float YOffset { get; }
     public void Spawn(Transform target);

@@ -34,9 +34,9 @@ public class HealthUI : MonoBehaviour, IScreenSpaceUI
 
     public Action<float> GetDistanceFromCamera => HandleDistance;
 
-    public RectTransform Self => rectTransform;
+    public Transform transfrom => transform;
 
-    private void Start()
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();

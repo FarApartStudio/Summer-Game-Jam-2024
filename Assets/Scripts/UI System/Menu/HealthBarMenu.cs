@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBarMenu : GenericMenu<GameMenu>
+public class HealthBarMenu : GenericMenu<HealthBarMenu>
 {
     [SerializeField] private HealthUI screenHealthPrefab;
     [SerializeField] private Transform spawnPos;
@@ -37,7 +37,7 @@ public class HealthBarMenu : GenericMenu<GameMenu>
 
     }
 
-    public void HandleHealthControllerCreated(HealthController controller)
+    public void AddHealthBar(HealthController controller)
     {
         HealthUI screenHealth = ObjectPoolManager.SpawnObject(screenHealthPrefab, spawnPos);
         screenHealth.Spawn(controller.transform);
@@ -46,7 +46,7 @@ public class HealthBarMenu : GenericMenu<GameMenu>
         screenSpaceUIController.Add(screenHealth);
     }
 
-    public void HandleHealthControllerDestroyed(HealthController controller)
+    public void RemoveHealthBar(HealthController controller)
     {
         HealthUI healthUI = screenHealths[controller];
 

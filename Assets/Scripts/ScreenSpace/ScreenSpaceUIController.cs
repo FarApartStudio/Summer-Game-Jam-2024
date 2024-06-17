@@ -27,6 +27,16 @@ public class ScreenSpaceUIController : MonoBehaviour
 
         for (int i = 0; i < screenSpaceUIs.Count; i++)
         {
+            if (screenSpaceUIs[i].IsActive)
+            {
+                screenSpaceUIs[i].transfrom.gameObject.SetActive(true);
+            }
+            else
+            {
+                screenSpaceUIs[i].transfrom.gameObject.SetActive(false);
+                continue;
+            }
+
             IScreenSpaceUI screenHealth = screenSpaceUIs[i];
             Vector3 screenPosition = cam.WorldToScreenPoint(screenHealth.Target.position + Vector3.up * screenHealth.YOffset);
             Vector3 directionToEnemy = screenHealth.Target.position - cam.transform.position;
@@ -36,16 +46,16 @@ public class ScreenSpaceUIController : MonoBehaviour
 
             float dotProduct = Vector3.Dot(cam.transform.forward, directionToEnemy);
 
-            if (dotProduct > 0 && screenSpaceUIs[i].IsActive)
+            if (dotProduct > 0)
             {
-                screenSpaceUIs[i].Self.gameObject.SetActive(true);
+                screenSpaceUIs[i].transfrom.gameObject.SetActive(true);
 
-                screenSpaceUIs[i].Self.position = screenPosition;
+                screenSpaceUIs[i].transfrom.position = screenPosition;
                 // screenSpaceUIs[i].Self.anchoredPosition = GetUIPos(screenHealth.Target.position + Vector3.up * screenHealth.YOffset);
             }
             else
             {
-                screenSpaceUIs[i].Self.gameObject.SetActive(false);
+                screenSpaceUIs[i].transfrom.gameObject.SetActive(false);
             }
 
             float distance = Vector3.Distance(cam.transform.position, screenSpaceUIs[i].Target.position);
@@ -59,7 +69,7 @@ public class ScreenSpaceUIController : MonoBehaviour
         for (int i = 0; i < distances.Count; i++)
         {
             int index = distances[i].index;
-            screenSpaceUIs[index].Self.SetSiblingIndex(i);
+            screenSpaceUIs[index].transfrom.SetSiblingIndex(i);
         }
     }
 

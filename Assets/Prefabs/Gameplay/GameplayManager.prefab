@@ -52,6 +52,10 @@ MonoBehaviour:
     type: 3}
   _windlinesPrefab: {fileID: 563756001746810986, guid: df8fbca8d8dd0424e8950a670fafe763,
     type: 3}
+  _enemyActivators:
+  - {fileID: 0}
+  _enemySpawnTriggers:
+  - {fileID: 0}
 --- !u!1 &3434923085450354466
 GameObject:
   m_ObjectHideFlags: 0
