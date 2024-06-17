@@ -144,7 +144,7 @@ public class AdvanceButton : Button, IPointerDownHandler, IPointerUpHandler
 
         if (interactable)
         {
-            AudioSystem.PlayOneShotAudio(AudioTypeID.UI_ButtonPress, AudioCategory.UI, true);
+            //AudioSystem.PlayOneShotAudio(AudioTypeID.UI_ButtonPress, AudioCategory.UI, true);
 
             OnAnyButtonClicked?.Invoke();
             OnToggled();

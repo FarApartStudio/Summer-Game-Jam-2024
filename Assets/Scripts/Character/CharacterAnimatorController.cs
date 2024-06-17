@@ -8,9 +8,6 @@ public abstract class CharacterAnimatorController : MonoBehaviour
     [SerializeField] protected CharacterManager characterManager;
     [SerializeField] protected MovementController movementController;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected AudioClip LandingAudioClip;
-    [SerializeField] protected AudioClip[] FootstepAudioClips;
-    [Range(0, 1)][SerializeField] protected float FootstepAudioVolume = 0.5f;
     public Animator Animator => animator;
 
     protected int _animIDSpeed;
@@ -114,25 +111,5 @@ public abstract class CharacterAnimatorController : MonoBehaviour
     public void PlayAnimation (int layer, string animation, float transitionDuration = 0.2f)
     {      
         animator.CrossFade(animation, transitionDuration, layer);
-    }
-
-    private void OnFootstep(AnimationEvent animationEvent)
-    {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            if (FootstepAudioClips.Length > 0)
-            {
-                var index = Random.Range(0, FootstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterManager.GetCharacterController.center), FootstepAudioVolume);
-            }
-        }
-    }
-
-    private void OnLand(AnimationEvent animationEvent)
-    {
-        if (animationEvent.animatorClipInfo.weight > 0.5f)
-        {
-            AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(characterManager.GetCharacterController.center), FootstepAudioVolume);
-        }
     }
 }
