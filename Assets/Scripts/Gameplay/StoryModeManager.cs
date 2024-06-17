@@ -33,6 +33,7 @@ public class StoryModeManager : MonoBehaviour
     private GameMenu _gameMenu;
     private HealthBarMenu _healthBarMenu;
     private ScreenFadeMenu _screenFadeMenu;
+    private CinematicMenu _cinematicMenu;
 
     public Pilot GetPlayer => _player;
 
@@ -49,10 +50,10 @@ public class StoryModeManager : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    _introTimeline.Play();
-        //}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
     }
 
     public void IntroCutScene()
@@ -61,6 +62,8 @@ public class StoryModeManager : MonoBehaviour
         {
             _screenFadeMenu.Open().Show(1, .5f, OnFadeMid: () =>
             {
+                _cinematicMenu.Close();
+
                 cinematicActors.SetActive(false);
 
                 SpawnCharacter();
@@ -70,6 +73,7 @@ public class StoryModeManager : MonoBehaviour
                 _gameMenu.Open();
                 _healthBarMenu.Open();
             });
+
         });
 
         _introTimeline.OnFinished += (timeline) =>
@@ -78,6 +82,8 @@ public class StoryModeManager : MonoBehaviour
         };
 
         _introTimeline.Play();
+
+        _cinematicMenu.Open();
     }
 
     public void InitUI()
@@ -85,6 +91,7 @@ public class StoryModeManager : MonoBehaviour
         _gameMenu = UIManager.GetMenu<GameMenu>();
         _healthBarMenu = UIManager.GetMenu<HealthBarMenu>();
         _screenFadeMenu = UIManager.GetMenu<ScreenFadeMenu>();
+        _cinematicMenu = UIManager.GetMenu<CinematicMenu>();
     }
 
     public void SpawnCharacter ()
