@@ -13,9 +13,10 @@ public class CharacterDashController : MonoBehaviour
     [Header("References")]
     [SerializeField] private CharacterManager characterManager;
 
-    private bool isDodging;
-    private float dodgeTimer;
-    private float dodgeCooldownTimer;
+    [Header("Debug")]
+    [SerializeField] private bool isDodging;
+    [SerializeField] private float dodgeTimer;
+    [SerializeField] private float dodgeCooldownTimer;
 
     private void Update()
     {

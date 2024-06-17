@@ -15,6 +15,10 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private Pilot _playerPrefab;
     [SerializeField] private Transform spawnPos;
 
+    [Header("Cinematic")]
+    [SerializeField] private GameObject cinematicActors;
+    [SerializeField] private TimelineController _introTimeline;
+
     [Header("Effect")]
     [SerializeField] FollowTransfrom _rainStormPrefab;
     [SerializeField] FollowTransfrom _windlinesPrefab;
@@ -28,6 +32,7 @@ public class StoryModeManager : MonoBehaviour
     private FollowTransfrom _windlines;
     private GameMenu _gameMenu;
     private HealthBarMenu _healthBarMenu;
+    private ScreenFadeMenu _screenFadeMenu;
 
     public Pilot GetPlayer => _player;
 
@@ -39,19 +44,47 @@ public class StoryModeManager : MonoBehaviour
     private void Start()
     {
         InitUI();
+        IntroCutScene();
+    }
 
-        SpawnCharacter();
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    _introTimeline.Play();
+        //}
+    }
 
-        ActivateEnemies();
+    public void IntroCutScene()
+    {
+        _introTimeline.AddTimeEvent(0.8f, () =>
+        {
+            _screenFadeMenu.Open().Show(1, .5f, OnFadeMid: () =>
+            {
+                cinematicActors.SetActive(false);
 
-        _gameMenu.Open();
-        _healthBarMenu.Open();
+                SpawnCharacter();
+
+                ActivateEnemies();
+
+                _gameMenu.Open();
+                _healthBarMenu.Open();
+            });
+        });
+
+        _introTimeline.OnFinished += (timeline) =>
+        {
+           
+        };
+
+        _introTimeline.Play();
     }
 
     public void InitUI()
     {
         _gameMenu = UIManager.GetMenu<GameMenu>();
         _healthBarMenu = UIManager.GetMenu<HealthBarMenu>();
+        _screenFadeMenu = UIManager.GetMenu<ScreenFadeMenu>();
     }
 
     public void SpawnCharacter ()
