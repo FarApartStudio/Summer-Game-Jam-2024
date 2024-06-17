@@ -15,12 +15,16 @@ public class Cloud : MonoBehaviour
 
     private void Awake()
     {
-        hitObserver.GetOnHit.AddListener(OnHit);
+        hitObserver = GetComponent<HitObserver>();
         _renderer = GetComponent<Renderer>();
+        hitObserver.GetOnHit.AddListener(OnHit);
     }
 
     private void OnHit()
     {
         _renderer.material = hitMaterial;
+        _renderer.transform.JuicyShakePosition(.25f, new Vector3(0.1f, 0.1f, 0.1f));
+        _renderer.transform.JuicyShakeScale(.25f, new Vector3(0.05f, 0.05f, 0.05f));
+        _renderer.transform.JuicyShakePosition(.25f, new Vector3(0.1f, 0.1f, 0.1f));
     }
 }
