@@ -11,6 +11,7 @@ public class MultiHitObserver : MonoBehaviour
     [SerializeField] private UnityEvent OnComplete;
     [SerializeField] private HitObserver[] hitObservers;
 
+    private int hitCount = 0;
 
     public UnityEvent GetOnComplete => OnComplete;
 
@@ -29,22 +30,17 @@ public class MultiHitObserver : MonoBehaviour
 
     private void Hit()
     {
-        int hitCount = 0;
-
-        foreach (HitObserver hitObserver in hitObservers)
-        {
-            if (hitObserver.IsHit)
-            {
-                hitCount++;
-            }
-        }
+        hitCount++;
 
         if (hitCount >= minHits)
         {
-
-            Debug.Log("All hit observers are hit");
             OnComplete.Invoke();
         }
+    }
+
+    public void ResetHit()
+    {
+        hitCount = 0;
     }
 
     [Button]

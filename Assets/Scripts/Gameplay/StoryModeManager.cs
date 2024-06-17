@@ -1,3 +1,5 @@
+using Pelumi.Juicer;
+using Pelumi.ObjectPool;
 using Pelumi.UISystem;
 using Sirenix.OdinInspector;
 using System;
@@ -23,7 +25,6 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private EnemySpawnTrigger[] _enemySpawnTriggers;
 
     private Pilot _player;
-    private FollowTransfrom  _rainStorm;
     private FollowTransfrom _windlines;
     private GameMenu _gameMenu;
     private HealthBarMenu _healthBarMenu;
@@ -69,8 +70,10 @@ public class StoryModeManager : MonoBehaviour
 
     private void OnCloudHit()
     {
-        _rainStorm = Instantiate(_rainStormPrefab, _player.transform.position, Quaternion.identity);
+        _cloudHitObserver.ResetHit();
+        FollowTransfrom  _rainStorm = ObjectPoolManager.SpawnObject(_rainStormPrefab, _player.transform.position, Quaternion.identity);
         _rainStorm.SetTarget(_player.transform);
+        Juicer.WaitForSeconds(20, new JuicerCallBack(() => ObjectPoolManager.ReleaseObject(_rainStorm)));
     }
 
     public void ActivateEnemies()
