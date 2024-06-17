@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractionHandler : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class InteractionHandler : MonoBehaviour
     public event Action<Collider> OnInteractEnd;
 
     [SerializeField] private LayerMask _interactableLayer;
+    [SerializeField] private UnityEvent OnStartInteract;
+    [SerializeField] private UnityEvent OnEndInteract;
+
 
     private bool _isInteracting;
 
@@ -16,16 +20,21 @@ public class InteractionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_interactableLayer == (_interactableLayer | (1 << other.gameObject.layer)))
+        if (_interactableLayer != (_interactableLayer | (1 << other.gameObject.layer))) 
+            return;
+
+         _isInteracting = true;
         OnInteractStart?.Invoke(other);
-        _isInteracting = true;
+        OnStartInteract?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_interactableLayer == (_interactableLayer | (1 << other.gameObject.layer)))
-            OnInteractEnd?.Invoke(other);
+        if (_interactableLayer != (_interactableLayer | (1 << other.gameObject.layer)))
+            return;
 
         _isInteracting = false;
+        OnInteractEnd?.Invoke(other);
+        OnEndInteract?.Invoke();
     }
 }

@@ -1,4 +1,5 @@
 using Pelumi.UISystem;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,9 @@ using UnityEngine;
 
 public class StoryModeManager : MonoBehaviour
 {
+    public static StoryModeManager Instance { get; private set; }
+
+
     [SerializeField] private Pilot _playerPrefab;
     [SerializeField] private Transform spawnPos;
 
@@ -14,20 +18,20 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] FollowTransfrom _windlinesPrefab;
 
     [Header("Enemy")]
-    [SerializeField] private List<EnemyActivator> _enemyActivators;
-    [SerializeField] private List<EnemySpawnTrigger> _enemySpawnTriggers;
+    [SerializeField] private EnemyActivator[] _enemyActivators;
+    [SerializeField] private EnemySpawnTrigger[] _enemySpawnTriggers;
 
     private Pilot _player;
     private FollowTransfrom  _rainStorm;
     private FollowTransfrom _windlines;
-
-
     private GameMenu _gameMenu;
     private HealthBarMenu _healthBarMenu;
 
+    public Pilot GetPlayer => _player;
+
     private void Awake()
     {
-
+        Instance = this;
     }
 
     private void Start()
@@ -105,5 +109,12 @@ public class StoryModeManager : MonoBehaviour
     private void OnAimModeChanged(ViewMode mode)
     {
         _gameMenu.ToggleCrosshair(mode == ViewMode.Aim);
+    }
+
+    [Button]
+    private void GenerateAllActivatorsAndTriggers()
+    {
+        _enemyActivators = FindObjectsOfType<EnemyActivator>();
+        _enemySpawnTriggers  = FindObjectsOfType<EnemySpawnTrigger>();
     }
 }
