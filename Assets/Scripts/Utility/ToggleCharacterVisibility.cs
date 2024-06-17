@@ -1,9 +1,10 @@
+using Pelumi.UISystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToggleCharacterMovement : MonoBehaviour
+public class ToggleCharacterVisibility : MonoBehaviour
 {
 
     public void ToggleMovement(bool value)
@@ -20,11 +21,13 @@ public class ToggleCharacterMovement : MonoBehaviour
 
     private void DisableMovement()
     {
-       StoryModeManager.Instance.GetPlayer.gameObject.SetActive(false);
+        StoryModeManager.Instance.GetPlayer.gameObject.SetActive(false);
+        UIManager.Instance.ToggleVisibility(Visibility.Invisible);
     }
 
     private void EnableMovement()
     {
         StoryModeManager.Instance.GetPlayer.gameObject.SetActive(true);
+        UIManager.Instance.ToggleVisibility(Visibility.Visible);
     }
 }
