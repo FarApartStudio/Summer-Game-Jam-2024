@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ReSpawnTrigger : MonoBehaviour
 {
+    [SerializeField] private UnityEvent OnUse;
     private Transform[] spawnPoints;
 
     private void Awake()
@@ -20,6 +22,8 @@ public class ReSpawnTrigger : MonoBehaviour
             pilot.transform.position = spawnPoint.position;
             pilot.transform.rotation = spawnPoint.rotation;
             pilot.gameObject.SetActive(true);
+
+            OnUse?.Invoke();
         }
     }
 
