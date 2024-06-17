@@ -101,8 +101,13 @@ public class MovementController : MonoBehaviour
 
     public void OnSprint(bool value)
     {
-        sprint = value && CanSprint.Invoke() && move.magnitude > 0.1f;
-        OnSprintChange?.Invoke(sprint);
+        bool canSprint = value && CanSprint.Invoke() && move.magnitude > 0.1f;
+
+        if (sprint != canSprint)
+        {
+            sprint = canSprint;
+            OnSprintChange?.Invoke(sprint);
+        }
     }
 
     private void Start()

@@ -78,7 +78,8 @@ GameObject:
   - component: {fileID: 8046655933381770757}
   - component: {fileID: 3697906092153187270}
   - component: {fileID: 2495128076503502575}
-  - component: {fileID: 8715130316006574714}
+  - component: {fileID: 8137444454593103730}
+  - component: {fileID: 8374983763493081427}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -225,9 +226,13 @@ MonoBehaviour:
   applyRootMotion: 0
   applyRootGravity: 0
   showWeapon: 0
+  normalFOV: 60
+  sprintFOV: 70
   currentCameraDirection: 0
   pilotAnimatorController: {fileID: 62042857860961748}
   characterCombatController: {fileID: 2495128076503502575}
+  characterDodge: {fileID: 8374983763493081427}
+  healthController: {fileID: 8137444454593103730}
   hipCameraTargetPos: {x: 0, y: 1.31, z: 0}
   aimLeftCameraTargetPos: {x: 0.5, y: 1.31, z: 0}
   aimRightCameraTargetPos: {x: -0.5, y: 1.31, z: 0}
@@ -273,9 +278,6 @@ MonoBehaviour:
   aimTargetDebug: {fileID: 517107354916711258}
   rightHandSocket: {fileID: 5350211146003713043}
   weaponTransform: {fileID: 8887122210938452048}
-  aimHelperLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
   detectLayer:
     serializedVersion: 2
     m_Bits: 257
@@ -296,7 +298,7 @@ MonoBehaviour:
   isTriggerReleased: 1
   currentTriggerHoldTime: 0
   currentFireRate: 0
---- !u!114 &8715130316006574714
+--- !u!114 &8137444454593103730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,12 +307,84 @@ MonoBehaviour:
   m_GameObject: {fileID: 3843559297540417718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f9a7dfc1fd79a4995e29f4a7a43a01, type: 3}
+  m_Script: {fileID: 11500000, guid: 73ffc27528719de42896c21b2e5c9be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgeDuration: 1
-  dodgeCooldown: 1
+  currentHealth: 100
+  maxHealth: 100
+  damageDelayDuration: 0
+  isInvisible: 0
+  canDealDamage: 1
+  _damageEffects: []
+--- !u!114 &8374983763493081427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843559297540417718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0667f88a8915c84ea8e0ae7881f65a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodgeCooldown: 0.25
+  gravityMultiplier: 0.5
+  dodgeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.09951749
+      value: 1.8493423
+      inSlope: 19.951847
+      outSlope: 19.951847
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16055337
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.13292299
+      value: 24.269747
+      inSlope: 1131.4348
+      outSlope: 1131.4348
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.20772126
+    - serializedVersion: 3
+      time: 0.16133438
+      value: 58.13736
+      inSlope: 887.77435
+      outSlope: 887.77435
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2
+      value: 80
+      inSlope: 391.08408
+      outSlope: 391.08408
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33522543
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  characterController: {fileID: 4290627434747875188}
   characterManager: {fileID: 8046655933381770757}
+  isDodging: 0
+  dodgeDuration: 2
 --- !u!1 &4966983381144437047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,6 +1236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.010098003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716237971634376834, guid: fc59b575eec1f8a4cb9c28de082ddd90,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7716237971634376834, guid: fc59b575eec1f8a4cb9c28de082ddd90,
         type: 3}

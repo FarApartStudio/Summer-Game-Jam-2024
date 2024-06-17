@@ -43,7 +43,7 @@ public class AI_AttackState : AI_BaseState
         changeState = false;
         stoppedMoving = false;
 
-        if(Invulnerable)GetEnemyController(animator).healthController.SetVulnerable(true);
+        if(Invulnerable)GetEnemyController(animator).healthController.SetInvisibility(true);
 
         GetEnemyController(animator).chanceToStopAttack = chanceToStopAttack;
         GetEnemyController(animator).cannotStopAttack = cannotStopAttack;
@@ -117,7 +117,7 @@ public class AI_AttackState : AI_BaseState
     {
         if (!goingToNext)
         {
-            if (Invulnerable) GetEnemyController(animator).healthController.SetVulnerable(false);
+            if (Invulnerable) GetEnemyController(animator).healthController.SetInvisibility(false);
             GetEnemyController(animator).ToggleAttackIndicator(attackIndicatorIndex, false);
             GetEnemyController(animator).cannotStopAttack = false;
             GetEnemyController(animator).SetIsAttacking(false);

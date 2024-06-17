@@ -31,7 +31,7 @@ public class AI_InvulnerabeState : AI_BaseState
         {
             case InvulnerabeState.Start:
                 GetEnemyController(animator).CanMove(false);
-                GetEnemyController(animator).healthController.SetVulnerable(true);
+                GetEnemyController(animator).healthController.SetInvisibility(true);
                 break;
             case InvulnerabeState.Mid:
                 timer = Random.Range(invulnerabeTimeRange.x, invulnerabeTimeRange.y);
@@ -62,7 +62,7 @@ public class AI_InvulnerabeState : AI_BaseState
             if (!changeState && stateInfo.normalizedTime >= endDuration)
             {
                 changeState = true;
-                GetEnemyController(animator).healthController.SetVulnerable(false);
+                GetEnemyController(animator).healthController.SetInvisibility(false);
                 nextTransiton.Execute(animator);
             }
         }

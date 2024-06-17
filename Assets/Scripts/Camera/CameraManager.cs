@@ -92,6 +92,11 @@ public class CameraManager : MonoBehaviour
         fovCoroutine = StartCoroutine(ChangeFOVSmoothlyCoroutine(followVirtualCamera, newFOV, duration));
     }
 
+    public void SetMainFov (float newFov)
+    {
+        followVirtualCamera.m_Lens.FieldOfView = newFov;
+    }
+
     private IEnumerator ChangeFOVSmoothlyCoroutine(CinemachineVirtualCamera virtualCamera, float newFOV, float duration = 0.5f)
     {
         float initialFOV = virtualCamera.m_Lens.FieldOfView;
