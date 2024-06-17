@@ -631,6 +631,10 @@ MonoBehaviour:
           m_StringArgument: ANIM_HangingButtonDespawn
           m_BoolArgument: 1
         m_CallState: 2
+  totems:
+  - {fileID: 2338901762817422801}
+  - {fileID: 9197731926153216895}
+  - {fileID: 4590653758079174973}
 --- !u!1 &6359790835897405021
 GameObject:
   m_ObjectHideFlags: 0
