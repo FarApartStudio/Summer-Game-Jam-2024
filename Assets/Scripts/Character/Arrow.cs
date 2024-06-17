@@ -163,6 +163,17 @@ public class Arrow : MonoBehaviour
         ObjectPoolManager.ReleaseObject(gameObject);
     }
 
+    public void ForceDeSpawn ()
+    {
+        if (_deSpawnRoutine != null)
+            StopCoroutine(_deSpawnRoutine);
+
+        if (!gameObject.activeSelf) return;
+        _trail.gameObject.SetActive(false);
+        transform.SetParent(null);
+        ObjectPoolManager.ReleaseObject(gameObject);
+    }
+
     private Vector3 GetOffsetPosition()
     {
         return transform.position + transform.forward * _detectOffset.z + transform.right * _detectOffset.x + transform.up * _detectOffset.y;

@@ -1,3 +1,4 @@
+using Pelumi.ObjectPool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float hitAnimationDelay;
     [SerializeField] float attackRate;
     [SerializeField] int rageAmount;
-    [SerializeField] float despawnDelay = 1;
+    [SerializeField] float despawnDelay = 2;
 
     [Header("Enemy Data")]
     [SerializeField] EnemyData enemyData;
@@ -112,6 +113,7 @@ public class EnemyController : MonoBehaviour
 
     public void Activate()
     {
+        DeSpawnArrowOnBody();
         SetUpEnemy (enemyData);
         //OnActivated?.Invoke(this);
     }
@@ -184,9 +186,11 @@ public class EnemyController : MonoBehaviour
         animator.CrossFade("Death" , 0.1f);
         navMeshAgent.enabled = false;
 
+        OnKilled?.Invoke(this);
+
         yield return new WaitForSecondsRealtime(despawnDelay);
 
-        OnKilled?.Invoke(this);
+        ObjectPoolManager.ReleaseObject(gameObject);
     }
 
     private void KnockBack(Vector3 direction)
@@ -295,6 +299,15 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.05f);
         navMeshAgent.enabled = true;
         canMove = true;
+    }
+
+    private void DeSpawnArrowOnBody()
+    {
+        Arrow[] arrows = GetComponentsInChildren<Arrow>();
+        foreach (Arrow arrow in arrows)
+        {
+            arrow.ForceDeSpawn();
+        }
     }
 
     void ToggleHitPoints (bool state)

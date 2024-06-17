@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,15 +16,23 @@ public class EnemySpawnTrigger : MonoBehaviour
 
     [SerializeField] private UnityEvent OnTriggered;
     [SerializeField] private UnityEvent OnClear;
-
-    private EnemySpawnArea[] enemySpawnAreaArray;
+    [SerializeField] private EnemySpawnArea[] enemySpawnAreaArray;
 
     [Header("Debug")]
     private bool alreadyTriggered;
 
-    public void Init()
+    [Button]
+    private void GenerateSpawnAreas ()
     {
         enemySpawnAreaArray = GetComponentsInChildren<EnemySpawnArea>();
+    }
+
+    public void Init()
+    {
+        if (enemySpawnAreaArray == null || enemySpawnAreaArray.Length == 0)
+        {
+            GenerateSpawnAreas();
+        }
 
         foreach (var spawnArea in enemySpawnAreaArray)
         {
