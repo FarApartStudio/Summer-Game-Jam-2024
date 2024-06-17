@@ -9,7 +9,7 @@ public class TotemPuzzle : MonoBehaviour
 {
     [SerializeField] private float resetDelay = 1f;
     [SerializeField] private UnityEvent OnComplete;
-    private Totem[] totems;
+    [SerializeField] private Totem[] totems;
 
     private void Awake()
     {
