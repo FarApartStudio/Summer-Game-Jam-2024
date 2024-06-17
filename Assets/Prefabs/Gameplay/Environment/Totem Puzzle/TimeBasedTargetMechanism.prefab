@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 4590653758079174973}
   - component: {fileID: 851014413655288586}
   m_Layer: 0
-  m_Name: TargetTotemMechanism (2)
+  m_Name: Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 9197731926153216895}
   - component: {fileID: 3758216187834346290}
   m_Layer: 0
-  m_Name: TargetTotemMechanism (1)
+  m_Name: Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 2338901762817422801}
   - component: {fileID: 3625155841838923302}
   m_Layer: 0
-  m_Name: TargetTotemMechanism
+  m_Name: Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
