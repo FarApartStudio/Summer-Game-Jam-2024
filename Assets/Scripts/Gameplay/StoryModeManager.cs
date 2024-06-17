@@ -1,3 +1,5 @@
+using Pelumi.Juicer;
+using Pelumi.ObjectPool;
 using Pelumi.UISystem;
 using Sirenix.OdinInspector;
 using System;
@@ -16,13 +18,13 @@ public class StoryModeManager : MonoBehaviour
     [Header("Effect")]
     [SerializeField] FollowTransfrom _rainStormPrefab;
     [SerializeField] FollowTransfrom _windlinesPrefab;
+    [SerializeField] MultiHitObserver _cloudHitObserver;
 
     [Header("Enemy")]
     [SerializeField] private EnemyActivator[] _enemyActivators;
     [SerializeField] private EnemySpawnTrigger[] _enemySpawnTriggers;
 
     private Pilot _player;
-    private FollowTransfrom  _rainStorm;
     private FollowTransfrom _windlines;
     private GameMenu _gameMenu;
     private HealthBarMenu _healthBarMenu;
@@ -40,6 +42,8 @@ public class StoryModeManager : MonoBehaviour
 
         SpawnCharacter();
 
+        ActivateEnemies();
+
         _gameMenu.Open();
         _healthBarMenu.Open();
     }
@@ -54,8 +58,6 @@ public class StoryModeManager : MonoBehaviour
     {
         _player = Instantiate(_playerPrefab, spawnPos.position, spawnPos.rotation);
 
-        _rainStorm = Instantiate(_rainStormPrefab, _player.transform.position,Quaternion.identity);
-        _rainStorm.SetTarget(_player.transform);
         _windlines = Instantiate(_windlinesPrefab, _player.transform.position, Quaternion.identity);
         _windlines.SetTarget(_player.transform);
 
@@ -63,7 +65,15 @@ public class StoryModeManager : MonoBehaviour
         _player.GetCharacterCombatController.OnAimAccuracyChanged += OnAimAccuracyChanged;
         _player.GetCharacterCombatController.OnSuccessfulHit += OnSuccessfulHit;
 
-        ActivateEnemies();
+        _cloudHitObserver.GetOnComplete.AddListener(OnCloudHit);
+    }
+
+    private void OnCloudHit()
+    {
+        _cloudHitObserver.ResetHit();
+        FollowTransfrom  _rainStorm = ObjectPoolManager.SpawnObject(_rainStormPrefab, _player.transform.position, Quaternion.identity);
+        _rainStorm.SetTarget(_player.transform);
+        Juicer.WaitForSeconds(20, new JuicerCallBack(() => ObjectPoolManager.ReleaseObject(_rainStorm)));
     }
 
     public void ActivateEnemies()
