@@ -25,8 +25,9 @@ public class CharacterDashController : MonoBehaviour
 
     private void HandleDodge()
     {
-        if (InputManager.Instance.GetDodgeInput() && dodgeCooldownTimer <= 0)
+        if (!isDodging && InputManager.Instance.GetDodgeInput() && dodgeCooldownTimer <= 0)
         {
+            isDodging = true;
             OnDodge();
         }
 

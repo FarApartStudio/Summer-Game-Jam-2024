@@ -41853,6 +41853,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnedBook
       objectReference: {fileID: 0}
+    - target: {fileID: 5768215463681486626, guid: 4223fa5bd9dbf114ea3dd5f5be2af832,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7437105942828635716, guid: 4223fa5bd9dbf114ea3dd5f5be2af832,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -59920,7 +59925,7 @@ PrefabInstance:
     - target: {fileID: 6546144816223905956, guid: f4623861adef08448a238a36afa04080,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6823405211571160949, guid: f4623861adef08448a238a36afa04080,
         type: 3}
