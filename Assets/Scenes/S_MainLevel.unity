@@ -42474,7 +42474,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnPos
       value: 
-      objectReference: {fileID: 1817250123}
+      objectReference: {fileID: 1159726709}
     - target: {fileID: 2916153116336937541, guid: 04c3bfd94f27c6540b66dc75225a316f,
         type: 3}
       propertyPath: _introTimeline
@@ -42528,7 +42528,7 @@ PrefabInstance:
     - target: {fileID: 3434923085450354466, guid: 04c3bfd94f27c6540b66dc75225a316f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -58507,6 +58507,12 @@ Transform:
   - {fileID: 2081130964}
   m_Father: {fileID: 1245294597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1159726709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3333194790371300726, guid: 04c3bfd94f27c6540b66dc75225a316f,
+    type: 3}
+  m_PrefabInstance: {fileID: 901860745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1159847579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8070790794430506070, guid: f71c75c75837cd042b8434df4dc8a27d,
@@ -86515,7 +86521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1817250123
 Transform:
   m_ObjectHideFlags: 0
@@ -105427,6 +105433,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TimeBasedTargetMechanism
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926199271574013226, guid: 5b946662d0e9b074793f8a544bba2d24,
+        type: 3}
+      propertyPath: resetDelay
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
