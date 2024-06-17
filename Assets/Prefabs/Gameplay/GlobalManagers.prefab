@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 2606446928736105772, guid: d509b33827b0b8f4786dc333bc81a85a, type: 3}
   - {fileID: 1497952571574194477, guid: 689afbab3302f134ab856e2c17f164f1, type: 3}
   - {fileID: 4232801117150389188, guid: d963aa15fa8c53f4cba9f4f8f88e830a, type: 3}
+  - {fileID: 7058685831226027102, guid: 17c83e7003d98444bbe31728d58759f6, type: 3}
   unPersitentManagers:
   - {fileID: 3053106700685776985, guid: 8e8d77bd0e672134a9ea298f00ccc807, type: 3}
   - {fileID: 2317962867235660225, guid: 22f1f732566d10e419641bca0e3312f3, type: 3}

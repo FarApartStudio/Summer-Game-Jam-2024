@@ -343,17 +343,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.09951749
-      value: 1.8493423
-      inSlope: 19.951847
-      outSlope: 19.951847
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.16055337
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.13292299
-      value: 24.269747
+      time: 0.07029418
+      value: 31.92331
       inSlope: 1131.4348
       outSlope: 1131.4348
       tangentMode: 0
@@ -361,22 +352,22 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.20772126
     - serializedVersion: 3
-      time: 0.16133438
-      value: 58.13736
-      inSlope: 887.77435
-      outSlope: 887.77435
+      time: 0.17662778
+      value: 69.81417
+      inSlope: -370.4315
+      outSlope: -370.4315
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.19080238
+      outWeight: 0.6621308
     - serializedVersion: 3
-      time: 0.2
-      value: 80
-      inSlope: 391.08408
-      outSlope: 391.08408
+      time: 0.27
+      value: 0
+      inSlope: -109.76726
+      outSlope: -109.76726
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33522543
+      inWeight: 0.17660934
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -434,7 +425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3784817954582246277
 Transform:
   m_ObjectHideFlags: 0
@@ -1327,6 +1318,10 @@ PrefabInstance:
       insertIndex: 0
       addedObject: {fileID: 4201600970053311798}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2852669603217764190, guid: fc59b575eec1f8a4cb9c28de082ddd90,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 20391760287094418}
     - targetCorrespondingSourceObject: {fileID: 9003916746020781296, guid: fc59b575eec1f8a4cb9c28de082ddd90,
         type: 3}
       insertIndex: -1
@@ -1342,7 +1337,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7767018493047915862}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5503198396692539912}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cee321961ac8bbe44a5c553c0ea27e1b, type: 3}
@@ -1426,6 +1421,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7767018493047915862}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5503198396692539912 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2852669603217764190, guid: fc59b575eec1f8a4cb9c28de082ddd90,
+    type: 3}
+  m_PrefabInstance: {fileID: 7767018493047915862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &20391760287094418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5503198396692539912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8beeec0552371745975f13b5a4d7e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 447
+  Yoffset: -0.2
 --- !u!114 &7879682714115200223 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 473932964286009737, guid: fc59b575eec1f8a4cb9c28de082ddd90,

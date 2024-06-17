@@ -27,7 +27,7 @@ public class UICurrencyEffect : MonoBehaviour
             if (_shouldPlaySfx && !_isPlayingSfx)
             {
                 _isPlayingSfx = true;
-                AudioSystem.PlayOneShotAudio(AudioTypeID.UI_Currency, AudioCategory.UI, true);
+               // AudioSystem.PlayOneShotAudio(AudioTypeID.UI_Currency, AudioCategory.UI, true);
 
                 Juicer.WaitForSecondsRealtime(.15f, new JuicerCallBack(() =>
                 {

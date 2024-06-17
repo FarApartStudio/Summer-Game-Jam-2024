@@ -29,30 +29,6 @@ public class PilotAnimatorController : CharacterAnimatorController
         }
     }
 
-    public void FootL(AnimationEvent animationEvent)
-    {
-        //if (animationEvent.animatorClipInfo.weight > 0.5f)
-        //{
-        //    if (FootstepAudioClips.Length > 0)
-        //    {
-        //        var index = Random.Range(0, FootstepAudioClips.Length);
-        //        AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterManager.GetCharacterController.center), FootstepAudioVolume);
-        //    }
-        //}
-    }
-
-    public void FootR(AnimationEvent animationEvent)
-    {
-        //if (animationEvent.animatorClipInfo.weight > 0.5f)
-        //{
-        //    if (FootstepAudioClips.Length > 0)
-        //    {
-        //        var index = Random.Range(0, FootstepAudioClips.Length);
-        //        AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(characterManager.GetCharacterController.center), FootstepAudioVolume);
-        //    }
-        //}
-    }
-
     public void Shoot()
     {
         OnShootTriggered?.Invoke();
