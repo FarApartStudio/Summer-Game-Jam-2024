@@ -273,6 +273,9 @@ MonoBehaviour:
   aimTargetDebug: {fileID: 517107354916711258}
   rightHandSocket: {fileID: 5350211146003713043}
   weaponTransform: {fileID: 8887122210938452048}
+  aimHelperLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   detectLayer:
     serializedVersion: 2
     m_Bits: 257

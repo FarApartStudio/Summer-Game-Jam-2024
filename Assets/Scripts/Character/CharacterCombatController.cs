@@ -48,7 +48,6 @@ public class CharacterCombatController : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private Transform rightHandSocket;
     [SerializeField] private Transform weaponTransform;
-    [SerializeField] private LayerMask aimHelperLayerMask;
     [SerializeField] private LayerMask detectLayer;
     [SerializeField] private Bow currentBow;
 
@@ -257,7 +256,7 @@ public class CharacterCombatController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer))
         {
-            mouseWorldPosition = Vector3.Lerp (mouseWorldPosition , IsTooClose(screeCenterHit.point) ? ray.GetPoint(100) : screeCenterHit.point, Time.deltaTime * 20);
+            mouseWorldPosition = Vector3.Lerp (mouseWorldPosition , IsTooClose(screeCenterHit.point) ? ray.GetPoint(10) : screeCenterHit.point, Time.deltaTime * 20);
             //mouseWorldPosition = IsTooClose (screeCenterHit.point) ? ray.GetPoint(1000) : screeCenterHit.point;
         }
         else
