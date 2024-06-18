@@ -33,8 +33,12 @@ public class EnemySpawnArea : MonoBehaviour
     private List<EnemyController> enemiesList = new List<EnemyController>();
     private BoxCollider boxCollider;
 
+    private bool finishedSpawning;
+
     public bool IsCleared => enemiesList.Count == 0;
     public int EnemiesCount => enemiesList.Count;
+
+    public bool IsCompleted => finishedSpawning && IsCleared;
 
     private void Awake()
     {
@@ -48,6 +52,7 @@ public class EnemySpawnArea : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
+        finishedSpawning = false;
         for (int i = 0; i < waveArray.Length; i++)
         {
             for (int j = 0; j < waveArray[i].waveEnemyArray.Length; j++)
@@ -91,7 +96,7 @@ public class EnemySpawnArea : MonoBehaviour
 
     private void FinishedSpawning()
     {
-
+        finishedSpawning = true;
     }
 
     public Vector3 GetRandomSpawnPoint()

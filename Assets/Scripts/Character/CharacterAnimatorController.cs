@@ -15,7 +15,6 @@ public abstract class CharacterAnimatorController : MonoBehaviour
     protected int _animIDJump;
     protected int _animIDFreeFall;
     protected int _animIDMotionSpeed;
-    protected int _animIDJumpCount;
 
     public void Start()
     {
@@ -39,7 +38,6 @@ public abstract class CharacterAnimatorController : MonoBehaviour
         _animIDJump = Animator.StringToHash("Jump");
         _animIDFreeFall = Animator.StringToHash("FreeFall");
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        _animIDJumpCount = Animator.StringToHash("JumpCount");
     }
 
     public void HandleAnimation()
@@ -49,7 +47,6 @@ public abstract class CharacterAnimatorController : MonoBehaviour
         animator.SetFloat(_animIDMotionSpeed, movementController.InputMagnitude);
         animator.SetBool(_animIDJump, movementController.IsJumping);
         animator.SetBool(_animIDFreeFall, movementController.FreeFall);
-        animator.SetInteger(_animIDJumpCount, movementController.GetJumpCount);
 
         animator.SetFloat("VelocityX", movementController.InputAnimDirection.x);
         animator.SetFloat("VelocityY", movementController.InputAnimDirection.y);
