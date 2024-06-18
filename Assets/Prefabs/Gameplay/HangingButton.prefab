@@ -655,17 +655,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: StarExplosionBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 121188, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4508
+      objectReference: {fileID: 0}
+    - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4508
+      objectReference: {fileID: 0}
+    - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4508
+      objectReference: {fileID: 0}
     - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.966305
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.0327444
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.4980564
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 401526, guid: 27bec7bc47f580b41b60cd2d2cac5908, type: 3}
       propertyPath: m_LocalRotation.w

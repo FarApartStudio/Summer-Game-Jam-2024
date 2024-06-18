@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2921132140310353296}
   - component: {fileID: 2921132140311451472}
   - component: {fileID: 2921132140315748144}
+  - component: {fileID: 7996793442899076424}
   m_Layer: 0
   m_Name: Cliff_04_LOD1
   m_TagString: Untagged
@@ -106,6 +107,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: ba53360b4195cb542922626d94e36105, type: 3}
+--- !u!114 &7996793442899076424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2921132140309449104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a195e26a505dfb64cb92a0bbb1d03af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surface: 3
 --- !u!1 &2921132140309449106
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +132,7 @@ GameObject:
   - component: {fileID: 2921132140310353298}
   - component: {fileID: 2921132140311451474}
   - component: {fileID: 2921132140315748146}
+  - component: {fileID: 2113634195627916784}
   m_Layer: 0
   m_Name: Cliff_04_LOD0
   m_TagString: Untagged
@@ -212,6 +227,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: ba53360b4195cb542922626d94e36105, type: 3}
+--- !u!114 &2113634195627916784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2921132140309449106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a195e26a505dfb64cb92a0bbb1d03af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surface: 3
 --- !u!1 &2921132140309449108
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +314,7 @@ GameObject:
   - component: {fileID: 2921132140310353302}
   - component: {fileID: 2921132140311451478}
   - component: {fileID: 2921132140315748150}
+  - component: {fileID: 8376933438123791854}
   m_Layer: 0
   m_Name: Cliff_04_LOD2
   m_TagString: Untagged
@@ -380,3 +409,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: ba53360b4195cb542922626d94e36105, type: 3}
+--- !u!114 &8376933438123791854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2921132140309449110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a195e26a505dfb64cb92a0bbb1d03af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surface: 3
