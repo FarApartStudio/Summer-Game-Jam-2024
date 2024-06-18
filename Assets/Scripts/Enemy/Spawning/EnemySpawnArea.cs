@@ -53,8 +53,12 @@ public class EnemySpawnArea : MonoBehaviour
     IEnumerator SpawnRoutine()
     {
         finishedSpawning = false;
+
         for (int i = 0; i < waveArray.Length; i++)
         {
+            if (i != 0)
+                yield return new WaitForSeconds(timeBetweenWaves);
+
             for (int j = 0; j < waveArray[i].waveEnemyArray.Length; j++)
             {
                 for (int k = 0; k < waveArray[i].waveEnemyArray[j].amount; k++)
@@ -69,17 +73,13 @@ public class EnemySpawnArea : MonoBehaviour
                     OnActivated?.Invoke(newEnemy);
                     newEnemy.gameObject.SetActive(true);
                     newEnemy.Activate(false);
-                    yield return null;
                 }
             }
 
             yield return new WaitUntil(() => IsCleared);
-
-            if(i < waveArray.Length - 1)
-            yield return new WaitForSeconds(timeBetweenWaves);
         }
 
-        FinishedSpawning();
+        finishedSpawning = true;
     }
 
     private void EnemyKilled(EnemyController controller)
@@ -88,15 +88,10 @@ public class EnemySpawnArea : MonoBehaviour
         OnKilled?.Invoke(controller);
         enemiesList.Remove(controller);
 
-        if (IsCleared)
+        if (IsCompleted)
         {
             OnCleared?.Invoke();
         }
-    }
-
-    private void FinishedSpawning()
-    {
-        finishedSpawning = true;
     }
 
     public Vector3 GetRandomSpawnPoint()

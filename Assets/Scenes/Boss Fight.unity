@@ -3512,6 +3512,73 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 399251106}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1262248835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1262248838}
+  - component: {fileID: 1262248837}
+  - component: {fileID: 1262248836}
+  m_Layer: 0
+  m_Name: Timed  Damager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1262248836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262248835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea217a8a3ba48ba41af6717303cf6c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageInterval: 1
+  damage: 10
+  knockback: 0
+--- !u!114 &1262248837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262248835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1732a7fc07df2c943aea974df13f6b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.30204678, g: 0, b: 1, a: 1}
+  localOffset: {x: 0, y: 0, z: 0}
+  maxHit: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  size: 3.84
+--- !u!4 &1262248838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262248835}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -18.74, y: 1.05, z: 27.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284599160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4584,6 +4651,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1601006156}
   m_LocalEulerAnglesHint: {x: 0, y: -55.007977, z: 0}
+--- !u!1 &1656933598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1656933601}
+  - component: {fileID: 1656933600}
+  - component: {fileID: 1656933599}
+  m_Layer: 0
+  m_Name: Instant Damager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1656933599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656933598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1732a7fc07df2c943aea974df13f6b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0.5249419, a: 1}
+  localOffset: {x: 0, y: 0, z: 0}
+  maxHit: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  size: 3.84
+--- !u!114 &1656933600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656933598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4724fb65568fba04bbf0af3a06179342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  knockback: 0
+--- !u!4 &1656933601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656933598}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.274947, y: 1.05, z: 27.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1660055399
 GameObject:
   m_ObjectHideFlags: 0
@@ -28858,3 +28991,5 @@ SceneRoots:
   - {fileID: 3345984189529401373}
   - {fileID: 1771702415}
   - {fileID: 621624267477275432}
+  - {fileID: 1656933601}
+  - {fileID: 1262248838}
