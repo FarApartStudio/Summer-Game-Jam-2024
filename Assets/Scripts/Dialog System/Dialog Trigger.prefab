@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2998670276366083511}
   - component: {fileID: 2998670276366083508}
   - component: {fileID: 1326169718055078647}
-  - component: {fileID: 4197499889799119290}
+  - component: {fileID: 1418610842140961069}
   m_Layer: 2
   m_Name: Dialog Trigger
   m_TagString: Untagged
@@ -73,9 +73,9 @@ MonoBehaviour:
   OnStartInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4197499889799119290}
-        m_TargetAssemblyTypeName: TutorialPrompt, Assembly-CSharp
-        m_MethodName: ShowTutorialPrompt
+      - m_Target: {fileID: 1418610842140961069}
+        m_TargetAssemblyTypeName: DialogTrigger, Assembly-CSharp
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   OnEndInteract:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4197499889799119290
+--- !u!114 &1418610842140961069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,10 +109,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2998670276366083506}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a18a21ae158f554797769c196843ebd, type: 3}
+  m_Script: {fileID: 11500000, guid: 54d82a1301f30b24d9831ffd7602db33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tutorialPromptData:
-    ActionText: 
-    keyImage: {fileID: 0}
-    ActionDescription: 
+  currentDialog:
+    dialogObject: {fileID: 11400000, guid: dc640f4d61ea4854c82369d758da9912, type: 2}
+    OnBegin:
+      m_PersistentCalls:
+        m_Calls: []
+    OnFinsihed:
+      m_PersistentCalls:
+        m_Calls: []

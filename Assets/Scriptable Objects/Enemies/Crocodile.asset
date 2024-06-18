@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c001b42f85f8744978d1c465145de1, type: 3}
+  m_Name: Crocodile
+  m_EditorClassIdentifier: 
+  enemyName: Crocodile
+  description: 
+  enemyIcon: {fileID: 0}
+  enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+    type: 3}
+  damage: 20
+  health: 200
+  enemyType: 0
+  skinSets:
+    materials:
+    - materials:
+      - {fileID: 2100000, guid: 5db529711bbac4b44ba61bf91b0a0c49, type: 2}
+      - {fileID: 2100000, guid: 6d3e589d4a0f1f447af05db4f068b752, type: 2}
+      - {fileID: 2100000, guid: 5a8ab480d3f2df4409f017ed9551fa76, type: 2}
+      - {fileID: 2100000, guid: 7228ccf2589642c4fa401b2b215bb229, type: 2}
+  hasRage: 0
+  canKnockBack: 0

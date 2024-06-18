@@ -254,7 +254,7 @@ public class EnemyController : MonoBehaviour
     {
         Vector3 nextDestination;
 
-        if (EnemyAIActions.RandomPosition(transform.position, damageDetectRadar.GetScanSize(), out nextDestination))
+        if (EnemyAIActions.RandomPosition(transform.position, searchDetectRadar.GetScanSize(), out nextDestination))
         {
             navMeshAgent.SetDestination(nextDestination);
         }

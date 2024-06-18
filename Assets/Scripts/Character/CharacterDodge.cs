@@ -60,4 +60,10 @@ public class CharacterDodge : MonoBehaviour
 
         isDodging = false;
     }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        isDodging = false;
+    }
 }
