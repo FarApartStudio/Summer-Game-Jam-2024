@@ -65,6 +65,22 @@ public class DialogManager : MonoBehaviour
         isTyping = false;
     }
 
+    IEnumerator PlayOverDurationText(float duration)
+    {
+        isTyping = true;
+        float time = 0;
+        int charIndex = 0;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            charIndex = (int)Mathf.Lerp(0, fullText.Length, time / duration);
+            dialogText.text = fullText.Substring(0, charIndex);
+            yield return null;
+        }
+        dialogText.text = fullText;
+        isTyping = false;
+    }
+
     IEnumerator PlayVoiceOver(AudioClip audioClip)
     {
         isPlayingVoiceOver = true;
@@ -85,7 +101,9 @@ public class DialogManager : MonoBehaviour
             isTyping = true;
             isPlayingVoiceOver = true;
 
-            StartCoroutine(PlayText());
+           // StartCoroutine(PlayText());
+
+            StartCoroutine(PlayOverDurationText(textSequences[i].audioClip.length - 0.5f));
 
             StartCoroutine(PlayVoiceOver(textSequences[i].audioClip));
 

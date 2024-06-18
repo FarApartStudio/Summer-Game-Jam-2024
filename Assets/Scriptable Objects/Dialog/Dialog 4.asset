@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Dialog 4
   m_EditorClassIdentifier: 
   textSequences:
-  - messages: Do you want to go down this route
+  - messages: 'Narrator: Hey! Look at that friendly pup! You should go pet it.'
     audioClip: {fileID: 8300000, guid: d58de6efc5a756747b1bc9fcaf2dbe68, type: 3}
     textDuration: 0

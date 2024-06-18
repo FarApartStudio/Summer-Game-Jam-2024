@@ -5371,7 +5371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tutorialPromptData:
     ActionText: Press
-    ActionKey: Q
+    keyImage: {fileID: 0}
     ActionDescription: To Dodge
 --- !u!1001 &159871629
 PrefabInstance:
@@ -13478,6 +13478,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1159245356}
     m_Modifications:
+    - target: {fileID: 1418610842140961069, guid: a33fe0e1c401d0e45a4187ea595fbc8a,
+        type: 3}
+      propertyPath: currentDialog.dialogObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e60150c6722e7b46b58d8271ce038ca,
+        type: 2}
     - target: {fileID: 2998670276366083496, guid: a33fe0e1c401d0e45a4187ea595fbc8a,
         type: 3}
       propertyPath: currentDialog.dialogObject
@@ -18682,6 +18688,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1159245356}
     m_Modifications:
+    - target: {fileID: 1418610842140961069, guid: a33fe0e1c401d0e45a4187ea595fbc8a,
+        type: 3}
+      propertyPath: currentDialog.dialogObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 61e468b8533f1254781338e89f04c3cc,
+        type: 2}
     - target: {fileID: 2998670276366083496, guid: a33fe0e1c401d0e45a4187ea595fbc8a,
         type: 3}
       propertyPath: currentDialog.dialogObject
@@ -51754,6 +51766,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1159245356}
     m_Modifications:
+    - target: {fileID: 1418610842140961069, guid: a33fe0e1c401d0e45a4187ea595fbc8a,
+        type: 3}
+      propertyPath: currentDialog.dialogObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 01d682fa2ce38b440a9e842e0fab6025,
+        type: 2}
     - target: {fileID: 2998670276366083496, guid: a33fe0e1c401d0e45a4187ea595fbc8a,
         type: 3}
       propertyPath: currentDialog.dialogObject

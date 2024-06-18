@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Dialog 1
   m_EditorClassIdentifier: 
   textSequences:
-  - messages: Hey there
+  - messages: Ew! What is this? 3 in a week!? Hello there muck! Welcome to the land
+      of Veyra, or whatever... I don't really care.
     audioClip: {fileID: 8300000, guid: 8fffcaaf077b8304f9ed71b425df0062, type: 3}
     textDuration: 0
-  - messages: dawdwada
+  - messages: I suppose I should explain what's going on huh? Actually uh, after
+      thinking long and hard about it, I decided you can figure it out yourself but
+      how about you make your way over that log and entertain me with your terrible
+      archery skills!
     audioClip: {fileID: 8300000, guid: 78ddcc7aacd95b04cbef856166a57364, type: 3}
     textDuration: 0
