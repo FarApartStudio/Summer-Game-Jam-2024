@@ -23,7 +23,7 @@ public abstract class CharacterAnimatorController : MonoBehaviour
 
         movementController.OnDoubleJump += () =>
         {
-            animator.SetTrigger("DoubleJump");
+            animator.CrossFade("Flip", 0.1f);
         };
     }
 
