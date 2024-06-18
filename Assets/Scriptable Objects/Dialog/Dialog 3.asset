@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Dialog 3
   m_EditorClassIdentifier: 
   textSequences:
-  - messages: 'Narrator: Hey! That was great, a lot better than I expected I must
-      say. Just joking! That was pathetic. Anyways, you probably noticed that gate
-      open over there, the obvious thing to do is walk over there.'
+  - messages: Hey! That was great, a lot better than I expected I must say. Just
+      joking! That was pathetic. Anyways, you probably noticed that gate open over
+      there, the obvious thing to do is walk over there.
     audioClip: {fileID: 8300000, guid: 7ecf53d7a5a11b943bbb77ff176e89b3, type: 3}
     textDuration: 0
