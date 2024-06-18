@@ -61,10 +61,13 @@ public class EnemyController : MonoBehaviour
     float timer;
     int rageCounter;
     bool isAttacking;
+    private Vector3 spawnPos;
 
     WaitForSeconds hitDelayTime;
     NavMeshObstacle navMeshObs;
     DamageDefector damageDefector;
+
+
     public EnemyData GetEnemyData() => enemyData;
     public void SwapSkin() => enemyData.skinSets.SelectRandomSkin(bodyParts);
     public void ToggleAttacking(bool newState) => canAttack = newState;
@@ -113,6 +116,7 @@ public class EnemyController : MonoBehaviour
         DeSpawnArrowOnBody();
         SetUpEnemy (enemyData);
         animator.SetBool("Patrol", patrol);
+        spawnPos = transform.position;
     }
 
     public void SetUpEnemy(EnemyData enemyData)
@@ -254,7 +258,7 @@ public class EnemyController : MonoBehaviour
     {
         Vector3 nextDestination;
 
-        if (EnemyAIActions.RandomPosition(transform.position, searchDetectRadar.GetScanSize(), out nextDestination))
+        if (EnemyAIActions.RandomPosition(spawnPos, searchDetectRadar.GetScanSize(), out nextDestination))
         {
             navMeshAgent.SetDestination(nextDestination);
         }
