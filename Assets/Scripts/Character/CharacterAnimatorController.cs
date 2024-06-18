@@ -16,10 +16,14 @@ public abstract class CharacterAnimatorController : MonoBehaviour
     protected int _animIDFreeFall;
     protected int _animIDMotionSpeed;
 
-
     public void Start()
     {
         AssignAnimationIDs();
+
+        movementController.OnDoubleJump += () =>
+        {
+            animator.CrossFade("Flip", 0.1f);
+        };
     }
 
     protected virtual void Update()

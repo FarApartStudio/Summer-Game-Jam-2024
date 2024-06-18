@@ -11,7 +11,10 @@ public class MovementController : MonoBehaviour
     public Func<bool> CanMove;
     public Func<bool> CanRotate;
     public Func<bool> CanSprint;
+    public Func<bool> CanJump;
     public event Action<bool> OnSprintChange;
+
+    public Action OnDoubleJump;
 
     [SerializeField] private bool analogMovement;
 
@@ -33,6 +36,8 @@ public class MovementController : MonoBehaviour
     [Space(10)]
     [Tooltip("The height the player can jump")]
     [SerializeField] private float jumpHeight = 1.2f;
+
+    [SerializeField] private float jumpCountMax = 2;
 
     [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
     [SerializeField] private float gravity = -15.0f;
@@ -73,14 +78,15 @@ public class MovementController : MonoBehaviour
     private bool _isSprinting;
     private CharacterController _controller;
     private GameObject _mainCamera;
+    private int jumpCount;
 
     public float AnimationBlend => _animationBlend;
     public float InputMagnitude => _inputMagnitude;
     public bool FreeFall => _freeFall;
     public bool IsJumping => _isJumping;
     public bool Grounded => grounded;
-
     public bool IsSprinting => sprint;
+    public int GetJumpCount => jumpCount;
 
     public GameObject CinemachineCameraTarget => cinemachineCameraTarget;
 
@@ -215,12 +221,14 @@ public class MovementController : MonoBehaviour
             }
 
             // Jump
-            if (jump && _jumpTimeoutDelta <= 0.0f)
+            if (CanJump.Invoke() && jump && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
                 _isJumping = true;
+
+                jumpCount = 1;
             }
 
             // jump timeout
@@ -231,6 +239,18 @@ public class MovementController : MonoBehaviour
         }
         else
         {
+            if (jump && jumpCount < jumpCountMax)
+            {
+                // the square root of H * -2 * G = how much velocity needed to reach desired height
+                _verticalVelocity = Mathf.Sqrt((jumpHeight * 1.5f) * -2f * gravity);
+
+                _isJumping = true;
+
+                jumpCount++;
+
+                OnDoubleJump?.Invoke();
+            }
+
             // reset the jump timeout timer
             _jumpTimeoutDelta = jumpTimeout;
 
@@ -275,7 +295,6 @@ public class MovementController : MonoBehaviour
             sprint = false;
             OnSprintChange?.Invoke(sprint);
         }
-
     }
 
     private void OnDrawGizmos()

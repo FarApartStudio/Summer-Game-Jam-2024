@@ -38,10 +38,11 @@ public class Pilot : CharacterManager
         movementController.CanSprint = () => characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive;
         movementController.CanMove = () => canMove && healthController.IsAlive;
         movementController.CanRotate = () => canRotate && healthController.IsAlive;
+        movementController.CanJump = () => canJump && characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive;
 
         characterCombatController.CamAim = ()=> !IsPerformingAction && healthController.IsAlive;
 
-        characterDodge.CanDodge = () => characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive;
+        characterDodge.CanDodge = () => characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive && movementController.Grounded;
 
         characterDodge.OnDodgeStart += () =>
         {

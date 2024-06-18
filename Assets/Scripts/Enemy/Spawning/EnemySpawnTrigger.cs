@@ -53,7 +53,7 @@ public class EnemySpawnTrigger : MonoBehaviour
     {
         foreach (var enemySpawnArea in enemySpawnAreaArray)
         {
-            if (!enemySpawnArea.IsCleared)
+            if (!enemySpawnArea.IsCompleted)
             {
                 return;
             }
