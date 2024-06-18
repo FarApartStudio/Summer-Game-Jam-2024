@@ -9,18 +9,12 @@ public class FootStepTrigger : MonoBehaviour
     [SerializeField]private LayerMask layerMask;
     [SerializeField] private float Yoffset;
 
-    private TerrainDetector terrainDetector;
-
-    private void Awake()
-    {
-        terrainDetector = new TerrainDetector();
-    }
 
     public void FootL(AnimationEvent animationEvent)
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            PlayFootStepSound(animationEvent);
+            DetectGround();
         } 
     }
 
@@ -28,7 +22,7 @@ public class FootStepTrigger : MonoBehaviour
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            PlayFootStepSound(animationEvent);
+            DetectGround();
         }
     }
 
@@ -36,60 +30,11 @@ public class FootStepTrigger : MonoBehaviour
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            PlayFootStepSound(animationEvent);
+            DetectGround();
         }
     }
 
-    public void PlayFootStepSound(AnimationEvent animationEvent)
-    {
-        FootStepSurface footStepSurface = GetFootStepSurface(out Vector3 position);
-
-        AudioTypeID footStep = AudioTypeID.DirtFootstep;
-
-        if (footStepSurface != null)
-        {
-            FootSurface footSurface = footStepSurface.GetFootSurface;
-            switch (footSurface)
-            {
-                case FootSurface.Dirt:
-                    footStep = AudioTypeID.DirtFootstep;
-                    break;
-                case FootSurface.Grass:
-                    footStep = AudioTypeID.GrassFootstep;
-                    break;
-                case FootSurface.Wood:
-                    footStep = AudioTypeID.WoodFootstep;
-                    break;
-                case FootSurface.Rock:
-                    footStep = AudioTypeID.RockFootstep;
-                    break;
-            }
-        }
-        else
-        {
-            int terrainTextureIndex = terrainDetector.GetActiveTerrainTextureIdx(position);
-
-            switch (terrainTextureIndex)
-            {
-                case 0:
-                    footStep = AudioTypeID.GrassFootstep;
-                    break;
-                case 1:
-                    footStep = AudioTypeID.DirtFootstep;
-                    break;
-                case 2:
-                    footStep = AudioTypeID.WoodFootstep;
-                    break;
-                case 3:
-                    footStep = AudioTypeID.RockFootstep;
-                    break;
-            }
-        }
-
-        AudioSystem.PlayOneShotAudio(footStep, AudioCategory.Sfx, true, volume: Random.Range(0.8f, 1.0f));
-    }
-
-    public FootStepSurface GetFootStepSurface(out Vector3 pos)
+    public void DetectGround()
     {
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + Vector3.down * Yoffset;
@@ -98,12 +43,68 @@ public class FootStepTrigger : MonoBehaviour
             FootStepSurface footStepSurface = hit.collider.GetComponent<FootStepSurface>();
             if (footStepSurface != null)
             {
-                pos = hit.point;
-                return footStepSurface;
+                PlayFootStepSound (footStepSurface);
+                return;
+            }
+
+            TerrainDetector terrainDetector = hit.collider.GetComponent<TerrainDetector>();
+            if (terrainDetector != null)
+            {
+                PlayFootStepSound(terrainDetector);
+                return;
             }
         }
-        pos = transform.position;
-        return null;
+
+        AudioSystem.PlayOneShotAudio(AudioTypeID.DirtFootstep, AudioCategory.Sfx, true, volume: Random.Range(0.8f, 1.0f));
+    }
+
+    public void PlayFootStepSound(TerrainDetector terrainDetector)
+    {
+        AudioTypeID footStep = AudioTypeID.DirtFootstep;
+
+        int terrainTextureIndex = terrainDetector.GetActiveTerrainTextureIdx(transform.position);
+
+        switch (terrainTextureIndex)
+        {
+            case 0:
+                footStep = AudioTypeID.GrassFootstep;
+                break;
+            case 1:
+                footStep = AudioTypeID.DirtFootstep;
+                break;
+            case 2:
+                footStep = AudioTypeID.WoodFootstep;
+                break;
+            case 3:
+                footStep = AudioTypeID.RockFootstep;
+                break;
+        }
+
+        AudioSystem.PlayOneShotAudio(footStep, AudioCategory.Sfx, true, volume: Random.Range(0.8f, 1.0f));
+    }
+
+    public void PlayFootStepSound(FootStepSurface footStepSurface)
+    {
+        AudioTypeID footStep = AudioTypeID.DirtFootstep;
+
+        FootSurface footSurface = footStepSurface.GetFootSurface;
+        switch (footSurface)
+        {
+            case FootSurface.Dirt:
+                footStep = AudioTypeID.DirtFootstep;
+                break;
+            case FootSurface.Grass:
+                footStep = AudioTypeID.GrassFootstep;
+                break;
+            case FootSurface.Wood:
+                footStep = AudioTypeID.WoodFootstep;
+                break;
+            case FootSurface.Rock:
+                footStep = AudioTypeID.RockFootstep;
+                break;
+        }
+
+        AudioSystem.PlayOneShotAudio(footStep, AudioCategory.Sfx, true, volume: Random.Range(0.8f, 1.0f));
     }
 
     private void OnDrawGizmos()
