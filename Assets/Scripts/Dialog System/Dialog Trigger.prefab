@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2998670276366083511}
   - component: {fileID: 2998670276366083508}
-  - component: {fileID: 2998670276366083496}
   - component: {fileID: 1326169718055078647}
+  - component: {fileID: 4197499889799119290}
   m_Layer: 2
   m_Name: Dialog Trigger
   m_TagString: Untagged
@@ -55,38 +55,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2998670276366083496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2998670276366083506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d82a1301f30b24d9831ffd7602db33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentDialog:
-    dialogObject: {fileID: 11400000, guid: dc640f4d61ea4854c82369d758da9912, type: 2}
-    OnBegin:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2998670276366083506}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnFinsihed:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!114 &1326169718055078647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,10 +73,22 @@ MonoBehaviour:
   OnStartInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2998670276366083496}
-        m_TargetAssemblyTypeName: DialogTrigger, Assembly-CSharp
-        m_MethodName: Play
+      - m_Target: {fileID: 4197499889799119290}
+        m_TargetAssemblyTypeName: TutorialPrompt, Assembly-CSharp
+        m_MethodName: ShowTutorialPrompt
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2998670276366083506}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -120,3 +100,19 @@ MonoBehaviour:
   OnEndInteract:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4197499889799119290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2998670276366083506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a18a21ae158f554797769c196843ebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialPromptData:
+    ActionText: 
+    keyImage: {fileID: 0}
+    ActionDescription: 

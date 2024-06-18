@@ -127,6 +127,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Wolf
       objectReference: {fileID: 0}
+    - target: {fileID: 7769811078698966829, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+        type: 3}
+      propertyPath: attackInfos.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769811078698966829, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+        type: 3}
+      propertyPath: attackInfos.Array.data[1].damager
+      value: 
+      objectReference: {fileID: 8165944045304691640}
+    - target: {fileID: 7769811078698966829, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+        type: 3}
+      propertyPath: attackInfos.Array.data[1].attackName
+      value: Attack2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7769811078698966829, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+        type: 3}
+      propertyPath: attackInfos.Array.data[1].damageInfo.damage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -148,6 +168,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7217b100654d91d46ab53692680ea053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8165944045304691640 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5783847257441448121, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+    type: 3}
+  m_PrefabInstance: {fileID: 2384401704707689217}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d27eed951ef8dd4db2fbbbcd3fa519b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7821544446657869440

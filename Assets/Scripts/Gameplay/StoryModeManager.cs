@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class StoryModeManager : MonoBehaviour
 {
@@ -63,10 +64,10 @@ public class StoryModeManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerHit();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+     
+        //}
     }
 
     public void IntroCutScene()
@@ -107,6 +108,9 @@ public class StoryModeManager : MonoBehaviour
         _healthBarMenu = UIManager.GetMenu<HealthBarMenu>();
         _screenFadeMenu = UIManager.GetMenu<ScreenFadeMenu>();
         _cinematicMenu = UIManager.GetMenu<CinematicMenu>();
+
+        TaskPrompt.OnMissionPrompt  = (text) => _gameMenu.SetMissionPrompt(text);
+        TutorialKeyPrompt.OnTutorialPrompt = (data) => _gameMenu.SetTutorialPrompt(data);
     }
 
     public void SpawnCharacter ()
@@ -119,6 +123,14 @@ public class StoryModeManager : MonoBehaviour
         _player.GetCharacterCombatController.OnAimModeChanged += OnAimModeChanged;
         _player.GetCharacterCombatController.OnAimAccuracyChanged += OnAimAccuracyChanged;
         _player.GetCharacterCombatController.OnSuccessfulHit += OnSuccessfulHit;
+
+        _player.GetHealthController.OnHealthChanged += PlayerChanged;
+        _player.GetHealthController.OnHit += PlayerHit;
+    }
+
+    private void PlayerChanged(IHealth obj)
+    {
+        _gameMenu.SetPlayerHealthBar(obj.GetNormalisedHealth);
     }
 
     public void EnvironmeentEvents()
@@ -126,9 +138,9 @@ public class StoryModeManager : MonoBehaviour
         _cloudHitObserver.GetOnComplete.AddListener(OnCloudHit);
     }
 
-    private void PlayerHit()
+    private void PlayerHit(DamageInfo damageInfo)
     {
-        _gameMenu.SpawnDamageIndicator(_player.transform, _player.transform.position + _player.transform.forward * 2);
+        _gameMenu.SpawnDamageIndicator(_player.transform, damageInfo.damagePosition);
     }
 
     private void OnCloudHit()

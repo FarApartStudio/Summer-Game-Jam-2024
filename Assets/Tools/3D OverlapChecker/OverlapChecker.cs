@@ -9,15 +9,15 @@ public abstract class OverlapChecker : MonoBehaviour
 
 
     [SerializeField] protected Color color;
-    [SerializeField] protected Vector2 localOffset;
+    [SerializeField] protected Vector3 localOffset;
     [SerializeField] protected int maxHit = 10;
     [SerializeField] protected LayerMask layerMask;
 
     protected Collider[] colliders;
     protected int hitCount;
-    protected Vector2 pos;
+    protected Vector3 pos;
 
-    public Vector2 Offset => localOffset;
+    public Vector3 Offset => localOffset;
     
 
 

@@ -222,13 +222,15 @@ public class CharacterCombatController : MonoBehaviour
         {
             DamageInfo damageInfo = new DamageInfo();
             damageInfo.damage = CalculateDamage();
+            damageInfo.damagePosition = arrowHit.HitPoint;
             damageInfo.hitDirection = arrowHit.HitDirection;
             damageInfo.damageType = DamageType.Projectile;
             damageInfo.critical = false;
-            damageInfo.knockback = false;
-            damageable.Damage(damageInfo, arrowHit.HitPoint);
-
-            OnSuccessfulHit?.Invoke();
+            damageInfo.knockback = false;       
+            if (damageable.Damage(damageInfo))
+            {
+                OnSuccessfulHit?.Invoke();
+            }
         }
     }
 

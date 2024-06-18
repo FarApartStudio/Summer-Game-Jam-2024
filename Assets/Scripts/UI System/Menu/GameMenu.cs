@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameMenu : GenericMenu<GameMenu>
 {
@@ -24,9 +25,25 @@ public class GameMenu : GenericMenu<GameMenu>
     [Header("PlayerHealth")]
     [SerializeField] private Image healthBar;
 
+    [Header("TaskPrompt")]
+    [SerializeField] private Transform _taskPrompt;
+    [SerializeField] private TextMeshProUGUI _taskPromptText;
+
+    [Header ("TutorialPrompt")]
+    [SerializeField] private Transform _tutorialPrompt;
+    [SerializeField] private TextMeshProUGUI _tutorialActionText;
+    [SerializeField] private Image _tutorialKeyImage;
+    [SerializeField] private TextMeshProUGUI _tutorialActionDescription;
+
+
     private JuicerRuntimeCore<float> _fadeInOutEffect;
     private JuicerRuntimeCore<float> _fadeOutEffect;
     private JuicerRuntimeCore<float> _hitMarkerEffect;
+
+    private JuicerRuntimeCore<float> _taskPromptEffect;
+    private JuicerRuntimeCore<float> _tutorialPromptEffect;
+
+    private JuicerRuntimeCore<float> _lowHealthEffect;
 
     protected override void OnCreated()
     {
@@ -35,6 +52,15 @@ public class GameMenu : GenericMenu<GameMenu>
         _hitMarkerEffect.SetLoop(2);
 
         ToggleCrosshair (false);
+
+        _taskPrompt.localScale = new Vector3(0, 1, 1);
+        _taskPromptEffect = _taskPrompt.JuicyScaleX(1f, .25f);
+
+        _tutorialPrompt.localScale = new Vector3(0, 1, 1);
+        _tutorialPromptEffect = _tutorialPrompt.JuicyScaleX(1f, .25f);
+
+        _lowHealthEffect = healthBar.transform.parent.JuicyScale(1.1f, .15f);
+        _lowHealthEffect.SetLoop(0);
     }
 
     protected override void OnOpened()
@@ -82,5 +108,53 @@ public class GameMenu : GenericMenu<GameMenu>
     public void SetPlayerHealthBar(float value)
     {
         healthBar.fillAmount = value;
+
+        if (value < 0.3f)
+        {
+            if (!_lowHealthEffect.IsPlaying)
+            {
+                _lowHealthEffect.Start();
+            }
+
+            if (value == 0)
+            {
+                if (_lowHealthEffect.IsPlaying)
+                {
+                    _lowHealthEffect.Stop();
+                }
+            }
+        }
+        else
+        {
+            if (_lowHealthEffect.IsPlaying)
+            {
+                _lowHealthEffect.Stop();
+            }
+        }
+    }
+
+    public void SetMissionPrompt(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            _taskPromptEffect.StartWithNewDestination(0);
+            return;
+        }
+        _taskPromptEffect.StartWithNewDestination(1);
+        _taskPromptText.text = text;
+    }
+
+    public void SetTutorialPrompt(TutorialKeyPromptData data)
+    {
+        if (string.IsNullOrEmpty(data.ActionText))
+        {
+            _tutorialPromptEffect.StartWithNewDestination(0);
+            return;
+        }
+
+        _tutorialPromptEffect.StartWithNewDestination(1);
+        _tutorialActionText.text = data.ActionText;
+        _tutorialKeyImage.sprite = data.keyImage;
+        _tutorialActionDescription.text = data.ActionDescription;
     }
 }

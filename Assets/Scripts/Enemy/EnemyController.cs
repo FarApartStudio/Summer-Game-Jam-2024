@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
     public Action<EnemyController> OnKilled;
 
     public AttackInfoManager attackInfoManager { get; private set; }
-    //public Collider col { get; private set; }
+
     public NavMeshAgent navMeshAgent { get; private set; }
     public Animator animator{ get; private set; }
     public HealthController healthController { get; private set; }
@@ -25,6 +24,7 @@ public class EnemyController : MonoBehaviour
     public DamageDefector GetDamageDefector => damageDefector;
 
     [Header("Enemy Properties")]
+    [SerializeField] bool isPatrolling = true;
     [SerializeField] float hitAnimationDelay;
     [SerializeField] float attackRate;
     [SerializeField] int rageAmount;
@@ -78,8 +78,6 @@ public class EnemyController : MonoBehaviour
 
         navMeshObs = GetComponent<NavMeshObstacle>();
 
-       // col = GetComponent<Collider>();
-
         healthController = GetComponent<HealthController>();
 
         animator = GetComponentInChildren<Animator>();
@@ -93,7 +91,6 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-       // target = Player.Instance.transform;
         //navMeshAgent.updateRotation = false;
         hitDelayTime = new WaitForSeconds(hitAnimationDelay);
         damageDefector.OnDefect = OnDamageDefect;
@@ -111,11 +108,11 @@ public class EnemyController : MonoBehaviour
         AttackTimer();
     }
 
-    public void Activate()
+    public void Activate(bool patrol)
     {
         DeSpawnArrowOnBody();
         SetUpEnemy (enemyData);
-        //OnActivated?.Invoke(this);
+        animator.SetBool("Patrol", patrol);
     }
 
     public void SetUpEnemy(EnemyData enemyData)
@@ -132,7 +129,7 @@ public class EnemyController : MonoBehaviour
 
         foreach (GameObject attackIndicator in attackIndicators) attackIndicator.SetActive(false);
 
-       // attackInfoManager.SetDamagerInfo(this, enemyData.damage, 0, 0);
+        attackInfoManager.SetDamagerInfo(this, enemyData.damage, 0, 0);
 
         SwapSkin();
     }
@@ -145,34 +142,32 @@ public class EnemyController : MonoBehaviour
         foreach (HitPoint hitPoint in hitPoints)
         {
             hitPoint.AssignHealthSystem(healthController);
-            hitPoint.OnHit += OnBodyHit;
         }
-    }
-
-    private void OnBodyHit(HitPoint hitPoint)
-    {
-
     }
 
     private void OnHit(DamageInfo damageInfo)
     {
+        //if (!canPlayHit || isStuned || cannotStopAttack) return;
 
+        //if (chanceToStopAttack && UnityEngine.Random.Range(0, 10) > 5) return;
+
+        //animator.SetTrigger("Hit");
+        //StartCoroutine(nameof(HitDelay));
+
+        ChestIfPatrolling();
+    }
+
+    private void ChestIfPatrolling()
+    {
+        if (!isPatrolling) return;
+        isPatrolling = false;
+        animator.CrossFade("Chase", 0.1f);
     }
 
     private void OnDie(DamageInfo info)
     {
         StopAllCoroutines();
         StartCoroutine(DeathSequence());
-    }
-
-    private void Hit()
-    {
-        if (!canPlayHit || isStuned || cannotStopAttack) return;
-
-        if (chanceToStopAttack && UnityEngine.Random.Range(0, 10) > 5) return;
-
-        animator.SetTrigger("Hit");
-        StartCoroutine(nameof(HitDelay));
     }
 
     private IEnumerator DeathSequence()

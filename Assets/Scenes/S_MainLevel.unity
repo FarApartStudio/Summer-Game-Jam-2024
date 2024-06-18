@@ -37168,6 +37168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 1149133646}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   OnClear:
     m_PersistentCalls:
       m_Calls:

@@ -160,6 +160,10 @@ namespace Pelumi.Juicer
 
         public bool IsFinished { get => _coroutine  == null || _coroutine.IsDone; }
 
+        public bool IsPaused => _juicerRuntimeController.IsPaused;
+
+        public bool IsPlaying => !IsFinished && !IsPaused;
+
         public abstract JuicerRuntime Start(JuicerEventHandler PreStartEvent = null);
 
         public abstract JuicerRuntime StartFromOrigin();

@@ -48,20 +48,6 @@ public abstract class CharacterAnimatorController : MonoBehaviour
         animator.SetFloat("VelocityY", movementController.InputAnimDirection.y);
     }
 
-    public void UpdateAnimatorMovementParameters(float horizontalMovement, float verticalMovement, bool isSprinting)
-    {
-        float horizontalAmount = horizontalMovement;
-        float verticalAmount = verticalMovement;
-
-        if (isSprinting)
-        {
-            verticalAmount = 2;
-        }
-
-        //animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
-        //animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);
-    }
-
     public virtual void PlayTargetActionAnimation(string targetAnimation, bool isPerformingAction, bool applyRootMotion = false, bool applyRootGravity = false, bool canRotate = false, bool canMove = false, bool showWeapon = true)
     {
         characterManager.SetApplyRootMotion(applyRootMotion);
@@ -111,5 +97,10 @@ public abstract class CharacterAnimatorController : MonoBehaviour
     public void PlayAnimation (int layer, string animation, float transitionDuration = 0.2f)
     {      
         animator.CrossFade(animation, transitionDuration, layer);
+    }
+
+    public void SetlayerWight (int layer, float weight)
+    {
+        animator.SetLayerWeight(layer, weight);
     }
 }
