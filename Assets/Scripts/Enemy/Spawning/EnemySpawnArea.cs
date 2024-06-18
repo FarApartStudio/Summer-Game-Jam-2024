@@ -59,6 +59,8 @@ public class EnemySpawnArea : MonoBehaviour
             if (i != 0)
                 yield return new WaitForSeconds(timeBetweenWaves);
 
+            yield return new WaitUntil(() => IsCleared);
+
             for (int j = 0; j < waveArray[i].waveEnemyArray.Length; j++)
             {
                 for (int k = 0; k < waveArray[i].waveEnemyArray[j].amount; k++)
@@ -74,9 +76,7 @@ public class EnemySpawnArea : MonoBehaviour
                     newEnemy.gameObject.SetActive(true);
                     newEnemy.Activate(false);
                 }
-            }
-
-            yield return new WaitUntil(() => IsCleared);
+            }   
         }
 
         finishedSpawning = true;
