@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6114674213981869105}
   - component: {fileID: 9180951311962984851}
   - component: {fileID: 6384329274025473624}
-  - component: {fileID: 2189484394671304546}
+  - component: {fileID: 6525664650691944460}
   m_Layer: 3
   m_Name: FallenSwampLog
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.836281, y: 1.0609533, z: 1.0596808}
   m_Center: {x: -0.17616135, y: 0.00235039, z: 0.0011063635}
---- !u!114 &2189484394671304546
+--- !u!114 &6525664650691944460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,8 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6013181416104601152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed0c86c002c25d743a9386af8ee8d699, type: 3}
+  m_Script: {fileID: 11500000, guid: a195e26a505dfb64cb92a0bbb1d03af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _surfaceType: 2
-  _friction: 0.5
+  surface: 2
