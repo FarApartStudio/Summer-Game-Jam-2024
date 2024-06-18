@@ -18,6 +18,8 @@ public class TerrainDetector
             return;
         }
 
+        Terrain[] terrains = Terrain.activeTerrains;
+
         terrainData = Terrain.activeTerrain.terrainData;
         alphamapWidth = terrainData.alphamapWidth;
         alphamapHeight = terrainData.alphamapHeight;

@@ -56,13 +56,14 @@ public class EnemySpawnArea : MonoBehaviour
                 {
                     yield return new WaitUntil(CanSpawnEnemies);
 
-                    EnemyController newEnemy = ObjectPoolManager.SpawnObject(waveArray[i].waveEnemyArray[j].enemySO.enemyController);
-                    newEnemy.gameObject.transform.position = transform.position;
-                    newEnemy.gameObject.transform.rotation = Quaternion.identity;
+                    EnemyController newEnemy = ObjectPoolManager.SpawnObject(waveArray[i].waveEnemyArray[j].enemySO.enemyController, transform.position,
+                        Quaternion.identity);
+                    newEnemy.gameObject.SetActive(false);
                     newEnemy.OnKilled += EnemyKilled;
-                    newEnemy.Activate(false);
                     enemiesList.Add(newEnemy);
                     OnActivated?.Invoke(newEnemy);
+                    newEnemy.gameObject.SetActive(true);
+                    newEnemy.Activate(false);
                     yield return null;
                 }
             }
