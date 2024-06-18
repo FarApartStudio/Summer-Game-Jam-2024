@@ -76,14 +76,19 @@ public static class EnemyAIActions
    public static bool RandomPosition(Vector3 center, float range, out Vector3 result)
    {
         Vector3 randomPoint = center + Random.insideUnitSphere * range;
-
         NavMeshHit hit;
-        bool isValid = NavMesh.SamplePosition(randomPoint, out hit, .5f, NavMesh.AllAreas);
+        int loopCount = 0;
 
-        while (!isValid)
+        do
         {
             randomPoint = center + Random.insideUnitSphere * range;
-            isValid = NavMesh.SamplePosition(randomPoint, out hit, .5f, NavMesh.AllAreas);
+            loopCount++;
+        } while (!NavMesh.SamplePosition(randomPoint, out hit, .5f, NavMesh.AllAreas) && loopCount < 30);
+
+        if (loopCount >= 30)
+        {
+            result = center;
+            return false;
         }
 
         result = hit.position;
