@@ -14,11 +14,13 @@ public class Pilot : CharacterManager
 {
     [SerializeField] private float normalFOV = 60;
     [SerializeField] private float sprintFOV = 70;
+    [SerializeField] private float reviveInvisibilityTime = 2f;
     [SerializeField] private CameraDirection currentCameraDirection;
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
     [SerializeField] private CharacterCombatController characterCombatController;
     [SerializeField] private CharacterDodge characterDodge;
     [SerializeField] private HealthController healthController;
+    [SerializeField] private ImpactReceiver impactReceiver;
 
     [SerializeField] private Vector3 hipCameraTargetPos;
     [SerializeField] private Vector3 aimLeftCameraTargetPos;
@@ -26,19 +28,20 @@ public class Pilot : CharacterManager
     [SerializeField] private bool canJump = true;
 
     public CharacterCombatController GetCharacterCombatController => characterCombatController;
+    public HealthController GetHealthController => healthController;
 
     private void Start()
     {
         movementController.OnSprintChange += OnSprintChange;
         pilotAnimatorController.OnShootTriggered += OnFire;
 
-        movementController.CanSprint = () => characterCombatController.GetAimMode == ViewMode.HipFire;
-        movementController.CanMove = () => canMove;
-        movementController.CanRotate = () => canRotate;
+        movementController.CanSprint = () => characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive;
+        movementController.CanMove = () => canMove && healthController.IsAlive;
+        movementController.CanRotate = () => canRotate && healthController.IsAlive;
 
-        characterCombatController.CamAim = ()=> !IsPerformingAction;
+        characterCombatController.CamAim = ()=> !IsPerformingAction && healthController.IsAlive;
 
-        characterDodge.CanDodge = () => characterCombatController.GetAimMode == ViewMode.HipFire;
+        characterDodge.CanDodge = () => characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive;
 
         characterDodge.OnDodgeStart += () =>
         {
@@ -49,6 +52,9 @@ public class Pilot : CharacterManager
         {
             healthController.SetInvisibility(false);
         };
+
+        healthController.OnHit += OnHit;
+        healthController.OnDie += OnDie;
 
         ResetActions();
 
@@ -67,27 +73,15 @@ public class Pilot : CharacterManager
 
             cameraController.UpdateInput(InputManager.Instance.GetCameraInput());
 
-            characterCombatController.OnAimModeChanged += OnAimModeChanged;
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                //switch (currentCameraDirection)
-                //{
-                //    case CameraDirection.Left:
-                //        ChangeCameraDirection(CameraDirection.Right);
-                //        break;
-                //    case CameraDirection.Right:
-                //        ChangeCameraDirection(CameraDirection.Left);
-                //        break;
-                //    default:
-                //        break;
-                //}
-            }
+            characterCombatController.OnAimModeChanged += OnAimModeChanged;     
         }
 
         if (InputManager.Instance.GetReloadInput())
         {
-
+            if (!healthController.IsAlive)
+            {
+                Revive();
+            }
         }
 
         if (InputManager.Instance.GetSwapWeaponInput())
@@ -101,10 +95,24 @@ public class Pilot : CharacterManager
         cameraController.AddRecoil(vector);
     }
 
-    public void ChangeCameraDirection(CameraDirection direction)
+    public void ChangeCameraDirection()
     {
-        currentCameraDirection = direction;
-        CameraManager.Instance.ChangeCameraDirection(currentCameraDirection);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            switch (currentCameraDirection)
+            {
+                case CameraDirection.Left:
+                    currentCameraDirection = CameraDirection.Right;
+                    CameraManager.Instance.ChangeCameraDirection(CameraDirection.Right);
+                    break;
+                case CameraDirection.Right:
+                    currentCameraDirection = CameraDirection.Left;
+                    CameraManager.Instance.ChangeCameraDirection(CameraDirection.Left);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void OnSprintChange(bool state)
@@ -142,6 +150,49 @@ public class Pilot : CharacterManager
     private void OnFire()
     {
         characterCombatController.SpawnArrow();
+    }
+
+    private void OnHit(DamageInfo damageInfo)
+    {
+        if(damageInfo.knockback)
+        {
+            if (characterCombatController.GetAimMode == ViewMode.Aim)
+            {
+                characterCombatController.TryCancleShoot();
+            }
+
+            impactReceiver.AddImpact(damageInfo.hitDirection, 50f);
+            pilotAnimatorController.PlayTargetActionAnimation("Knockback", true);
+        }
+
+        if (damageInfo.damage > 0)
+        {
+           // pilotAnimatorController.PlayTargetActionAnimation("Hit", true);
+        }
+    }
+
+    private void OnDie(DamageInfo obj)
+    {
+        if (characterCombatController.GetAimMode == ViewMode.Aim)
+        {
+            characterCombatController.TryCancleShoot();
+        }
+        pilotAnimatorController.PlayTargetActionAnimation("Death", true);
+        pilotAnimatorController.SetlayerWight(1, 0);
+    }
+
+    public void Revive ()
+    {
+        IEnumerator ReviveSequence()
+        {
+            healthController.SetInvisibility(true);
+            yield return new WaitForSeconds(reviveInvisibilityTime);
+            healthController.SetInvisibility(false);
+        }
+        StartCoroutine(ReviveSequence());
+        healthController.RestoreHeal(healthController.GetMaxHealth);
+        pilotAnimatorController.SetlayerWight(1, 1);
+        pilotAnimatorController.PlayTargetActionAnimation("Revive", true);
     }
 
     public override void SetShowWeapon(bool show)

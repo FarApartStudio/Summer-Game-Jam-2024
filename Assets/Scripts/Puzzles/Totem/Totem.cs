@@ -23,12 +23,13 @@ public class Totem : MonoBehaviour, IDamageable
         HandleTimer();
     }
 
-    public void Damage(DamageInfo damageInfo, Vector3 damagePosition)
+    public bool Damage(DamageInfo damageInfo)
     {
         if (isCompleted || isHit)
-            return;
+            return false;
         isHit = true;
         OnHitWhenNotReset.Invoke();
+        return true;
     }
 
     public void SetUp(float resetDelay)

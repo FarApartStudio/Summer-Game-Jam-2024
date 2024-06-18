@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainDetector : MonoBehaviour
+public class TerrainDetector
 {
     private TerrainData terrainData;
     private int alphamapWidth;

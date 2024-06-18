@@ -3010,7 +3010,7 @@ MonoBehaviour:
   _damageSpawnPos: {fileID: 5079648916846668996}
   _damageIndicatorPrefab: {fileID: 5345768983625243310, guid: c6316203e19545f4c9a60428ed12ae3f,
     type: 3}
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 8284560280518573676}
 --- !u!1 &5983064912853937495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3629,7 +3629,7 @@ MonoBehaviour:
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0.431
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

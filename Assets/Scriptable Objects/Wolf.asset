@@ -17,7 +17,7 @@ MonoBehaviour:
   enemyIcon: {fileID: 0}
   enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
     type: 3}
-  damage: 10
+  damage: 20
   health: 100
   enemyType: 0
   skinSets:

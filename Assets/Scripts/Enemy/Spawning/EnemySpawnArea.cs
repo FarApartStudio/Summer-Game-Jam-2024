@@ -60,7 +60,7 @@ public class EnemySpawnArea : MonoBehaviour
                     newEnemy.gameObject.transform.position = transform.position;
                     newEnemy.gameObject.transform.rotation = Quaternion.identity;
                     newEnemy.OnKilled += EnemyKilled;
-                    newEnemy.Activate();
+                    newEnemy.Activate(false);
                     enemiesList.Add(newEnemy);
                     OnActivated?.Invoke(newEnemy);
                     yield return null;

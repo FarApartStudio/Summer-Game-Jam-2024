@@ -14,12 +14,12 @@ public class HitObserver : MonoBehaviour, IDamageable
 
     public UnityEvent GetOnHit => OnHit;
 
-    public void Damage(DamageInfo damageInfo, Vector3 damagePosition)
+    public bool Damage(DamageInfo damageInfo)
     {
-        if (oneTimeUse && isHit) return;
+        if (oneTimeUse && isHit) return false;
         isHit = !isHit ? true : false;
         OnHit.Invoke();
         OnHitToggle.Invoke(isHit);
-
+        return true;
     }
 }

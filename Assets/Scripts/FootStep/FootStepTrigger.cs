@@ -32,6 +32,14 @@ public class FootStepTrigger : MonoBehaviour
         }
     }
 
+    public void Land (AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            PlayFootStepSound(animationEvent);
+        }
+    }
+
     public void PlayFootStepSound(AnimationEvent animationEvent)
     {
         FootStepSurface footStepSurface = GetFootStepSurface(out Vector3 position);
