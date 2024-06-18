@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c001b42f85f8744978d1c465145de1, type: 3}
   m_Name: Crocodile
   m_EditorClassIdentifier: 
-  enemyName: Enraged Crocodile
+  enemyName: Crocodile
   description: 
   enemyIcon: {fileID: 0}
-  enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+  enemyController: {fileID: 8862202830851856819, guid: 4d7aa8d3500da8e4b903659828fd2fd6,
     type: 3}
   damage: 20
   health: 200

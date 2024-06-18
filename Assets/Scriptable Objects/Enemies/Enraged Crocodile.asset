@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Enraged Crocodile
   description: 
   enemyIcon: {fileID: 0}
-  enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+  enemyController: {fileID: 7704999780767206049, guid: b721ea252ced6fa479fff38071477113,
     type: 3}
   damage: 25
   health: 400
