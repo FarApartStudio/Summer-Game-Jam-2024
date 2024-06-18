@@ -15,6 +15,8 @@ public class Pilot : CharacterManager
     [SerializeField] private float normalFOV = 60;
     [SerializeField] private float sprintFOV = 70;
     [SerializeField] private float reviveInvisibilityTime = 2f;
+    [SerializeField] private float normalMoveSpeed = 2.5f;
+    [SerializeField] private float aimMoveSpeed = 1;
     [SerializeField] private CameraDirection currentCameraDirection;
     [SerializeField] private PilotAnimatorController pilotAnimatorController;
     [SerializeField] private CharacterCombatController characterCombatController;
@@ -138,12 +140,12 @@ public class Pilot : CharacterManager
             case ViewMode.HipFire:
                 CameraManager.Instance.ToggleAimCamera(false);
                 movementController.SetRotateOnMove(true);
-               // isPerformingAction = false;
+                movementController.SetMoveSpeed(normalMoveSpeed);
                 break;
             case ViewMode.Aim:
                 CameraManager.Instance.ToggleAimCamera(true);
                 movementController.SetRotateOnMove(false);
-               // isPerformingAction = true;
+                movementController.SetMoveSpeed(aimMoveSpeed);
                 break;
         }
     }
@@ -161,6 +163,8 @@ public class Pilot : CharacterManager
             {
                 characterCombatController.TryCancleShoot();
             }
+
+            CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
 
             impactReceiver.AddImpact(damageInfo.hitDirection, 50f);
             pilotAnimatorController.PlayTargetActionAnimation("Knockback", true);

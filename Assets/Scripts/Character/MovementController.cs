@@ -297,6 +297,11 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    public void SetMoveSpeed(float value)
+    {
+        moveSpeed = value;
+    }
+
     private void OnDrawGizmos()
     {
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
