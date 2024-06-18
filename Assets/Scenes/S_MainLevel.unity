@@ -32143,17 +32143,17 @@ PrefabInstance:
     - target: {fileID: 292540048303893874, guid: 855aa981ea701834496fa01c6c45df2d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.13
+      value: 4.18
       objectReference: {fileID: 0}
     - target: {fileID: 292540048303893874, guid: 855aa981ea701834496fa01c6c45df2d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.54
+      value: -11.78
       objectReference: {fileID: 0}
     - target: {fileID: 292540048303893874, guid: 855aa981ea701834496fa01c6c45df2d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 52.32
+      value: 52.3
       objectReference: {fileID: 0}
     - target: {fileID: 292540048303893874, guid: 855aa981ea701834496fa01c6c45df2d,
         type: 3}
@@ -39430,11 +39430,21 @@ PrefabInstance:
     - target: {fileID: 2916153116336937541, guid: 04c3bfd94f27c6540b66dc75225a316f,
         type: 3}
       propertyPath: _enemySpawnTriggers.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2916153116336937541, guid: 04c3bfd94f27c6540b66dc75225a316f,
         type: 3}
       propertyPath: _enemySpawnTriggers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1772826011}
+    - target: {fileID: 2916153116336937541, guid: 04c3bfd94f27c6540b66dc75225a316f,
+        type: 3}
+      propertyPath: _enemySpawnTriggers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1991623931}
+    - target: {fileID: 2916153116336937541, guid: 04c3bfd94f27c6540b66dc75225a316f,
+        type: 3}
+      propertyPath: _enemySpawnTriggers.Array.data[2]
       value: 
       objectReference: {fileID: 5074151505717089112}
     - target: {fileID: 3333194790371300726, guid: 04c3bfd94f27c6540b66dc75225a316f,
@@ -78605,7 +78615,8 @@ MonoBehaviour:
         m_CallState: 2
   enemySpawnAreaArray:
   - {fileID: 836871506}
-  - {fileID: 0}
+  - {fileID: 1166180691}
+  - {fileID: 778890806}
 --- !u!65 &1772826012
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -95522,7 +95533,6 @@ MonoBehaviour:
         m_CallState: 2
   enemySpawnAreaArray:
   - {fileID: 3327251032008080030}
-  - {fileID: 0}
 --- !u!65 &5638829441442087309
 BoxCollider:
   m_ObjectHideFlags: 0
