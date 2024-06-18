@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameMenu : GenericMenu<GameMenu>
 {
@@ -23,6 +24,17 @@ public class GameMenu : GenericMenu<GameMenu>
 
     [Header("PlayerHealth")]
     [SerializeField] private Image healthBar;
+
+    [Header("TaskPrompt")]
+    [SerializeField] private Transform _taskPrompt;
+    [SerializeField] private TextMeshProUGUI _taskPromptText;
+
+    [Header ("TutorialPrompt")]
+    [SerializeField] private Transform _tutorialPrompt;
+    [SerializeField] private TextMeshProUGUI _tutorialActionText;
+    [SerializeField] private Image _tutorialKeyImage;
+    [SerializeField] private TextMeshProUGUI _tutorialActionDescription;
+
 
     private JuicerRuntimeCore<float> _fadeInOutEffect;
     private JuicerRuntimeCore<float> _fadeOutEffect;
@@ -82,5 +94,15 @@ public class GameMenu : GenericMenu<GameMenu>
     public void SetPlayerHealthBar(float value)
     {
         healthBar.fillAmount = value;
+    }
+
+    public void SetMissionPrompt(string text)
+    {
+        _taskPromptText.text = text;
+    }
+
+    public void SetTutorialPrompt(TutorialKeyPromptData data)
+    {
+
     }
 }

@@ -108,6 +108,9 @@ public class StoryModeManager : MonoBehaviour
         _healthBarMenu = UIManager.GetMenu<HealthBarMenu>();
         _screenFadeMenu = UIManager.GetMenu<ScreenFadeMenu>();
         _cinematicMenu = UIManager.GetMenu<CinematicMenu>();
+
+        TaskPrompt.OnMissionPrompt  = (text) => _gameMenu.SetMissionPrompt(text);
+        TutorialKeyPrompt.OnTutorialPrompt = (data) => _gameMenu.SetTutorialPrompt(data);
     }
 
     public void SpawnCharacter ()

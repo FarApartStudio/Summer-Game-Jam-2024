@@ -1571,16 +1571,16 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8240854005087891487}
   m_Father: {fileID: 2585160267671376157}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -117.52}
+  m_AnchoredPosition: {x: 0.00012207031, y: -177.51999}
   m_SizeDelta: {x: 580, y: 120}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1646500433878217342
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3011,6 +3011,12 @@ MonoBehaviour:
   _damageIndicatorPrefab: {fileID: 5345768983625243310, guid: c6316203e19545f4c9a60428ed12ae3f,
     type: 3}
   healthBar: {fileID: 8284560280518573676}
+  _taskPrompt: {fileID: 2029759296718367387}
+  _taskPromptText: {fileID: 4472756473890661588}
+  _tutorialPrompt: {fileID: 8841729399302800908}
+  _tutorialActionText: {fileID: 636741233357330509}
+  _tutorialKeyImage: {fileID: 5250113007992844844}
+  _tutorialActionDescription: {fileID: 4791272129599998600}
 --- !u!1 &5983064912853937495
 GameObject:
   m_ObjectHideFlags: 0
