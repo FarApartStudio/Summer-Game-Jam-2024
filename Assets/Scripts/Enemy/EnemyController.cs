@@ -95,6 +95,7 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         //navMeshAgent.updateRotation = false;
+        spawnPos = transform.position;
         hitDelayTime = new WaitForSeconds(hitAnimationDelay);
         damageDefector.OnDefect = OnDamageDefect;
         AssignEvents();

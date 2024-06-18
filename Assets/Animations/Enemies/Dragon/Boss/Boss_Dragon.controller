@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-8833174087399291501
+--- !u!1102 &-7431761024601015670
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cinematic_Take Off
+  m_Name: Take Off
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -20,20 +20,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c897c9272e1aa7143b761b9a09a0fa95, type: 2}
+  m_Motion: {fileID: 7400000, guid: da645e0f88000ac4796fd08a6dd84ecd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-8407515207102145638
+--- !u!1102 &-2520453933718359312
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cinematic_Fly Forward
+  m_Name: Fly Forward
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -46,20 +46,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c2d12e132692c5442b6ba94cfd198b39, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9987ae369e854584b8ac55afc70c51cd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-8370568128677126472
+--- !u!1102 &-271949582518753168
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cinematic_Fly Glide
+  m_Name: Fly Glide
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -72,33 +72,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f62cda323b46169408f2dc403a97af28, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-462683470844530847
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Cinematic_Fly Float
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d7e2dba323544f944be9066a10f2dc62, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5dc4fc95ebd74904294d77598bad9aea, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -136,17 +110,17 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -462683470844530847}
-    m_Position: {x: -200, y: -290, z: 0}
+    m_State: {fileID: 7927542040647683979}
+    m_Position: {x: -230, y: -280, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -8407515207102145638}
-    m_Position: {x: -200, y: -220, z: 0}
+    m_State: {fileID: -2520453933718359312}
+    m_Position: {x: -220, y: -230, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -8370568128677126472}
-    m_Position: {x: -200, y: -170, z: 0}
+    m_State: {fileID: -271949582518753168}
+    m_Position: {x: -220, y: -180, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -8833174087399291501}
-    m_Position: {x: -190, y: -120, z: 0}
+    m_State: {fileID: -7431761024601015670}
+    m_Position: {x: -230, y: -110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -156,4 +130,30 @@ AnimatorStateMachine:
   m_EntryPosition: {x: -456, y: -360, z: 0}
   m_ExitPosition: {x: -456, y: -312, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -8407515207102145638}
+  m_DefaultState: {fileID: 7927542040647683979}
+--- !u!1102 &7927542040647683979
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Fly Float
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 67fb658989854784b8b64fda44dc3629, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
