@@ -56,8 +56,7 @@ public class EnemySpawnArea : MonoBehaviour
 
         for (int i = 0; i < waveArray.Length; i++)
         {
-            if (i != 0)
-                yield return new WaitForSeconds(timeBetweenWaves);
+            if (i != 0)  yield return new WaitForSeconds(timeBetweenWaves);
 
             yield return new WaitUntil(() => IsCleared);
 
