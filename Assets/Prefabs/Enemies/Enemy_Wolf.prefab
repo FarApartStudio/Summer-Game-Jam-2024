@@ -2139,7 +2139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0706a0bf060ea5b4bb1b2fb447003c53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanSize: 6
+  scanSize: 8
   maxScanAtOnce: 1
   scanLayer:
     serializedVersion: 2

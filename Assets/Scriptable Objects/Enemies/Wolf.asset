@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c001b42f85f8744978d1c465145de1, type: 3}
   m_Name: Wolf
   m_EditorClassIdentifier: 
-  enemyName: Wolf
+  enemyName: Boar
   description: 
   enemyIcon: {fileID: 0}
   enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
     type: 3}
-  damage: 20
+  damage: 10
   health: 100
   enemyType: 0
   skinSets:

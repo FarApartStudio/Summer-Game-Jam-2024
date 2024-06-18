@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c001b42f85f8744978d1c465145de1, type: 3}
+  m_Name: Boar
+  m_EditorClassIdentifier: 
+  enemyName: Boar
+  description: 
+  enemyIcon: {fileID: 0}
+  enemyController: {fileID: 8053882484329318810, guid: 0ac8ce09ebcea75458fd9e2ee7831a88,
+    type: 3}
+  damage: 20
+  health: 150
+  enemyType: 0
+  skinSets:
+    materials:
+    - materials:
+      - {fileID: 2100000, guid: 5bb8986db15b3084eae09587c43d3b0e, type: 2}
+      - {fileID: 2100000, guid: 672132e503145cc499af49c5bed4953c, type: 2}
+      - {fileID: 2100000, guid: 73a093030ebf4e24d920102c89db9c04, type: 2}
+      - {fileID: 2100000, guid: 1f307dd517392c54d8f1271892e11416, type: 2}
+    - materials:
+      - {fileID: 2100000, guid: 5bb8986db15b3084eae09587c43d3b0e, type: 2}
+      - {fileID: 2100000, guid: 672132e503145cc499af49c5bed4953c, type: 2}
+      - {fileID: 2100000, guid: 73a093030ebf4e24d920102c89db9c04, type: 2}
+      - {fileID: 2100000, guid: 1f307dd517392c54d8f1271892e11416, type: 2}
+  hasRage: 0
+  canKnockBack: 0
