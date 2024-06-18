@@ -28,6 +28,15 @@ public class EnemyActivator : MonoBehaviour
 
         foreach (var enemy in enemies)
         {
+            enemy.gameObject.SetActive(false);
+        }
+    }
+
+    public void Spawn()
+    {
+        foreach (var enemy in enemies)
+        {
+            enemy.gameObject.SetActive(true);
             enemy.Activate(true);
             enemy.OnKilled += EnemyKilled;
             OnActivated?.Invoke(enemy);
