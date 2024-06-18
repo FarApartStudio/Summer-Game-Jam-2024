@@ -20779,6 +20779,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1090451602904029541, guid: bc0a6bfdd77571242bef870a33bc125d,
+        type: 3}
+      propertyPath: missionPromptText
+      value: Kill them all
+      objectReference: {fileID: 0}
     - target: {fileID: 1130626965888713438, guid: bc0a6bfdd77571242bef870a33bc125d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26435,7 +26440,7 @@ PrefabInstance:
     - target: {fileID: 7291464407406056494, guid: 89965df0897125c41ab069d74f4c7c43,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.25
+      value: 11.86
       objectReference: {fileID: 0}
     - target: {fileID: 7291464407406056494, guid: 89965df0897125c41ab069d74f4c7c43,
         type: 3}
@@ -26481,6 +26486,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7580910976101164891, guid: 89965df0897125c41ab069d74f4c7c43,
+        type: 3}
+      propertyPath: _tutorialPromptData.keyImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 24df0f5bf698d8c40bba5e96c78640c5,
+        type: 3}
+    - target: {fileID: 7580910976101164891, guid: 89965df0897125c41ab069d74f4c7c43,
+        type: 3}
+      propertyPath: _tutorialPromptData.ActionText
+      value: Press
+      objectReference: {fileID: 0}
+    - target: {fileID: 7580910976101164891, guid: 89965df0897125c41ab069d74f4c7c43,
+        type: 3}
+      propertyPath: _tutorialPromptData.ActionDescription
+      value: movee
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
