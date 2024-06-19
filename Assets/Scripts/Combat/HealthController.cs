@@ -13,7 +13,7 @@ public interface IHealth
 {
     Transform transform { get; }
     bool DealDamage(DamageInfo healthModification);
-    void RestoreHeal(int amount);
+    bool RestoreHeal(int amount);
     int GetCurrentHealth { get; }
     int GetMaxHealth { get; }
     float GetNormalisedHealth { get; }
@@ -57,6 +57,7 @@ public class HealthController : MonoBehaviour, IHealth
     public bool HasDamageDelay => damageDelayDuration > 0;
 
     public bool IsAlive => currentHealth > 0;
+    public bool HasMaxHealth => currentHealth == maxHealth;
 
     private void Awake()
     {
@@ -106,11 +107,18 @@ public class HealthController : MonoBehaviour, IHealth
         return true;
     }
 
-    public void RestoreHeal(int amount)
+    public bool RestoreHeal(int amount)
     {
+        if (!IsAlive)
+            return false;
+
+        if (HasMaxHealth)
+            return false;
+
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         OnHeal?.Invoke(amount);
         OnHealthChanged?.Invoke(this);
+        return true;
     }
 
     public IEnumerator ResetDamageDelay()

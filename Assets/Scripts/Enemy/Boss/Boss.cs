@@ -7,7 +7,7 @@ public class Boss : MonoBehaviour
 {
     [SerializeField] private EnemyController _enemyController;
 
-    private void Awake()
+    private void Start()
     {
         Activate();
     }

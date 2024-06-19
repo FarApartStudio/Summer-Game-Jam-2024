@@ -3189,6 +3189,10 @@ MonoBehaviour:
   _tutorialActionText: {fileID: 636741233357330509}
   _tutorialKeyImage: {fileID: 5250113007992844844}
   _tutorialActionDescription: {fileID: 4791272129599998600}
+  _bossHealthBarUI: {fileID: 0}
+  _bossHealthBar: {fileID: 0}
+  _gameOverScreen: {fileID: 0}
+  _triesText: {fileID: 0}
   _pauseMenu: {fileID: 4948776913320805417}
   _settingBtn: {fileID: 358081213247162266}
   _resumeBtn: {fileID: 492152506127631147}
