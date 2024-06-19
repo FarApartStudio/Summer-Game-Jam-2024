@@ -83,21 +83,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRetry: 3
-  _currentArea: 2
+  _currentArea: 1
   rainStormDuration: 15
   _playerPrefab: {fileID: 8046655933381770757, guid: 676160572f9c2d44389b6212140b2837,
     type: 3}
   storySpawnpoint: {fileID: 3333194790371300726}
   swampSpawnpoint: {fileID: 1538682951354889435}
   bossSpawnpoint: {fileID: 5296208552505169122}
+  _tutorialArea: {fileID: 0}
   cinematicActors: {fileID: 0}
   _introTimeline: {fileID: 0}
+  swampArea: {fileID: 0}
   _cinematicTwoTrigger: {fileID: 0}
   cinematicActorsTwo: {fileID: 0}
   _introTimelineTwo: {fileID: 0}
+  bossArea: {fileID: 0}
   _cinematicThreeTrigger: {fileID: 0}
   cinematicActorsThree: {fileID: 0}
   _introTimelineThree: {fileID: 0}
+  endVideo: {fileID: 32900000, guid: 441affc3cb497e84bad1a4ef8febf78f, type: 3}
+  _boss: {fileID: 0}
   _rainStormPrefab: {fileID: 9003350017393715044, guid: 1411c5b53334f204cafcc083086fb50f,
     type: 3}
   _windlinesPrefab: {fileID: 563756001746810986, guid: df8fbca8d8dd0424e8950a670fafe763,
@@ -109,8 +114,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   test: 0
-  testArea: 2
+  testArea: 3
 --- !u!114 &2933608319754947350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 3171347585107338286}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 328.58, y: 7.72, z: -178.76}
+  m_LocalPosition: {x: 406.114, y: 8.167, z: -148.256}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

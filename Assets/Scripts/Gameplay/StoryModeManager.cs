@@ -356,7 +356,11 @@ public class StoryModeManager : MonoBehaviour
                 TeleportPlayer(lastCheckPoint.GetSpawnPos);
             }
 
-        }, () => _player.Revive());
+        }, () =>
+        {
+            Debug.Log("Fade Out");
+            _player.Revive();
+        });
     }
 
     private void PlayerChanged(IHealth obj)
@@ -451,17 +455,23 @@ public class StoryModeManager : MonoBehaviour
 
     private void EndGame()
     {
-        _screenFadeMenu.Open().ShowWithFade(1, .5f, () =>
+        AudioSystem.StopAudioWithFade(AudioCategory.Music);
+
+        IEnumerator EndGameRoutine()
         {
+            yield return new WaitForSeconds(3);
+
             _gameMenu.Close();
             _healthBarMenu.Close();
             _screenFadeMenu.Close();
 
-            UIManager.GetMenu<MovieMenu>().Play(endVideo,null, () =>
+            UIManager.GetMenu<MovieMenu>().Play(endVideo, null, () =>
             {
                 LoadingScreen.Instance.LoadScene(0);
             });
-        });
+        }
+
+        StartCoroutine(EndGameRoutine());
     }
 
     private void EnableNeedAreas ()
