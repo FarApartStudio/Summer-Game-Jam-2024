@@ -442,8 +442,26 @@ public class StoryModeManager : MonoBehaviour
 
     private void StartBossFight ()
     {
+        _gameMenu.ShowBossHealthBar(true);
+        AudioSystem.PlayAudio(AudioTypeID.CombatMusic, AudioCategory.Music, volume: .5f);
         _boss.Activate(_player.transform);
         _boss.GetHealthController.OnHealthChanged += (health) => _gameMenu.SetBossHealthBar(health.GetNormalisedHealth);
+        _boss.GetHealthController.OnDie += (info) => EndGame();
+    }
+
+    private void EndGame()
+    {
+        _screenFadeMenu.Open().ShowWithFade(1, .5f, () =>
+        {
+            _gameMenu.Close();
+            _healthBarMenu.Close();
+            _screenFadeMenu.Close();
+
+            UIManager.GetMenu<MovieMenu>().Play(endVideo,null, () =>
+            {
+                LoadingScreen.Instance.LoadScene(0);
+            });
+        });
     }
 
     private void EnableNeedAreas ()
