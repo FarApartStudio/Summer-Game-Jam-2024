@@ -10,6 +10,10 @@ using TMPro;
 
 public class GameMenu : GenericMenu<GameMenu>
 {
+    public Action OnSettingsPressed;
+    public Action OnResumePressed;
+    public Action OnQuitPressed;
+
     [Header("Crosshair")]
     [SerializeField] private Transform _crosshair;
 
@@ -34,6 +38,12 @@ public class GameMenu : GenericMenu<GameMenu>
     [SerializeField] private TextMeshProUGUI _tutorialActionText;
     [SerializeField] private Image _tutorialKeyImage;
     [SerializeField] private TextMeshProUGUI _tutorialActionDescription;
+
+    [Header("Pause")]
+    [SerializeField] private Transform _pauseMenu;
+    [SerializeField] private Button _settingBtn;
+    [SerializeField] private Button _resumeBtn;
+    [SerializeField] private Button _quitBtn;
 
 
     private JuicerRuntimeCore<float> _fadeInOutEffect;
@@ -61,6 +71,10 @@ public class GameMenu : GenericMenu<GameMenu>
 
         _lowHealthEffect = healthBar.transform.parent.JuicyScale(1.1f, .15f);
         _lowHealthEffect.SetLoop(0);
+
+        _settingBtn.onClick.AddListener(() => OnSettingsPressed?.Invoke());
+        _resumeBtn.onClick.AddListener(() => OnResumePressed?.Invoke());
+        _quitBtn.onClick.AddListener(() => OnQuitPressed?.Invoke());
     }
 
     protected override void OnOpened()
@@ -156,5 +170,11 @@ public class GameMenu : GenericMenu<GameMenu>
         _tutorialActionText.text = data.ActionText;
         _tutorialKeyImage.sprite = data.keyImage;
         _tutorialActionDescription.text = data.ActionDescription;
+    }
+
+    public void TogglePause (bool state)
+    {
+        _pauseMenu.gameObject.SetActive(state);
+        Time.timeScale = state ? 0 : 1;
     }
 }

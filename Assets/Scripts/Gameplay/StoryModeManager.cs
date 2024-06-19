@@ -6,12 +6,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 public class StoryModeManager : MonoBehaviour
 {
     public static StoryModeManager Instance { get; private set; }
 
+    [SerializeField] private int _currentArea = 1;
 
+    [Header("Settings")]
     [SerializeField] private Pilot _playerPrefab;
     [SerializeField] private Transform storySpawnpoint;
     [SerializeField] private Transform swampSpawnpoint;
@@ -43,6 +47,8 @@ public class StoryModeManager : MonoBehaviour
     private HealthBarMenu _healthBarMenu;
     private ScreenFadeMenu _screenFadeMenu;
     private CinematicMenu _cinematicMenu;
+    private bool isPaused;
+
 
     public Pilot GetPlayer => _player;
 
@@ -57,14 +63,14 @@ public class StoryModeManager : MonoBehaviour
 
         if (test)
         {
-            SpawnCharacter();
+            SpawnCharacter(storySpawnpoint);
             ActivateEnemies();
             _gameMenu.Open();
             _healthBarMenu.Open();
             return;
         }
 
-        IntroCutScene();
+        LoadArea(_currentArea);
     }
 
     private void Update()
@@ -73,6 +79,34 @@ public class StoryModeManager : MonoBehaviour
         //{
      
         //}
+    }
+
+    private void LoadArea(int area)
+    {
+        switch (area)
+        {
+            case 1:
+                IntroCutScene();
+                break;
+            case 2:
+
+                _screenFadeMenu.Open().ShowWithFade(1, 1.5f, () =>
+                {
+                    SpawnCharacter(swampSpawnpoint);
+
+                    ActivateEnemies();
+
+                    EnvironmeentEvents();
+
+                    _gameMenu.Open();
+
+                    _healthBarMenu.Open();
+                });
+
+                break;
+            case 3:
+                break;
+        }
     }
 
     public void IntroCutScene()
@@ -85,7 +119,7 @@ public class StoryModeManager : MonoBehaviour
 
                 cinematicActors.SetActive(false);
 
-                SpawnCharacter();
+                SpawnCharacter(storySpawnpoint);
 
                 ActivateEnemies();
 
@@ -102,6 +136,8 @@ public class StoryModeManager : MonoBehaviour
            
         };
 
+        cinematicActors.gameObject.SetActive(true);
+
         _introTimeline.Play();
 
         _cinematicMenu.Open();
@@ -109,6 +145,8 @@ public class StoryModeManager : MonoBehaviour
 
     public void SecondCutScene()
     {
+        _currentArea++;
+
         _introTimelineTwo.AddTimeEvent(0.8f, () =>
         {
             _screenFadeMenu.Open().Show(1, .5f, OnFadeMid: () =>
@@ -143,10 +181,38 @@ public class StoryModeManager : MonoBehaviour
         _screenFadeMenu = UIManager.GetMenu<ScreenFadeMenu>();
         _cinematicMenu = UIManager.GetMenu<CinematicMenu>();
 
+        _gameMenu.OnSettingsPressed += () =>
+        {
+
+        };
+
+        _gameMenu.OnResumePressed += () =>
+        {
+            TogglePause (false);
+        };
+
+        _gameMenu.OnQuitPressed += () =>
+        {
+            LoadingScreen.Instance.LoadScene(0);
+        };
+
+        InputManager.Instance.OnPauseBtnPressed = () =>
+        {
+            TogglePause (!isPaused);
+        };
+
         TaskPrompt.OnMissionPrompt  = (text) => _gameMenu.SetMissionPrompt(text);
         TutorialKeyPrompt.OnTutorialPrompt = (data) => _gameMenu.SetTutorialPrompt(data);
 
         _cinematicTwoTrigger.OnInteractStart += OnInteractStart;
+    }
+
+    public void TogglePause (bool state)
+    {
+        isPaused = state;
+        _gameMenu.TogglePause(isPaused);
+        InputManager.Instance.ToggleCursor(state);
+        _player.ToggleMovement(!state);
     }
 
     private void OnInteractStart(Collider obj)
@@ -156,9 +222,9 @@ public class StoryModeManager : MonoBehaviour
         SecondCutScene();
     }
 
-    public void SpawnCharacter ()
+    public void SpawnCharacter (Transform spawnPoint)
     {
-        _player = Instantiate(_playerPrefab, storySpawnpoint.position, storySpawnpoint.rotation);
+        _player = Instantiate(_playerPrefab, spawnPoint.position, spawnPoint.rotation);
 
         _windlines = Instantiate(_windlinesPrefab, _player.transform.position, Quaternion.identity);
         _windlines.SetTarget(_player.transform);
@@ -245,6 +311,11 @@ public class StoryModeManager : MonoBehaviour
         _player.transform.position = spawnpoint.position;
         _player.transform.rotation = spawnpoint.rotation;
         _player.gameObject.SetActive(true);
+    }
+
+    private void RestartGame()
+    {
+        LoadingScreen.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     [Button]

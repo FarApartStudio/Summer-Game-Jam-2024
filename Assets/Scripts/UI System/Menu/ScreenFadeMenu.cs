@@ -78,4 +78,15 @@ public class ScreenFadeMenu : GenericMenu<ScreenFadeMenu>
         _fadeInOutEffect.SetDuration(duration);
         _fadeInOutEffect.Start();
     }
+
+    public void ShowWithFade(float duration = 1, float waitDelay = 1, Action OnFadeStart = null)
+    {
+        _OnFadeStart = OnFadeStart;
+        _canvasGroup.alpha = 1;
+
+        OnFadeStart?.Invoke();
+        _fadeOutEffect.SetDelay(waitDelay);
+        _fadeOutEffect.SetDuration(duration);
+        _fadeOutEffect.Start ();
+    }
 }

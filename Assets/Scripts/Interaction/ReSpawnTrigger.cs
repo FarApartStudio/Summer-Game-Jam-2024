@@ -1,3 +1,4 @@
+using Pelumi.UISystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.Events;
 
 public class ReSpawnTrigger : MonoBehaviour
 {
+    [SerializeField] int damage = 10;
     [SerializeField] private UnityEvent OnUse;
     private Transform[] spawnPoints;
 
@@ -21,15 +23,43 @@ public class ReSpawnTrigger : MonoBehaviour
     {
         if (other.TryGetComponent(out Pilot pilot))
         {
-            Transform spawnPoint = GetRandomSpawnPoint();
-            pilot.gameObject.SetActive(false);  
-            pilot.transform.position = spawnPoint.position;
-            pilot.transform.rotation = spawnPoint.rotation;
-            pilot.gameObject.SetActive(true);
+            DamageInfo damageInfo = new DamageInfo();
+            damageInfo.damage = damage;
+            pilot.GetHealthController.DealDamage(damageInfo);
+            if (!pilot.GetHealthController.IsAlive)
+                return;
+
+            pilot.GetHealthController.SetInvisibility(true);
+
+            UIManager.OpenMenu<ScreenFadeMenu>().Show(.5f, .25f, ()=>
+            {
+ 
+            },
+                
+            OnFadeMid: () =>
+            {
+                Transform spawnPoint = GetRandomSpawnPoint();
+                pilot.gameObject.SetActive(false);
+                pilot.transform.position = spawnPoint.position;
+                pilot.transform.rotation = spawnPoint.rotation;
+                pilot.gameObject.SetActive(true);
+            },
+            ()=>
+            {
+                IEnumerator SetInvisibility()
+                {
+                    yield return new WaitForSeconds(1);
+                    pilot.GetHealthController.SetInvisibility(false);
+                }
+
+                StartCoroutine(SetInvisibility());
+            });
 
             OnUse?.Invoke();
         }
     }
+
+
 
     private Transform GetRandomSpawnPoint()
     {

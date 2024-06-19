@@ -170,7 +170,7 @@ namespace Pelumi.AudioSystem
 
         public static void PlayAudio(AudioTypeID audioType, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)
         {
-            PlayAudio(audioType.ToString(), audioCategory, loop, fadeduration);
+            PlayAudio(audioType.ToString(), audioCategory, loop, fadeduration, volume);
         }
 
         public static void PlayAudio(string id, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)

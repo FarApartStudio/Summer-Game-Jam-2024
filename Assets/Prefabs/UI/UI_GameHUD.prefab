@@ -3017,6 +3017,10 @@ MonoBehaviour:
   _tutorialActionText: {fileID: 636741233357330509}
   _tutorialKeyImage: {fileID: 5250113007992844844}
   _tutorialActionDescription: {fileID: 4791272129599998600}
+  _pauseMenu: {fileID: 4948776913320805417}
+  _settingBtn: {fileID: 358081213247162266}
+  _resumeBtn: {fileID: 492152506127631147}
+  _quitBtn: {fileID: 3304192558142122254}
 --- !u!1 &5983064912853937495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3248,7 +3252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3633121680179145521
 RectTransform:
   m_ObjectHideFlags: 0

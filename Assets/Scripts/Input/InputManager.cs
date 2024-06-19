@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
 
+    public Action OnPauseBtnPressed;
+
     [SerializeField] private Vector2 movementInput;
     [SerializeField] private bool lockCursor;
     private PlayerControls playerControls;
@@ -18,30 +20,26 @@ public class InputManager : MonoBehaviour
         {
             Instance = this;
             playerControls = new PlayerControls();
-
-            playerControls.Player.Aim.performed += Aim_performed;
-            playerControls.Player.Aim.canceled += Aim_canceled;
+            playerControls.Player.Pause.performed += Pause_performed;
         }
+    }
+
+    private void Pause_performed(InputAction.CallbackContext obj)
+    {
+        OnPauseBtnPressed?.Invoke();
     }
 
     private void Start()
     {
-        if (lockCursor)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        ToggleCursor (!lockCursor);
     }
 
-    private void Aim_canceled(InputAction.CallbackContext obj)
+    public void ToggleCursor(bool value)
     {
-
+        Cursor.lockState = value ?  CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = value;
     }
 
-    private void Aim_performed(InputAction.CallbackContext obj)
-    {
-  
-    }
 
     public Vector2 GetMovementInput()
     {
@@ -115,6 +113,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        playerControls.Player.Pause.performed -= Pause_performed;
         playerControls.Dispose();
     }
 }
