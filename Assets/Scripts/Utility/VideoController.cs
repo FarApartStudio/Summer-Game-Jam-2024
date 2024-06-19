@@ -8,35 +8,27 @@ using Pelumi.Juicer;
 
 public class VideoController : MonoBehaviour
 {
-    public Action OnStarted;
-    public Action OnCompleted;
-
     [SerializeField] private VideoPlayer videoPlayer;
-    [SerializeField] private VideoClip videoClip;
-    [SerializeField] private CanvasGroup canvasGroup;
 
+    private Action OnStarted;
+    private Action OnCompleted;
+    private VideoClip videoClip;
     private Coroutine _playVideoCoroutine;
 
-    public void PlayVideo()
+    public void PlayVideo(VideoClip clip, Action onStarted, Action onCompleted)
     {
-        _playVideoCoroutine = StartCoroutine(PlayVideo(videoClip));
+        OnStarted = onStarted;
+        OnCompleted = onCompleted;
+        videoClip = clip;
+        _playVideoCoroutine = StartCoroutine(PlayVideo());
     }
 
-    public IEnumerator PlayVideo(VideoClip videoClip)
+    public IEnumerator PlayVideo()
     {
         OnStarted?.Invoke();
-        videoPlayer.clip = videoClip;
         videoPlayer.Play();
         yield return new WaitForSecondsRealtime((float)videoClip.length + 1);
         OnCompleted?.Invoke();
-    }
-
-    public IEnumerator PlayVideo(VideoClip videoClip, IEnumerator OnComplected = null)
-    {
-        videoPlayer.clip = videoClip;
-        videoPlayer.Play();
-        yield return new WaitForSecondsRealtime((float)videoClip.length + 1);
-        if(OnComplected != null) yield return OnComplected;
     }
 
     public void SkipVideo()

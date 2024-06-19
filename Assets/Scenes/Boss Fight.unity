@@ -2407,51 +2407,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1376364345}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!1 &795473450
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 795473451}
-  - component: {fileID: 795473452}
-  m_Layer: 0
-  m_Name: CheckPointManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &795473451
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795473450}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -282.51358, y: -161.3954, z: 6.2278028}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8868671346241471487}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &795473452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795473450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3dceb2855c7ae46b9fc555289d443d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _checkpoints: []
 --- !u!1 &800127922
 GameObject:
   m_ObjectHideFlags: 0
@@ -27847,19 +27802,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1577384260731861137, guid: 04c3bfd94f27c6540b66dc75225a316f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 795473451}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3bfd94f27c6540b66dc75225a316f, type: 3}
---- !u!4 &8868671346241471487 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1577384260731861137, guid: 04c3bfd94f27c6540b66dc75225a316f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8868671346241471486}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8963107865730105893
 MonoBehaviour:
   m_ObjectHideFlags: 0

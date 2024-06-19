@@ -63,6 +63,8 @@ public class StoryModeManager : MonoBehaviour
     {
         InitUI();
 
+        InputManager.Instance.ToggleCursor(false);
+
         AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music);
 
         if (test)
