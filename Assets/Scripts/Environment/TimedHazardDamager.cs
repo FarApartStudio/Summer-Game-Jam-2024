@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimedHazardManager : MonoBehaviour
+public class TimedHazardDamager : MonoBehaviour
 {
     [SerializeField] private float damageInterval;
     [SerializeField] private int damage;

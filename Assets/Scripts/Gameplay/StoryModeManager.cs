@@ -25,15 +25,18 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private Transform bossSpawnpoint;
 
     [Header("First Cinematic")]
+    [SerializeField] private GameObject _tutorialArea;
     [SerializeField] private GameObject cinematicActors;
     [SerializeField] private TimelineController _introTimeline;
 
     [Header("Second Cinematic")]
+    [SerializeField] private GameObject swampArea;
     [SerializeField] private InteractionHandler _cinematicTwoTrigger;
     [SerializeField] private GameObject cinematicActorsTwo;
     [SerializeField] private TimelineController _introTimelineTwo;
 
     [Header("Third Cinematic")]
+    [SerializeField] private GameObject bossArea;
     [SerializeField] private InteractionHandler _cinematicThreeTrigger;
     [SerializeField] private GameObject cinematicActorsThree;
     [SerializeField] private TimelineController _introTimelineThree;
@@ -65,6 +68,8 @@ public class StoryModeManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _currentArea = PlayerPrefs.GetInt("CurrentArea", 1);
+        EnableNeedAreas();
     }
 
     private void Start()
@@ -84,7 +89,7 @@ public class StoryModeManager : MonoBehaviour
             return;
         }
 
-        _currentArea = PlayerPrefs.GetInt("CurrentArea", 1);
+
 
         LoadArea(_currentArea);
     }
@@ -186,10 +191,12 @@ public class StoryModeManager : MonoBehaviour
 
         _introTimelineTwo.OnFinished += (timeline) =>
         {
-
+            DisableArea(1);
         };
 
         _gameMenu.Close();
+
+        EnableArea(2);
 
         cinematicActorsTwo.gameObject.SetActive(true);
 
@@ -218,8 +225,10 @@ public class StoryModeManager : MonoBehaviour
 
         _introTimelineThree.OnFinished += (timeline) =>
         {
-
+            DisableArea(2);
         };
+
+        EnableArea(3);
 
         _gameMenu.Close();
 
@@ -418,6 +427,54 @@ public class StoryModeManager : MonoBehaviour
     private void RestartGame()
     {
         LoadingScreen.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void EnableNeedAreas ()
+    {
+        if (_currentArea == 1)
+        {
+            _tutorialArea.SetActive(true);
+        }
+        else if (_currentArea == 2)
+        {
+            swampArea.SetActive(true);
+        }
+        else if (_currentArea == 3)
+        {
+            bossArea.SetActive(true);
+        }
+    }
+
+    private void EnableArea(int area)
+    {
+        if (area == 1)
+        {
+            _tutorialArea.SetActive(true);
+        }
+        else if (area == 2)
+        {
+            swampArea.SetActive(true);
+        }
+        else if (area == 3)
+        {
+            bossArea.SetActive(true);
+        }
+    }
+
+    private void DisableArea (int area)
+    {
+        if (area == 1)
+        {
+            _tutorialArea.SetActive(false);
+        }
+        else if (area == 2)
+        {
+            swampArea.SetActive(false);
+        }
+        else if (area == 3)
+        {
+            bossArea.SetActive(false);
+        }
     }
 
     [Button]

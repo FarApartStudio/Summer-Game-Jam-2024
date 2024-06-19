@@ -24,6 +24,11 @@ public class Pilot : CharacterManager
     [SerializeField] private HealthController healthController;
     [SerializeField] private ImpactReceiver impactReceiver;
 
+    [Header("Effect")]
+    [SerializeField] private ParticleSystem hitParticle;
+    [SerializeField] private ParticleSystem healParticle;
+
+    [Header("Cam Settings")]
     [SerializeField] private Vector3 hipCameraTargetPos;
     [SerializeField] private Vector3 aimLeftCameraTargetPos;
     [SerializeField] private Vector3 aimRightCameraTargetPos;
@@ -58,6 +63,10 @@ public class Pilot : CharacterManager
 
         healthController.OnHit += OnHit;
         healthController.OnDie += OnDie;
+        healthController.OnHeal += (amount) =>
+        {
+            healParticle.Play();
+        };
 
         ResetActions();
 
@@ -170,10 +179,9 @@ public class Pilot : CharacterManager
             pilotAnimatorController.PlayTargetActionAnimation("Knockback", true);
         }
 
-        if (damageInfo.damage > 0)
-        {
-           // pilotAnimatorController.PlayTargetActionAnimation("Hit", true);
-        }
+        hitParticle.Play();
+
+        // pilotAnimatorController.PlayTargetActionAnimation("Hit", true);
     }
 
     private void OnDie(DamageInfo obj)
