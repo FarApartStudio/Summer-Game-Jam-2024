@@ -8,6 +8,7 @@ public class AttackInfo
     public enum AttackType { Normal, Special}
 
     public string attackName;
+    public float damageMulti = 1;
     public DamageInfo damageInfo;
     public Damager damager;
     public UnityEvent OnAttack;
@@ -104,7 +105,10 @@ public class AttackInfoManager : MonoBehaviour
         attackInfo = GetAttackInfo(attackName);
         if (attackInfo == null) return;
 
-        attackInfo.damager.SetDamageInfo(attackInfo.damageInfo);
+        DamageInfo damageInfo = attackInfo.damageInfo;
+        damageInfo.damage = (int)(damageInfo.damage * attackInfo.damageMulti);
+
+        attackInfo.damager.SetDamageInfo(damageInfo);
         attackInfo.damager.OnHit = attackInfo.OnHit;
         attackInfo.damager.Attack();
         attackInfo.OnAttack?.Invoke();
