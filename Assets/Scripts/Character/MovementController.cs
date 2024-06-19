@@ -221,7 +221,7 @@ public class MovementController : MonoBehaviour
             }
 
             // Jump
-            if (CanJump.Invoke() && jump && _jumpTimeoutDelta <= 0.0f)
+            if (CanJump != null && CanJump.Invoke() && jump && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);

@@ -17,11 +17,6 @@ public class VideoController : MonoBehaviour
 
     private Coroutine _playVideoCoroutine;
 
-    private void Start()
-    {
-        PlayVideo();
-    }
-
     public void PlayVideo()
     {
         _playVideoCoroutine = StartCoroutine(PlayVideo(videoClip));
@@ -49,6 +44,7 @@ public class VideoController : MonoBehaviour
         if (_playVideoCoroutine != null)
         {
             StopCoroutine(_playVideoCoroutine);
+            videoPlayer.Stop();
             OnCompleted?.Invoke();
             _playVideoCoroutine = null;
         }
