@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum CameraDirection
 {
@@ -206,6 +207,9 @@ public class Pilot : CharacterManager
         healthController.RestoreHeal(healthController.GetMaxHealth);
         pilotAnimatorController.SetlayerWight(1, 1);
         pilotAnimatorController.PlayTargetActionAnimation("Revive", true);
+        ToggleMovement(true);
+
+        Debug.Log("Revive + " + healthController.GetCurrentHealth);
     }
 
     public void ToggleMovement (bool value)
