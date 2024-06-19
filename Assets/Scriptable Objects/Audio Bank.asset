@@ -44,7 +44,7 @@ MonoBehaviour:
     IsGroup: 0
     GroupAsset: []
   - Key: WaterFootstep
-    Asset: {fileID: 8300000, guid: 3fc0fc79b42d32a4d837565ab20f66b1, type: 3}
+    Asset: {fileID: 8300000, guid: e8c82818ac04cf94c9c3a816122e9c4d, type: 3}
     Info: 
     IsGroup: 0
     GroupAsset: []
