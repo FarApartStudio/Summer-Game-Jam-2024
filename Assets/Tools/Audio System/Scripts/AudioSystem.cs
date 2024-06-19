@@ -175,7 +175,7 @@ namespace Pelumi.AudioSystem
 
         public static void PlayAudio(string id, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)
         {
-            PlayAudio (Instance.audioBank.GetAsset (id), audioCategory, loop, fadeduration);
+            PlayAudio (Instance.audioBank.GetAsset (id), audioCategory, loop, fadeduration, volume);
         }
 
         public static void PlayAudio(AudioClip audioClip, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)

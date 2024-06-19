@@ -16,6 +16,7 @@ public class StoryModeManager : MonoBehaviour
 
     [SerializeField] private int maxRetry = 3;
     [SerializeField] private int _currentArea = 1;
+    [SerializeField] private int rainStormDuration = 15;
 
     [Header("Settings")]
     [SerializeField] private Pilot _playerPrefab;
@@ -65,7 +66,7 @@ public class StoryModeManager : MonoBehaviour
 
         InputManager.Instance.ToggleCursor(false);
 
-        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music);
+        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music, volume: .5f);
 
         if (test)
         {
@@ -291,7 +292,7 @@ public class StoryModeManager : MonoBehaviour
         _cloudHitObserver.ResetHit();
         FollowTransfrom  _rainStorm = ObjectPoolManager.SpawnObject(_rainStormPrefab, _player.transform.position, Quaternion.identity);
         _rainStorm.SetTarget(_player.transform);
-        Juicer.WaitForSeconds(20, new JuicerCallBack(() => ObjectPoolManager.ReleaseObject(_rainStorm)));
+        Juicer.WaitForSeconds(rainStormDuration, new JuicerCallBack(() => ObjectPoolManager.ReleaseObject(_rainStorm)));
     }
 
     public void ActivateEnemies()
