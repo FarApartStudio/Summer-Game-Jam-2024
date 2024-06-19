@@ -212,7 +212,8 @@ public class CharacterCombatController : MonoBehaviour
         if (arrowHit.Collider.gameObject.TryGetComponent<Surface>(out Surface surface))
         {
             GameObject impactEffect = ObjectPoolManager.SpawnObject(surface.GetSurfaceInfo()._particleSystem);
-            impactEffect.transform.position = arrowHit.HitPoint + arrowHit.HitNormal * 0.01f;
+            //   impactEffect.transform.position = arrowHit.HitPoint + arrowHit.HitNormal * 0.01f;
+            impactEffect.transform.position = arrowHit.Owner.transform.position;
             impactEffect.transform.rotation = Quaternion.FromToRotation(Vector3.up, arrowHit.HitNormal);
             impactEffect.gameObject.SetActive(true);
             impactEffect.transform.LookAt(arrowHit.HitPoint + arrowHit.HitNormal);

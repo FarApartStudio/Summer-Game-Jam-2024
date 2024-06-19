@@ -16,7 +16,7 @@ public class TimelineController : MonoBehaviour
 {
     public event Action<PlayableDirector> OnStart;
     public event Action<PlayableDirector> OnPaused;
-    public event Action<PlayableDirector> OnFinished;
+    public event Action OnFinished;
 
     [SerializeField] private bool playOnStart;
     [SerializeField] private List<TimelineEvent> timelineEvents;
@@ -64,11 +64,13 @@ public class TimelineController : MonoBehaviour
             }
             yield return null;
         }
+
+        OnFinished?.Invoke();
     }
 
     private void OnPlayableDirectorStopped(PlayableDirector director)
     {
-        OnFinished?.Invoke(director);
+      //  OnFinished?.Invoke(director);
     }
 
     private void OnPlayableDirectorPaused(PlayableDirector director)

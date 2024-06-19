@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+
     [SerializeField] private EnemyController _enemyController;
 
-    private void Start()
-    {
-        Activate();
-    }
+    public HealthController GetHealthController => _enemyController.healthController;    
 
-    public void Activate ()
+
+    public void Activate (Transform target)
     {
+        gameObject.SetActive (true);
         _enemyController.Activate(false);
-    }
-
-    public void SetTarget (Transform target)
-    {
         _enemyController.SetTarget(target);
     }
 }

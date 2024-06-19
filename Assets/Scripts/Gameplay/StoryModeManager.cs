@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Video;
 
 public class StoryModeManager : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private int maxRetry = 3;
     [SerializeField] private int _currentArea = 1;
     [SerializeField] private int rainStormDuration = 15;
+
 
     [Header("Settings")]
     [SerializeField] private Pilot _playerPrefab;
@@ -40,6 +41,10 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private InteractionHandler _cinematicThreeTrigger;
     [SerializeField] private GameObject cinematicActorsThree;
     [SerializeField] private TimelineController _introTimelineThree;
+
+    [Header("End")]
+    [SerializeField] private VideoClip endVideo;
+    [SerializeField] private Boss _boss;
 
     [Header("Effect")]
     [SerializeField] FollowTransfrom _rainStormPrefab;
@@ -132,6 +137,8 @@ public class StoryModeManager : MonoBehaviour
                     _gameMenu.Open();
 
                     _healthBarMenu.Open();
+
+                    StartBossFight();
                 });
                 break;
         }
@@ -159,7 +166,7 @@ public class StoryModeManager : MonoBehaviour
 
         });
 
-        _introTimeline.OnFinished += (timeline) =>
+        _introTimeline.OnFinished += () =>
         {
            
         };
@@ -185,13 +192,14 @@ public class StoryModeManager : MonoBehaviour
                 _gameMenu.Open();
                 TeleportPlayer(swampSpawnpoint);
                 _player.ToggleMovement(true);
+                DisableArea(1);
             });
 
         });
 
-        _introTimelineTwo.OnFinished += (timeline) =>
+        _introTimelineTwo.OnFinished += () =>
         {
-            DisableArea(1);
+
         };
 
         _gameMenu.Close();
@@ -219,13 +227,16 @@ public class StoryModeManager : MonoBehaviour
                 _gameMenu.Open();
                 TeleportPlayer(bossSpawnpoint);
                 _player.ToggleMovement(true);
+                DisableArea(2);
+                StartBossFight();
             });
 
         });
 
-        _introTimelineThree.OnFinished += (timeline) =>
+        _introTimelineThree.OnFinished += () =>
         {
-            DisableArea(2);
+            Debug.Log("Finished");
+
         };
 
         EnableArea(3);
@@ -427,6 +438,30 @@ public class StoryModeManager : MonoBehaviour
     private void RestartGame()
     {
         LoadingScreen.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void StartBossFight ()
+    {
+        _gameMenu.ShowBossHealthBar(true);
+        AudioSystem.PlayAudio(AudioTypeID.CombatMusic, AudioCategory.Music, volume: .5f);
+        _boss.Activate(_player.transform);
+        _boss.GetHealthController.OnHealthChanged += (health) => _gameMenu.SetBossHealthBar(health.GetNormalisedHealth);
+        _boss.GetHealthController.OnDie += (info) => EndGame();
+    }
+
+    private void EndGame()
+    {
+        _screenFadeMenu.Open().ShowWithFade(1, .5f, () =>
+        {
+            _gameMenu.Close();
+            _healthBarMenu.Close();
+            _screenFadeMenu.Close();
+
+            UIManager.GetMenu<MovieMenu>().Play(endVideo,null, () =>
+            {
+                LoadingScreen.Instance.LoadScene(0);
+            });
+        });
     }
 
     private void EnableNeedAreas ()
