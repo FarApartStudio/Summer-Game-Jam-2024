@@ -15,6 +15,8 @@ public enum GameButtonVisiblity
 
 public class AdvanceButton : Button, IPointerDownHandler, IPointerUpHandler
 {
+    public static event EventHandler OnAnyButtonHovered;
+
     public static event Action OnAnyButtonClicked;
     public static Action<GameButtonType> OnAnyButtonPointerDown;
     public event Action<bool> OnButtonStateChanged;
@@ -135,6 +137,22 @@ public class AdvanceButton : Button, IPointerDownHandler, IPointerUpHandler
         base.OnEnable();
     }
 
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        OnAnyButtonHovered?.Invoke(this, EventArgs.Empty);
+        base.OnPointerEnter(eventData);
+        onClickSizeEffect.StartWithNewDestination(buttonDownScale);
+
+        AudioSystem.PlayOneShotAudio(AudioTypeID.UI_ButtonHover, AudioCategory.UI, true);
+    }
+
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        base.OnPointerExit(eventData);
+        onClickSizeEffect.StartWithNewDestination (Vector3.one);
+    }
+
+
     public override void OnPointerClick(PointerEventData eventData)
     {
         if (gameButtonVisiblity == GameButtonVisiblity.Hidden)
@@ -144,7 +162,7 @@ public class AdvanceButton : Button, IPointerDownHandler, IPointerUpHandler
 
         if (interactable)
         {
-            //AudioSystem.PlayOneShotAudio(AudioTypeID.UI_ButtonPress, AudioCategory.UI, true);
+            AudioSystem.PlayOneShotAudio(AudioTypeID.UI_ButtonPress, AudioCategory.UI, true);
 
             OnAnyButtonClicked?.Invoke();
             OnToggled();

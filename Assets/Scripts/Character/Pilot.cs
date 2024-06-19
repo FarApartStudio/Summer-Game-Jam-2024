@@ -79,18 +79,18 @@ public class Pilot : CharacterManager
             characterCombatController.OnAimModeChanged += OnAimModeChanged;     
         }
 
-        if (InputManager.Instance.GetReloadInput())
-        {
-            if (!healthController.IsAlive)
-            {
-                Revive();
-            }
-        }
+        //if (InputManager.Instance.GetReloadInput())
+        //{
+        //    if (!healthController.IsAlive)
+        //    {
+        //        Revive();
+        //    }
+        //}
 
-        if (InputManager.Instance.GetSwapWeaponInput())
-        {
+        //if (InputManager.Instance.GetSwapWeaponInput())
+        //{
 
-        }
+        //}
     }
 
     private void OnCameraRecoil(Vector2 vector)

@@ -10,5 +10,9 @@ public enum AudioTypeID
 	WoodFootstep = 3,
 	CombatMusic = 4,
 	MainTrack = 5,
+	WaterFootstep = 6,
+	MenuMusic = 7,
+	UI_ButtonPress = 8,
+	UI_ButtonHover = 9,
 }
 }

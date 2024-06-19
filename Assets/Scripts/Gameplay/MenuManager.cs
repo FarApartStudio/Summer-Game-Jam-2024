@@ -1,35 +1,50 @@
+using Pelumi.AudioSystem;
+using Pelumi.UISystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private VideoController _videoController;
+    [SerializeField] private VideoClip introVideo;
 
+    private MainMenu _mainMenu;
 
-    private void Awake()
+    private void Start()
     {
-        _videoController.OnStarted = OnVideoStarted;
-        _videoController.OnCompleted = OnVideoCompleted;
-    }
+        _mainMenu = UIManager.GetMenu<MainMenu>();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        _mainMenu.OnNewGameBtnPressed = () =>
         {
-            _videoController.PlayVideo();
-        }
+            PlayerPrefs.SetInt("CurrentArea", 1);
 
-        if (Input.GetKeyDown(KeyCode.S))
+            _mainMenu.Close();
+            UIManager.GetMenu<MovieMenu>().Play(introVideo, OnVideoStarted, OnVideoCompleted);
+        };
+
+        _mainMenu.OnContinueBtnPressed = () =>
         {
-            _videoController.SkipVideo();
-        }
+            _mainMenu.Close();
+            UIManager.GetMenu<MovieMenu>().Play(introVideo, OnVideoStarted, OnVideoCompleted);
+        };
+
+        _mainMenu.OnQuitBtnPressed = () =>
+        {
+            Application.Quit();
+        };
+
+        InputManager.Instance.ToggleCursor(true);
+
+        _mainMenu.Open();
+
+        AudioSystem.PlayAudio(AudioTypeID.MenuMusic, AudioCategory.Music);
     }
 
     private void OnVideoStarted()
     {
-
+        AudioSystem.StopAudioWithFade(AudioCategory.Music);
     }
 
     private void OnVideoCompleted()

@@ -177,4 +177,9 @@ public class GameMenu : GenericMenu<GameMenu>
         _pauseMenu.gameObject.SetActive(state);
         Time.timeScale = state ? 0 : 1;
     }
+
+    public void ShowGameOver()
+    {
+
+    }
 }

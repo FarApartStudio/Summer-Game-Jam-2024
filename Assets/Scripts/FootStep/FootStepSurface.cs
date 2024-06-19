@@ -8,6 +8,7 @@ public enum FootSurface
     Grass,
     Wood,
     Rock,
+    Water
 }
 
 public class FootStepSurface : MonoBehaviour

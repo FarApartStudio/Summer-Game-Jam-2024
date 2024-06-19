@@ -23,8 +23,8 @@ public class Cloud : MonoBehaviour
     private void OnHit()
     {
         _renderer.material = hitMaterial;
-        _renderer.transform.JuicyShakePosition(.25f, new Vector3(0.05f, 0.05f, 0.05f));
-        _renderer.transform.JuicyShakeScale(.25f, new Vector3(0.05f, 0.05f, 0.05f));
-        _renderer.transform.JuicyShakePosition(.25f, new Vector3(0.05f, 0.05f, 0.05f));
+        _renderer.transform.JuicyShakePosition(.15f, new Vector3(0.02f, 0.05f, 0.05f));
+        _renderer.transform.JuicyShakeScale(.15f, new Vector3(0.02f, 0.05f, 0.05f));
+        _renderer.transform.JuicyShakePosition(.15f, new Vector3(0.02f, 0.05f, 0.05f));
     }
 }
