@@ -180,6 +180,8 @@ public class Pilot : CharacterManager
             pilotAnimatorController.PlayTargetActionAnimation("Knockback", true);
         }
 
+        CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .1f, .1f);
+
         hitParticle.Play();
 
         // pilotAnimatorController.PlayTargetActionAnimation("Hit", true);
@@ -204,7 +206,7 @@ public class Pilot : CharacterManager
             healthController.SetInvisibility(false);
         }
         StartCoroutine(ReviveSequence());
-        healthController.RestoreHeal(healthController.GetMaxHealth);
+        healthController.SetMaxHealth(healthController.GetMaxHealth);
         pilotAnimatorController.SetlayerWight(1, 1);
         pilotAnimatorController.PlayTargetActionAnimation("Revive", true);
         ToggleMovement(true);

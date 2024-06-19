@@ -83,7 +83,7 @@ public class StoryModeManager : MonoBehaviour
 
         InputManager.Instance.ToggleCursor(false);
 
-        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music, volume: .5f);
+        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music, volume: .15f);
 
         if (test)
         {
@@ -447,7 +447,7 @@ public class StoryModeManager : MonoBehaviour
     private void StartBossFight ()
     {
         _gameMenu.ShowBossHealthBar(true);
-        AudioSystem.PlayAudio(AudioTypeID.CombatMusic, AudioCategory.Music, volume: .5f);
+        AudioSystem.PlayAudio(AudioTypeID.CombatMusic, AudioCategory.Music, volume: .15f);
         _boss.Activate(_player.transform);
         _boss.GetHealthController.OnHealthChanged += (health) => _gameMenu.SetBossHealthBar(health.GetNormalisedHealth);
         _boss.GetHealthController.OnDie += (info) => EndGame();
@@ -459,7 +459,7 @@ public class StoryModeManager : MonoBehaviour
 
         IEnumerator EndGameRoutine()
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(5);
 
             _gameMenu.Close();
             _healthBarMenu.Close();

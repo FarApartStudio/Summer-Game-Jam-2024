@@ -11,7 +11,6 @@ public class InputManager : MonoBehaviour
     public Action OnPauseBtnPressed;
 
     [SerializeField] private Vector2 movementInput;
-    [SerializeField] private bool lockCursor;
     private PlayerControls playerControls;
 
     private void Awake()
@@ -27,11 +26,6 @@ public class InputManager : MonoBehaviour
     private void Pause_performed(InputAction.CallbackContext obj)
     {
         OnPauseBtnPressed?.Invoke();
-    }
-
-    private void Start()
-    {
-        ToggleCursor (!lockCursor);
     }
 
     public void ToggleCursor(bool value)
