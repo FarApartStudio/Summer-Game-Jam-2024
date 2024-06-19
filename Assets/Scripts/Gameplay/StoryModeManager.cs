@@ -1,3 +1,4 @@
+using Pelumi.AudioSystem;
 using Pelumi.Juicer;
 using Pelumi.ObjectPool;
 using Pelumi.UISystem;
@@ -69,6 +70,8 @@ public class StoryModeManager : MonoBehaviour
             _healthBarMenu.Open();
             return;
         }
+
+        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music);
 
         LoadArea(_currentArea);
     }
