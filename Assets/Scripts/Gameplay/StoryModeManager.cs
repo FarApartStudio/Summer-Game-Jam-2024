@@ -301,8 +301,15 @@ public class StoryModeManager : MonoBehaviour
 
     private void PlayerDead(DamageInfo info)
     {
-        _gameMenu.ShowGameOver();
-        RespawnPlayer();
+        _gameMenu.ShowGameOver(maxRetry - _currentDeathCount);
+
+        IEnumerator PlayerDeadRoutine()
+        {
+            yield return new WaitForSeconds(2);
+            RespawnPlayer();
+        }
+
+        StartCoroutine(PlayerDeadRoutine());
     }
 
     private void RespawnPlayer ()
@@ -315,20 +322,21 @@ public class StoryModeManager : MonoBehaviour
             return;
         }
 
-        _screenFadeMenu.Open().ShowWithFade(1, 1.5f, () =>
+        _gameMenu.Revive();
+
+        _screenFadeMenu.Open().Show(1, 1f,null, () =>
         {
             CheckpointTrigger lastCheckPoint = CheckpointManager.Instance.GetActiveCheckpoint();
             if (lastCheckPoint == null)
             {
-                TeleportPlayer( _currentArea == 1 ? storySpawnpoint : swampSpawnpoint);
+                TeleportPlayer(_currentArea == 1 ? storySpawnpoint : swampSpawnpoint);
             }
             else
             {
                 TeleportPlayer(lastCheckPoint.GetSpawnPos);
             }
 
-            
-        }, ()=> _player.Revive());
+        }, () => _player.Revive());
     }
 
     private void PlayerChanged(IHealth obj)

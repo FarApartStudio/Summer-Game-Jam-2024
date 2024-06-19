@@ -39,6 +39,15 @@ public class GameMenu : GenericMenu<GameMenu>
     [SerializeField] private Image _tutorialKeyImage;
     [SerializeField] private TextMeshProUGUI _tutorialActionDescription;
 
+    [Header("BossHealthBar")]
+    [SerializeField] private Transform _bossHealthBarUI;
+    [SerializeField] private Image _bossHealthBar;
+
+    [Header ("GameOver")]
+    [SerializeField] private Transform _gameOverScreen;
+    [SerializeField] private TextMeshProUGUI _triesText;
+
+
     [Header("Pause")]
     [SerializeField] private Transform _pauseMenu;
     [SerializeField] private Button _settingBtn;
@@ -178,8 +187,24 @@ public class GameMenu : GenericMenu<GameMenu>
         Time.timeScale = state ? 0 : 1;
     }
 
-    public void ShowGameOver()
+    public void ShowGameOver(int tries)
     {
+        _triesText.text = tries != 0 ? $" {tries} tries left" : "You have no more tries left";
+        _gameOverScreen.gameObject.SetActive(true);
+    }
 
+    public void Revive ()
+    {
+        _gameOverScreen.gameObject.SetActive(false);
+    }
+
+    public void ShowBossHealthBar (bool show)
+    {
+        _bossHealthBarUI.gameObject.SetActive(show);
+    }
+
+    public void SetBossHealthBar (float value)
+    {
+        _bossHealthBar.fillAmount = value;
     }
 }
