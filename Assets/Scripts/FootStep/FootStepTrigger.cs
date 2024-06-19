@@ -8,6 +8,7 @@ public class FootStepTrigger : MonoBehaviour
 {
     [SerializeField]private LayerMask layerMask;
     [SerializeField] private float Yoffset;
+    [SerializeField] private float checkDistance = 15;
 
 
     public void FootL(AnimationEvent animationEvent)
@@ -38,7 +39,7 @@ public class FootStepTrigger : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 rayOrigin = transform.position + Vector3.down * Yoffset;
-        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 5.0f, layerMask))
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, checkDistance, layerMask))
         {
             FootStepSurface footStepSurface = hit.collider.GetComponent<FootStepSurface>();
             if (footStepSurface != null)
@@ -102,6 +103,9 @@ public class FootStepTrigger : MonoBehaviour
             case FootSurface.Rock:
                 footStep = AudioTypeID.RockFootstep;
                 break;
+            case FootSurface.Water:
+            footStep = AudioTypeID.WaterFootstep;
+            break;
         }
 
         AudioSystem.PlayOneShotAudio(footStep, AudioCategory.Sfx, true, volume: Random.Range(0.8f, 1.0f));

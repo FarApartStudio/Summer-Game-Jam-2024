@@ -10,5 +10,6 @@ public enum AudioTypeID
 	WoodFootstep = 3,
 	CombatMusic = 4,
 	MainTrack = 5,
+	WaterFootstep = 6,
 }
 }

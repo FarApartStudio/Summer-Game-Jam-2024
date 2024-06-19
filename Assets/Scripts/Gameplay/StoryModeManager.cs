@@ -8,12 +8,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
+
 
 public class StoryModeManager : MonoBehaviour
 {
     public static StoryModeManager Instance { get; private set; }
 
+    [SerializeField] private int maxRetry = 3;
     [SerializeField] private int _currentArea = 1;
 
     [Header("Settings")]
@@ -49,7 +50,7 @@ public class StoryModeManager : MonoBehaviour
     private ScreenFadeMenu _screenFadeMenu;
     private CinematicMenu _cinematicMenu;
     private bool isPaused;
-
+    private int _currentDeathCount;
 
     public Pilot GetPlayer => _player;
 
@@ -62,6 +63,8 @@ public class StoryModeManager : MonoBehaviour
     {
         InitUI();
 
+        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music);
+
         if (test)
         {
             SpawnCharacter(storySpawnpoint);
@@ -71,24 +74,18 @@ public class StoryModeManager : MonoBehaviour
             return;
         }
 
-        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music);
+        _currentArea = PlayerPrefs.GetInt("CurrentArea", 1);
 
         LoadArea(_currentArea);
     }
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-     
-        //}
-    }
 
     private void LoadArea(int area)
     {
         switch (area)
         {
             case 1:
+                _cinematicTwoTrigger.OnInteractStart += OnInteractStart;
                 IntroCutScene();
                 break;
             case 2:
@@ -149,6 +146,7 @@ public class StoryModeManager : MonoBehaviour
     public void SecondCutScene()
     {
         _currentArea++;
+        PlayerPrefs.SetInt("CurrentArea", _currentArea);
 
         _introTimelineTwo.AddTimeEvent(0.8f, () =>
         {
@@ -206,8 +204,6 @@ public class StoryModeManager : MonoBehaviour
 
         TaskPrompt.OnMissionPrompt  = (text) => _gameMenu.SetMissionPrompt(text);
         TutorialKeyPrompt.OnTutorialPrompt = (data) => _gameMenu.SetTutorialPrompt(data);
-
-        _cinematicTwoTrigger.OnInteractStart += OnInteractStart;
     }
 
     public void TogglePause (bool state)
@@ -238,6 +234,39 @@ public class StoryModeManager : MonoBehaviour
 
         _player.GetHealthController.OnHealthChanged += PlayerChanged;
         _player.GetHealthController.OnHit += PlayerHit;
+        _player.GetHealthController.OnDie += PlayerDead;
+    }
+
+    private void PlayerDead(DamageInfo info)
+    {
+        _gameMenu.ShowGameOver();
+        RespawnPlayer();
+    }
+
+    private void RespawnPlayer ()
+    {
+        _currentDeathCount++;
+
+        if (_currentDeathCount >= maxRetry)
+        {
+            RestartGame();
+            return;
+        }
+
+        _screenFadeMenu.Open().ShowWithFade(1, 1.5f, () =>
+        {
+            CheckpointTrigger lastCheckPoint = CheckpointManager.Instance.GetActiveCheckpoint();
+            if (lastCheckPoint == null)
+            {
+                TeleportPlayer( _currentArea == 1 ? storySpawnpoint : swampSpawnpoint);
+            }
+            else
+            {
+                TeleportPlayer(lastCheckPoint.GetSpawnPos);
+            }
+
+            
+        }, ()=> _player.Revive());
     }
 
     private void PlayerChanged(IHealth obj)

@@ -1481,7 +1481,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 447
-  Yoffset: -0.2
+  Yoffset: -1.2
+  checkDistance: 15
 --- !u!114 &7879682714115200223 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 473932964286009737, guid: fc59b575eec1f8a4cb9c28de082ddd90,

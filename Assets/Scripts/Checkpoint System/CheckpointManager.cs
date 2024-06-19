@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,13 +8,17 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager Instance { get; private set; }
 
-    private CheckpointTrigger[] _checkpoints;
+    [SerializeField] private CheckpointTrigger[] _checkpoints;
     private CheckpointTrigger lastCheckPoint;
 
     private void Awake()
     {
         Instance = this;
-        _checkpoints = GetComponentsInChildren<CheckpointTrigger>();
+
+        if (_checkpoints == null || _checkpoints.Length == 0)
+        {
+            GenerateAllACheckpoints();
+        }
     }
 
     public CheckpointTrigger GetActiveCheckpoint()
@@ -29,5 +34,11 @@ public class CheckpointManager : MonoBehaviour
     public void RegisterCheckpoint(CheckpointTrigger checkpointTrigger)
     {
         lastCheckPoint = checkpointTrigger;
+    }
+
+    [Button]
+    private void GenerateAllACheckpoints()
+    {
+        _checkpoints = GetComponentsInChildren<CheckpointTrigger>();
     }
 }
