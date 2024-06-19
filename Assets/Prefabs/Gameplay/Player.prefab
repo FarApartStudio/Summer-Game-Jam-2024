@@ -290,7 +290,7 @@ MonoBehaviour:
   currentBow: {fileID: 1335592831006303342}
   arrow: {fileID: 8349473470084570783, guid: 03578d52053a2184c97697672507e17b, type: 3}
   _damageRange: {x: 10, y: 50}
-  maxRecoil: 0.5
+  maxRecoil: 1
   stabilityDuration: 1.5
   arrowSpeed: 30
   fireRate: 0.5
