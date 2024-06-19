@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1577384260731861137}
   - component: {fileID: 2916153116336937541}
+  - component: {fileID: 2933608319754947350}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -47,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b0333a9875ec64da9b3afce1615df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRetry: 3
+  _currentArea: 1
   _playerPrefab: {fileID: 8046655933381770757, guid: 676160572f9c2d44389b6212140b2837,
     type: 3}
   storySpawnpoint: {fileID: 3333194790371300726}
@@ -68,6 +71,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   test: 0
+--- !u!114 &2933608319754947350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713223916865269299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3dceb2855c7ae46b9fc555289d443d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _checkpoints: []
 --- !u!1 &3171347585107338286
 GameObject:
   m_ObjectHideFlags: 0

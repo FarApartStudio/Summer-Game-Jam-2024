@@ -5359,6 +5359,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7058685831226027103, guid: 17c83e7003d98444bbe31728d58759f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7959,17 +7964,22 @@ PrefabInstance:
     - target: {fileID: 1795898344784991009, guid: 92186d7800efbea4f840dbca3e1abf1a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.08
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 1795898344784991009, guid: 92186d7800efbea4f840dbca3e1abf1a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 297
+      value: 229.9
       objectReference: {fileID: 0}
     - target: {fileID: 9000073136403236004, guid: 92186d7800efbea4f840dbca3e1abf1a,
         type: 3}
       propertyPath: m_Name
       value: Checkpoint Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 9000073136403236004, guid: 92186d7800efbea4f840dbca3e1abf1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085200145317236537, guid: 92186d7800efbea4f840dbca3e1abf1a,
         type: 3}
@@ -7984,7 +7994,7 @@ PrefabInstance:
     - target: {fileID: 9085200145317236537, guid: 92186d7800efbea4f840dbca3e1abf1a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.269
+      value: 5.68
       objectReference: {fileID: 0}
     - target: {fileID: 9085200145317236537, guid: 92186d7800efbea4f840dbca3e1abf1a,
         type: 3}
@@ -13698,7 +13708,7 @@ PrefabInstance:
     - target: {fileID: 3110047399888595976, guid: 471056867fc15c6478018b49e9125c13,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3998459347191095333, guid: 471056867fc15c6478018b49e9125c13,
         type: 3}
@@ -28063,6 +28073,6 @@ SceneRoots:
   - {fileID: 1771702415}
   - {fileID: 4422439326789686579}
   - {fileID: 3178690224040785345}
-  - {fileID: 1863787343}
   - {fileID: 1681483264636194448}
   - {fileID: 1751967912}
+  - {fileID: 1863787343}
