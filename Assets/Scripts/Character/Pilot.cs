@@ -164,7 +164,7 @@ public class Pilot : CharacterManager
                 characterCombatController.TryCancleShoot();
             }
 
-            CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
+            CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f, damageInfo.hitDirection);
 
             impactReceiver.AddImpact(damageInfo.hitDirection, 50f);
             pilotAnimatorController.PlayTargetActionAnimation("Knockback", true);
