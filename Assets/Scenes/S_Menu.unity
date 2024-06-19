@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79e693c15d2a144db9263c5d281a021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  introVideo: {fileID: 32900000, guid: d6b0a84f18aa27848aa2d00cc68e7c0c, type: 3}
+  introVideo: {fileID: 32900000, guid: 6d77bc1cc67f2dc4e86974b792523bac, type: 3}
 --- !u!4 &1436370672
 Transform:
   m_ObjectHideFlags: 0
