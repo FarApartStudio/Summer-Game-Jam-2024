@@ -32,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3333194790371300726}
+  - {fileID: 2934668070633184802}
   - {fileID: 1538682951354889435}
   - {fileID: 4323061982274367935}
   m_Father: {fileID: 0}
@@ -49,16 +50,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRetry: 3
-  _currentArea: 1
+  _currentArea: 2
+  rainStormDuration: 15
   _playerPrefab: {fileID: 8046655933381770757, guid: 676160572f9c2d44389b6212140b2837,
     type: 3}
-  storySpawnpoint: {fileID: 3333194790371300726}
+  storySpawnpoint: {fileID: 2934668070633184802}
   swampSpawnpoint: {fileID: 1538682951354889435}
+  bossSpawnpoint: {fileID: 0}
   cinematicActors: {fileID: 0}
   _introTimeline: {fileID: 0}
   _cinematicTwoTrigger: {fileID: 0}
   cinematicActorsTwo: {fileID: 0}
   _introTimelineTwo: {fileID: 0}
+  _cinematicThreeTrigger: {fileID: 0}
+  cinematicActorsThree: {fileID: 0}
+  _introTimelineThree: {fileID: 0}
   _rainStormPrefab: {fileID: 9003350017393715044, guid: 1411c5b53334f204cafcc083086fb50f,
     type: 3}
   _windlinesPrefab: {fileID: 563756001746810986, guid: df8fbca8d8dd0424e8950a670fafe763,
@@ -171,7 +177,38 @@ Transform:
   m_GameObject: {fileID: 6913108188173239537}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 275.83, y: 5.111, z: -59.23}
+  m_LocalPosition: {x: 284.22, y: 4.477, z: -68.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1577384260731861137}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7517545134476342678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2934668070633184802}
+  m_Layer: 0
+  m_Name: TutorialEndSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2934668070633184802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7517545134476342678}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 55.09, y: 8.11, z: 31.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

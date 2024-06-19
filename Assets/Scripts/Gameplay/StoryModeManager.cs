@@ -22,6 +22,7 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private Pilot _playerPrefab;
     [SerializeField] private Transform storySpawnpoint;
     [SerializeField] private Transform swampSpawnpoint;
+    [SerializeField] private Transform bossSpawnpoint;
 
     [Header("First Cinematic")]
     [SerializeField] private GameObject cinematicActors;
@@ -31,6 +32,11 @@ public class StoryModeManager : MonoBehaviour
     [SerializeField] private InteractionHandler _cinematicTwoTrigger;
     [SerializeField] private GameObject cinematicActorsTwo;
     [SerializeField] private TimelineController _introTimelineTwo;
+
+    [Header("Third Cinematic")]
+    [SerializeField] private InteractionHandler _cinematicThreeTrigger;
+    [SerializeField] private GameObject cinematicActorsThree;
+    [SerializeField] private TimelineController _introTimelineThree;
 
     [Header("Effect")]
     [SerializeField] FollowTransfrom _rainStormPrefab;
@@ -43,6 +49,7 @@ public class StoryModeManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool test;
+    [SerializeField] private int testArea;
 
     private Pilot _player;
     private FollowTransfrom _windlines;
@@ -88,11 +95,12 @@ public class StoryModeManager : MonoBehaviour
         switch (area)
         {
             case 1:
-                _cinematicTwoTrigger.OnInteractStart += OnInteractStart;
+                _cinematicTwoTrigger.OnInteractStart += OnPlayerInteractCinematicTwo;
+                _cinematicThreeTrigger.OnInteractStart += OnPlayerInteractCinematicThree;
                 IntroCutScene();
                 break;
             case 2:
-
+                _cinematicThreeTrigger.OnInteractStart += OnPlayerInteractCinematicThree;
                 _screenFadeMenu.Open().ShowWithFade(1, 1.5f, () =>
                 {
                     SpawnCharacter(swampSpawnpoint);
@@ -108,6 +116,18 @@ public class StoryModeManager : MonoBehaviour
 
                 break;
             case 3:
+                _screenFadeMenu.Open().ShowWithFade(1, 1.5f, () =>
+                {
+                    SpawnCharacter(bossSpawnpoint);
+
+                    ActivateEnemies();
+
+                    EnvironmeentEvents();
+
+                    _gameMenu.Open();
+
+                    _healthBarMenu.Open();
+                });
                 break;
         }
     }
@@ -178,6 +198,38 @@ public class StoryModeManager : MonoBehaviour
         _cinematicMenu.Open();
     }
 
+    public void ThirdCutScene()
+    {
+        _currentArea++;
+        PlayerPrefs.SetInt("CurrentArea", _currentArea);
+
+        _introTimelineThree.AddTimeEvent(0.8f, () =>
+        {
+            _screenFadeMenu.Open().Show(1, .5f, OnFadeMid: () =>
+            {
+                cinematicActorsThree.gameObject.SetActive(false);
+                _cinematicMenu.Close();
+                _gameMenu.Open();
+                TeleportPlayer(bossSpawnpoint);
+                _player.ToggleMovement(true);
+            });
+
+        });
+
+        _introTimelineThree.OnFinished += (timeline) =>
+        {
+
+        };
+
+        _gameMenu.Close();
+
+        cinematicActorsThree.gameObject.SetActive(true);
+
+        _introTimelineThree.Play();
+
+        _cinematicMenu.Open();
+    }   
+
     public void InitUI()
     {
         _gameMenu = UIManager.GetMenu<GameMenu>();
@@ -217,11 +269,18 @@ public class StoryModeManager : MonoBehaviour
         _player.ToggleMovement(!state);
     }
 
-    private void OnInteractStart(Collider obj)
+    private void OnPlayerInteractCinematicTwo(Collider obj)
     {
         _player.ToggleMovement(false);
         _cinematicTwoTrigger.gameObject.SetActive(false);
         SecondCutScene();
+    }
+
+    private void OnPlayerInteractCinematicThree(Collider collider)
+    {
+        _player.ToggleMovement(false);
+        _cinematicThreeTrigger.gameObject.SetActive(false);
+        ThirdCutScene();
     }
 
     public void SpawnCharacter (Transform spawnPoint)
@@ -358,5 +417,17 @@ public class StoryModeManager : MonoBehaviour
     {
         _enemyActivators = FindObjectsOfType<EnemyActivator>();
         _enemySpawnTriggers  = FindObjectsOfType<EnemySpawnTrigger>();
+    }
+
+    [Button]
+    public void ClearData ()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
+    [Button]
+    public void UseTestArea()
+    {
+        PlayerPrefs.SetInt("CurrentArea", testArea);
     }
 }
