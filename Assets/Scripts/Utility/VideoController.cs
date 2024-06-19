@@ -17,9 +17,10 @@ public class VideoController : MonoBehaviour
 
     public void PlayVideo(VideoClip clip, Action onStarted, Action onCompleted)
     {
+        videoClip = clip;
         OnStarted = onStarted;
         OnCompleted = onCompleted;
-        videoClip = clip;
+        videoPlayer.clip = videoClip;
         _playVideoCoroutine = StartCoroutine(PlayVideo());
     }
 
