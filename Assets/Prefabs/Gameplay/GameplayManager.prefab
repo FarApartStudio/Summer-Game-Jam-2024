@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &713084478096239492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6682942947285195393}
+  m_Layer: 0
+  m_Name: TutorialEndSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6682942947285195393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713084478096239492}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 55.09, y: 8.11, z: 31.62}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1577384260731861137}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2713223916865269299
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,9 +63,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3333194790371300726}
+  - {fileID: 6682942947285195393}
   - {fileID: 2934668070633184802}
   - {fileID: 1538682951354889435}
   - {fileID: 4323061982274367935}
+  - {fileID: 5296208552505169122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2916153116336937541
@@ -54,9 +87,9 @@ MonoBehaviour:
   rainStormDuration: 15
   _playerPrefab: {fileID: 8046655933381770757, guid: 676160572f9c2d44389b6212140b2837,
     type: 3}
-  storySpawnpoint: {fileID: 2934668070633184802}
+  storySpawnpoint: {fileID: 3333194790371300726}
   swampSpawnpoint: {fileID: 1538682951354889435}
-  bossSpawnpoint: {fileID: 0}
+  bossSpawnpoint: {fileID: 5296208552505169122}
   cinematicActors: {fileID: 0}
   _introTimeline: {fileID: 0}
   _cinematicTwoTrigger: {fileID: 0}
@@ -77,6 +110,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   test: 0
+  testArea: 2
 --- !u!114 &2933608319754947350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 3171347585107338286}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 422.98, y: 9.73, z: -146.6}
+  m_LocalPosition: {x: 328.58, y: 7.72, z: -178.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -148,6 +182,37 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1577384260731861137}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5292051140886724504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5296208552505169122}
+  m_Layer: 0
+  m_Name: BossSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5296208552505169122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292051140886724504}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 365.88034, y: 60.690273, z: -406.87305}
+  m_LocalScale: {x: 7.6897936, y: 0.6510146, z: 7.6897936}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1577384260731861137}
