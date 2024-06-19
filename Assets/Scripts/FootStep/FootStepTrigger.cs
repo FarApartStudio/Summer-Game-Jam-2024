@@ -31,7 +31,7 @@ public class FootStepTrigger : MonoBehaviour
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            DetectGround();
+            AudioSystem.PlayOneShotAudio(AudioTypeID.DirtFootstep, AudioCategory.Sfx, true, volume: Random.Range(0.8f, 1.0f));
         }
     }
 
