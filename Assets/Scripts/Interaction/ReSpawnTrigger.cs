@@ -10,7 +10,11 @@ public class ReSpawnTrigger : MonoBehaviour
 
     private void Awake()
     {
+        // ingnore the parenr object and get all the children
         spawnPoints = GetComponentsInChildren<Transform>();
+
+        // ignore the first element
+        spawnPoints = spawnPoints[1..];
     }
 
     private void OnTriggerEnter(Collider other)

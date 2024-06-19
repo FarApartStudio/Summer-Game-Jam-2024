@@ -44,7 +44,7 @@ public class Pilot : CharacterManager
 
         characterCombatController.CamAim = ()=> !IsPerformingAction && healthController.IsAlive;
 
-        characterDodge.CanDodge = () => characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive && movementController.Grounded;
+        characterDodge.CanDodge = () => canMove && characterCombatController.GetAimMode == ViewMode.HipFire && healthController.IsAlive && movementController.Grounded;
 
         characterDodge.OnDodgeStart += () =>
         {
@@ -198,6 +198,16 @@ public class Pilot : CharacterManager
         healthController.RestoreHeal(healthController.GetMaxHealth);
         pilotAnimatorController.SetlayerWight(1, 1);
         pilotAnimatorController.PlayTargetActionAnimation("Revive", true);
+    }
+
+    public void ToggleMovement (bool value)
+    {
+        canControl = value;
+        canMove = value;
+        canJump = value;
+        canRotate = value;
+        isPerformingAction = !value;
+        movementController.StopMovement();
     }
 
     public override void SetShowWeapon(bool show)

@@ -285,6 +285,8 @@ public class MovementController : MonoBehaviour
         move = Vector2.zero;
         sprint = false;
         jump = false;
+        _speed = 0;
+        _animationBlend = 0;
         StopSprint();
     }
 

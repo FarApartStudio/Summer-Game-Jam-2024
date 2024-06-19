@@ -231,6 +231,8 @@ MonoBehaviour:
   normalFOV: 60
   sprintFOV: 70
   reviveInvisibilityTime: 2
+  normalMoveSpeed: 2.5
+  aimMoveSpeed: 1
   currentCameraDirection: 0
   pilotAnimatorController: {fileID: 62042857860961748}
   characterCombatController: {fileID: 2495128076503502575}
@@ -290,7 +292,7 @@ MonoBehaviour:
   _damageRange: {x: 10, y: 50}
   maxRecoil: 0.5
   stabilityDuration: 1.5
-  arrowSpeed: 50
+  arrowSpeed: 30
   fireRate: 0.5
   aimRotateSpeed: 50
   aimResetDelay: 0.5

@@ -13,11 +13,17 @@ public class StoryModeManager : MonoBehaviour
 
 
     [SerializeField] private Pilot _playerPrefab;
-    [SerializeField] private Transform spawnPos;
+    [SerializeField] private Transform storySpawnpoint;
+    [SerializeField] private Transform swampSpawnpoint;
 
-    [Header("Cinematic")]
+    [Header("First Cinematic")]
     [SerializeField] private GameObject cinematicActors;
     [SerializeField] private TimelineController _introTimeline;
+
+    [Header("Second Cinematic")]
+    [SerializeField] private InteractionHandler _cinematicTwoTrigger;
+    [SerializeField] private GameObject cinematicActorsTwo;
+    [SerializeField] private TimelineController _introTimelineTwo;
 
     [Header("Effect")]
     [SerializeField] FollowTransfrom _rainStormPrefab;
@@ -101,6 +107,35 @@ public class StoryModeManager : MonoBehaviour
         _cinematicMenu.Open();
     }
 
+    public void SecondCutScene()
+    {
+        _introTimelineTwo.AddTimeEvent(0.8f, () =>
+        {
+            _screenFadeMenu.Open().Show(1, .5f, OnFadeMid: () =>
+            {
+                cinematicActorsTwo.gameObject.SetActive(false);
+                _cinematicMenu.Close();
+                _gameMenu.Open();
+                TeleportPlayer(swampSpawnpoint);
+                _player.ToggleMovement(true);
+            });
+
+        });
+
+        _introTimelineTwo.OnFinished += (timeline) =>
+        {
+
+        };
+
+        _gameMenu.Close();
+
+        cinematicActorsTwo.gameObject.SetActive(true);
+
+        _introTimelineTwo.Play();
+
+        _cinematicMenu.Open();
+    }
+
     public void InitUI()
     {
         _gameMenu = UIManager.GetMenu<GameMenu>();
@@ -110,11 +145,20 @@ public class StoryModeManager : MonoBehaviour
 
         TaskPrompt.OnMissionPrompt  = (text) => _gameMenu.SetMissionPrompt(text);
         TutorialKeyPrompt.OnTutorialPrompt = (data) => _gameMenu.SetTutorialPrompt(data);
+
+        _cinematicTwoTrigger.OnInteractStart += OnInteractStart;
+    }
+
+    private void OnInteractStart(Collider obj)
+    {
+        _player.ToggleMovement(false);
+        _cinematicTwoTrigger.gameObject.SetActive(false);
+        SecondCutScene();
     }
 
     public void SpawnCharacter ()
     {
-        _player = Instantiate(_playerPrefab, spawnPos.position, spawnPos.rotation);
+        _player = Instantiate(_playerPrefab, storySpawnpoint.position, storySpawnpoint.rotation);
 
         _windlines = Instantiate(_windlinesPrefab, _player.transform.position, Quaternion.identity);
         _windlines.SetTarget(_player.transform);
@@ -193,6 +237,14 @@ public class StoryModeManager : MonoBehaviour
     private void OnAimModeChanged(ViewMode mode)
     {
         _gameMenu.ToggleCrosshair(mode == ViewMode.Aim);
+    }
+
+    private void TeleportPlayer (Transform spawnpoint)
+    {
+        _player.gameObject.SetActive(false);
+        _player.transform.position = spawnpoint.position;
+        _player.transform.rotation = spawnpoint.rotation;
+        _player.gameObject.SetActive(true);
     }
 
     [Button]
