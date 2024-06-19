@@ -189,7 +189,7 @@ public class GameMenu : GenericMenu<GameMenu>
 
     public void ShowGameOver(int tries)
     {
-        _triesText.text = tries != 0 ? $" {tries} tries left" : "You have no more tries left";
+        _triesText.text = tries != 0 ? $" {tries} tries left" : "no more tries left";
         _gameOverScreen.gameObject.SetActive(true);
     }
 

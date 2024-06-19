@@ -301,6 +301,8 @@ public class StoryModeManager : MonoBehaviour
 
     private void PlayerDead(DamageInfo info)
     {
+        _currentDeathCount++;
+
         _gameMenu.ShowGameOver(maxRetry - _currentDeathCount);
 
         IEnumerator PlayerDeadRoutine()
@@ -314,8 +316,6 @@ public class StoryModeManager : MonoBehaviour
 
     private void RespawnPlayer ()
     {
-        _currentDeathCount++;
-
         if (_currentDeathCount >= maxRetry)
         {
             RestartGame();
