@@ -850,6 +850,8 @@ MonoBehaviour:
   inRangeTransitons:
   - animationName: Attack1
     transitionDuration: 0.2
+  - animationName: Attack3
+    transitionDuration: 0.2
   canPerfromActionDuringChase: 1
   actionTransitons:
   - animationName: Attack2

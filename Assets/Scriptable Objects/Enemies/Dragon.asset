@@ -22,5 +22,5 @@ MonoBehaviour:
   enemyType: 0
   skinSets:
     materials: []
-  hasRage: 0
+  hasRage: 1
   canKnockBack: 0
