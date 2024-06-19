@@ -33,3 +33,13 @@ MonoBehaviour:
     Info: 
     IsGroup: 0
     GroupAsset: []
+  - Key: CombatMusic
+    Asset: {fileID: 8300000, guid: e351339fcb125fb4dbb0e49c8ec58258, type: 3}
+    Info: 
+    IsGroup: 0
+    GroupAsset: []
+  - Key: MainTrack
+    Asset: {fileID: 8300000, guid: 901c42b7b324b5e4bae8235ad6905124, type: 3}
+    Info: 
+    IsGroup: 0
+    GroupAsset: []

@@ -1,3 +1,4 @@
+using Pelumi.AudioSystem;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -60,6 +61,8 @@ public class EnemySpawnTrigger : MonoBehaviour
         }
 
         OnClear?.Invoke();
+
+        AudioSystem.PlayAudio(AudioTypeID.MainTrack, AudioCategory.Music);
     }
 
     public bool CanSpawnEnemies()
@@ -82,6 +85,8 @@ public class EnemySpawnTrigger : MonoBehaviour
         {
             alreadyTriggered = true;
             StartCoroutine(TriggerRoutine());
+
+            AudioSystem.PlayAudio(AudioTypeID.CombatMusic, AudioCategory.Music, fadeduration : .5f, volume : .5f );
         }
     }
 

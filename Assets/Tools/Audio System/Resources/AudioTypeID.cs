@@ -8,5 +8,7 @@ public enum AudioTypeID
 	GrassFootstep = 1,
 	RockFootstep = 2,
 	WoodFootstep = 3,
+	CombatMusic = 4,
+	MainTrack = 5,
 }
 }

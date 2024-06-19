@@ -86,11 +86,11 @@ namespace Pelumi.AudioSystem
             audioManagerSO.ChangeVolume(audioCategory, volume);
         }
 
-        private IEnumerator PlayMusicFade(AudioSource musicPlayer, AudioClip audioClip, bool loop = true, float fadeDuration = 1.0f)
+        private IEnumerator PlayMusicFade(AudioSource musicPlayer, AudioClip audioClip, bool loop = true, float fadeDuration = 1.0f, float volume  = 1)
         {
             // Fade out the music player
             float elapsedTime = 0f;
-            float startVolume = 1;
+            float startVolume = musicPlayer.volume;
             float targetVolume = 0f;
 
             while (elapsedTime < fadeDuration)
@@ -111,7 +111,7 @@ namespace Pelumi.AudioSystem
             // Fade in the music player
             elapsedTime = 0f;
             startVolume = 0f;
-            targetVolume = 1;
+            targetVolume = volume;
 
             while (elapsedTime < fadeDuration)
             {
@@ -120,7 +120,7 @@ namespace Pelumi.AudioSystem
                 yield return null;
             }
 
-            musicPlayer.volume = 1; // Ensure the volume is set to the target value
+            musicPlayer.volume = volume; // Ensure the volume is set to the target value
         }
 
         private IEnumerator StopAudioWithFadeRoutine(AudioCategory audioCategory)
@@ -168,21 +168,21 @@ namespace Pelumi.AudioSystem
             return audioClip;
         }
 
-        public static void PlayAudio(AudioTypeID audioType, AudioCategory audioCategory, bool loop = true, float fadeduration = 1)
+        public static void PlayAudio(AudioTypeID audioType, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)
         {
             PlayAudio(audioType.ToString(), audioCategory, loop, fadeduration);
         }
 
-        public static void PlayAudio(string id, AudioCategory audioCategory, bool loop = true, float fadeduration = 1)
+        public static void PlayAudio(string id, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)
         {
             PlayAudio (Instance.audioBank.GetAsset (id), audioCategory, loop, fadeduration);
         }
 
-        public static void PlayAudio(AudioClip audioClip, AudioCategory audioCategory, bool loop = true, float fadeduration = 1)
+        public static void PlayAudio(AudioClip audioClip, AudioCategory audioCategory, bool loop = true, float fadeduration = 1, float volume = 1)
         {
             if (!InstanceExists()) return;
             Instance.StopAllCoroutines();
-            Instance.StartCoroutine(Instance.PlayMusicFade(Instance.audioSources[audioCategory], audioClip, loop, fadeduration));
+            Instance.StartCoroutine(Instance.PlayMusicFade(Instance.audioSources[audioCategory], audioClip, loop, fadeduration, volume));
         }
 
         public static void PauseAudio(AudioCategory audioCategory)
