@@ -14,7 +14,7 @@ namespace Pelumi.SurfaceSystem
     {
         public SurfaceType _surfaceType;
         public GameObject _particleSystem;
-        public AudioClip _audioClip;
+        public AudioClip _impactSound;
     }
 }
 

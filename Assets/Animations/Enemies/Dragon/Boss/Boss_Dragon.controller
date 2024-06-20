@@ -515,10 +515,10 @@ MonoBehaviour:
   attackIndicatorIndex: 0
   Invulnerable: 0
   lookAtPlayer: 0
-  followPlayer: 1
-  followTime: 0.4
-  stopFollowAnimationTime: 0.7
-  moveSpeed: 5
+  followPlayer: 0
+  followTime: 0
+  stopFollowAnimationTime: 0
+  moveSpeed: 0
   canLoop: 0
   loopTimeRange: {x: 0, y: 0}
   inRangeTransiton:
@@ -769,7 +769,7 @@ MonoBehaviour:
   actionTransitons:
   - animationName: Attack2
     transitionDuration: 0.2
-  actionTimeRange: {x: 3, y: 5}
+  actionTimeRange: {x: 1, y: 2}
   changeState: 0
   timer: 0
 --- !u!1102 &2969389132194566025

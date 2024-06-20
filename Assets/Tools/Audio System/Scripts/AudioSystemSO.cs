@@ -60,6 +60,8 @@ namespace Pelumi.AudioSystem
 
         public void LoadAudioVolumeData()
         {
+           // LoadFromPlayerPrefs();
+
             foreach (AudioVolumeData data in audioVolumeData)
             {
                 SetVolume(data.AudioCategory, data.Volume);
@@ -98,6 +100,24 @@ namespace Pelumi.AudioSystem
                 AudioCategory audioCategory = (AudioCategory)Enum.Parse(typeof(AudioCategory), group.name);
                 audioVolumeData.Add(new AudioVolumeData() { AudioCategory = audioCategory, Volume = ConvertDecibelToVolume(volume) });
             }
+
+          //  SaveAsPlayerPef();
+        }
+
+        public void SaveAsPlayerPef ()
+        {
+            // convert audioVolumeData to json
+            string json = JsonUtility.ToJson(audioVolumeData);
+            // save json to player prefs
+            PlayerPrefs.SetString("AudioVolumeData", json);
+        }
+
+        public void LoadFromPlayerPrefs ()
+        {
+            // get json from player prefs
+            string json = PlayerPrefs.GetString("AudioVolumeData", null);
+            if (json != null)
+            audioVolumeData = JsonUtility.FromJson<List<AudioVolumeData>>(json);
         }
 
 #if UNITY_EDITOR
@@ -191,6 +211,12 @@ namespace Pelumi.AudioSystem
             if (GUILayout.Button("Load"))
             {
                 audioSystemSO.LoadAudioVolumeData();
+            }
+
+
+            if (GUILayout.Button("Clear PlayerPref"))
+            {
+                PlayerPrefs.DeleteKey("AudioVolumeData");
             }
         }
     }

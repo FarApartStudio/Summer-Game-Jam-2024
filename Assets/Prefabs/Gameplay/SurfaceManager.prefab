@@ -48,16 +48,16 @@ MonoBehaviour:
   - _surfaceType: 0
     _particleSystem: {fileID: 1202099461967415114, guid: a2260e48692e82f42bca297049684531,
       type: 3}
-    _audioClip: {fileID: 0}
+    _impactSound: {fileID: 8300000, guid: 24252664d1f41c140864d611ea092c18, type: 3}
   - _surfaceType: 1
     _particleSystem: {fileID: 1202099461967415114, guid: a2260e48692e82f42bca297049684531,
       type: 3}
-    _audioClip: {fileID: 0}
+    _impactSound: {fileID: 8300000, guid: 24252664d1f41c140864d611ea092c18, type: 3}
   - _surfaceType: 2
     _particleSystem: {fileID: 1202099461967415114, guid: a2260e48692e82f42bca297049684531,
       type: 3}
-    _audioClip: {fileID: 0}
+    _impactSound: {fileID: 8300000, guid: 589b20060dc19154ab2d746246fe6b7c, type: 3}
   - _surfaceType: 3
     _particleSystem: {fileID: 1202099461967415114, guid: 5358e92856c8487408807c130ca0ef3b,
       type: 3}
-    _audioClip: {fileID: 0}
+    _impactSound: {fileID: 8300000, guid: 9496feb530c6bc647a5d5a9208e8eaa3, type: 3}

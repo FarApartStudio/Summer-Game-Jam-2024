@@ -23,8 +23,10 @@ public class Bow : MonoBehaviour
     [SerializeField] private float maxArrowShakeIntensity = 1f;
     [SerializeField] private Gradient _arrowShakeGradient;
 
-    [Header("SO Settings")]
+    [Header("Audio")]
+    [SerializeField] private AudioSource _pullSoundSource;
 
+    [Header("SO Settings")]
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private float _projectileSpeed;
     [SerializeField] private float _fireRate;
@@ -74,11 +76,12 @@ public class Bow : MonoBehaviour
             case State.Normal:
                 _normalString.SetActive(true);
                 _pullString.SetActive(false);
+                _pullSoundSource.Stop();
                 break;
             case State.Pulling:
                 _normalString.SetActive(false);
                 _pullString.SetActive(true);
-               
+                _pullSoundSource.Play();
                 break;
         }
     }

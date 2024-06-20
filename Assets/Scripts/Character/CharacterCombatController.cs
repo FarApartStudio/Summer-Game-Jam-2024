@@ -1,3 +1,4 @@
+using Pelumi.AudioSystem;
 using Pelumi.ObjectPool;
 using Pelumi.SurfaceSystem;
 using Sirenix.OdinInspector;
@@ -219,6 +220,8 @@ public class CharacterCombatController : MonoBehaviour
             impactEffect.transform.rotation = Quaternion.FromToRotation(Vector3.up, arrowHit.HitNormal);
             impactEffect.gameObject.SetActive(true);
             impactEffect.transform.LookAt(arrowHit.HitPoint + arrowHit.HitNormal);
+
+            AudioSystem.PlayOneShotAudio(surface.GetSurfaceInfo()._impactSound, AudioCategory.Sfx);
         }
 
         if (arrowHit.Collider.TryGetComponent<IDamageable>(out IDamageable damageable))
