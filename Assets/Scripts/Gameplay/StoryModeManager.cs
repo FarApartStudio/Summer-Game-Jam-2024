@@ -455,6 +455,8 @@ public class StoryModeManager : MonoBehaviour
 
     private void EndGame()
     {
+        _player.GetHealthController.SetInvisibility(true);
+
         AudioSystem.StopAudioWithFade(AudioCategory.Music);
 
         IEnumerator EndGameRoutine()
