@@ -55,6 +55,7 @@ public class CameraManager : MonoBehaviour
         _target = target;
         followVirtualCamera.Follow = _target;
         aimVirtualCamera.Follow = _target;
+        followVirtualCamera.gameObject.SetActive(true);
     }
 
     public void LookAt(Transform target)

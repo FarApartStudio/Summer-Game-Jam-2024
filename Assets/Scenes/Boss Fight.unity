@@ -501,7 +501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &576908264
 Transform:
   m_ObjectHideFlags: 0
@@ -1367,7 +1367,7 @@ Transform:
   m_GameObject: {fileID: 1863787339}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 1.6, z: 9}
+  m_LocalPosition: {x: 0.1, y: 1.6, z: 14.73}
   m_LocalScale: {x: 4, y: 3, z: 5.81}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1444,7 +1444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1940287632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2837,6 +2837,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Swiming_Crocodile
       objectReference: {fileID: 0}
+    - target: {fileID: 8873033442512205987, guid: 7ad0bb5eb09884842960882f92f9b4c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3656,6 +3661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boss_Dragon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192916893968300334, guid: 84d3cc23a263a054a8712610f9555bec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8856472530888969255, guid: 84d3cc23a263a054a8712610f9555bec,
         type: 3}
