@@ -14,6 +14,10 @@ public class MovingPlatfrom : MonoBehaviour
     [SerializeField] bool movePlayer;
     [SerializeField] bool loop;
 
+    [Header("Rotation Settings")]
+    [SerializeField] bool rotateToWayPoint;
+    [SerializeField] float rotateSpeed;
+
     private Vector3 startPos;
     private Vector3 currentWayPoint;
     private int wayPointIndex = -1;
@@ -49,6 +53,13 @@ public class MovingPlatfrom : MonoBehaviour
     public void MoveToWayPoint()
     {
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, currentWayPoint, speed * Time.deltaTime);
+
+        if (rotateToWayPoint)
+        {
+            // ROTATE SMOOTHLY
+            Quaternion targetRotation = Quaternion.LookRotation(currentWayPoint - transform.localPosition);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+        }
     }
 
     public void CheckDistanceToWayPoint()
