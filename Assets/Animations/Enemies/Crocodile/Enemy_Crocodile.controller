@@ -392,10 +392,10 @@ MonoBehaviour:
   attackIndicatorIndex: 0
   Invulnerable: 0
   lookAtPlayer: 0
-  followPlayer: 0
-  followTime: 0
-  stopFollowAnimationTime: 0
-  moveSpeed: 0
+  followPlayer: 1
+  followTime: 0.5
+  stopFollowAnimationTime: 0.7
+  moveSpeed: 10
   canLoop: 0
   loopTimeRange: {x: 0, y: 0}
   inRangeTransiton:
@@ -691,10 +691,10 @@ MonoBehaviour:
   attackIndicatorIndex: 0
   Invulnerable: 0
   lookAtPlayer: 0
-  followPlayer: 0
-  followTime: 0
-  stopFollowAnimationTime: 0
-  moveSpeed: 0
+  followPlayer: 1
+  followTime: 0.5
+  stopFollowAnimationTime: 0.7
+  moveSpeed: 10
   canLoop: 0
   loopTimeRange: {x: 0, y: 0}
   inRangeTransiton:
