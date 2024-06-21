@@ -2870,30 +2870,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2495128076503502575, guid: 676160572f9c2d44389b6212140b2837,
-        type: 3}
-      propertyPath: autoHideMouse
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3843559297540417718, guid: 676160572f9c2d44389b6212140b2837,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3863470334873653690, guid: 676160572f9c2d44389b6212140b2837,
-        type: 3}
-      propertyPath: m_WarningMessage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137444454593103730, guid: 676160572f9c2d44389b6212140b2837,
-        type: 3}
-      propertyPath: maxHealth
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137444454593103730, guid: 676160572f9c2d44389b6212140b2837,
-        type: 3}
-      propertyPath: currentHealth
-      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 9198434293709738344, guid: 676160572f9c2d44389b6212140b2837,
         type: 3}

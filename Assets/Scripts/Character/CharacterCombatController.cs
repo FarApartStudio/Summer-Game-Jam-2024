@@ -91,7 +91,6 @@ public class CharacterCombatController : MonoBehaviour
     private bool reloaded = false;
     private bool cancelShot = false;
     private float lastHoldTime = 0;
-    private Vector3 lastTargetPos = Vector2.zero;
 
     public ViewMode GetAimMode => aimMode;
     public WeaponState GetWeaponState => weaponState;
@@ -109,10 +108,15 @@ public class CharacterCombatController : MonoBehaviour
 
     private void Update()
     {
-        HandleAnimationWeights();
         HandleInput();
-        HandleMouseWorldPosition();
-        HandleRotationWithCamera();
+
+        HandleAnimationWeights();
+
+        if (isTriggerHeld)
+        {
+            HandleMouseWorldPosition();
+            HandleRotationWithCamera();
+        }
     }
 
     public void HandleAnimationWeights()
@@ -164,7 +168,6 @@ public class CharacterCombatController : MonoBehaviour
         if (isTriggerHeld && !trigger)
         {
             lastHoldTime = currentTriggerHoldTime;
-            lastTargetPos = targetDetectPos;
             currentTriggerHoldTime = 0;
             isTriggerReleased = true;
             currentFireRate = fireRate;
@@ -204,18 +207,33 @@ public class CharacterCombatController : MonoBehaviour
 
     public void SpawnArrow ()
     {
-        //CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
+        screeCenterPoint = new Vector2(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2);
+        Ray ray = cam.ScreenPointToRay(screeCenterPoint);
 
-        //Vector3 finalDestination = GetBulletSpread(lastTargetPos, maxRecoil, GetLastAimAccuracy());
+        Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position, transform.rotation);
+        arrowInstance.OnHit = HitDetection;
 
-        //shootDirection = finalDestination - currentBow.GetFirePoint().position;
-        //shootDirection.Normalize();
-        //Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position,transform.rotation);
-        //arrowInstance.OnHit = HitDetection;
-        //arrowInstance.Init(shootDirection, arrowSpeed);
-        //currentBow.OnFire();
+        Vector3 direction = Vector3.zero;
 
-        ArrowRayCast();
+        if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer) && !IsTooClose(screeCenterHit.point))
+        {
+            direction = screeCenterHit.point - currentBow.GetFirePoint().position;
+            direction.Normalize();
+
+            Vector3 finalDirection = GetBulletSpread(direction, maxRecoil, GetLastAimAccuracy());
+            arrowInstance.Init(finalDirection, arrowSpeed);
+
+        }
+        else
+        {
+            direction = cam.transform.forward;
+            Vector3 finalDirection = GetBulletSpread(direction, maxRecoil, GetLastAimAccuracy());
+            arrowInstance.Init(direction, arrowSpeed);
+        }
+
+        CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
+        AudioSystem.PlayOneShotAudio(GetLastAimAccuracy() > 0.5f ? AudioTypeID.ArrowReleaseGood : AudioTypeID.ArrowReleaseBad, AudioCategory.Sfx);
+        currentBow.OnFire();
     }
 
     public void HitDetection(ArrowHit arrowHit)
@@ -283,7 +301,7 @@ public class CharacterCombatController : MonoBehaviour
             mouseWorldPosition = ray.GetPoint(1000);
         }
 
-        Debug.DrawLine(currentBow.GetFirePoint().position, mouseWorldPosition, Color.red, 1f);
+        //Debug.DrawLine(currentBow.GetFirePoint().position, mouseWorldPosition, Color.red, 1f);
 
         if (Physics.Linecast(currentBow.GetFirePoint().position, mouseWorldPosition, out RaycastHit linecastHit, detectLayer)
             && linecastHit.point != mouseWorldPosition
@@ -301,32 +319,6 @@ public class CharacterCombatController : MonoBehaviour
         }
 
         aimTargetDebug.position = Vector3.Lerp(aimTargetDebug.position, mouseWorldPosition, Time.deltaTime * 10);
-    }
-
-    public void ArrowRayCast()
-    {
-        screeCenterPoint = new Vector2(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2);
-        Ray ray = cam.ScreenPointToRay(screeCenterPoint);
-
-        Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position, transform.rotation);
-        arrowInstance.OnHit = HitDetection;
-
-        if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer) && !IsTooClose(screeCenterHit.point))
-        {
-            Vector3 finalDestination = GetBulletSpread(screeCenterHit.point, maxRecoil, GetLastAimAccuracy());
-            shootDirection = finalDestination - currentBow.GetFirePoint().position;
-            shootDirection.Normalize();
-            arrowInstance.Init(shootDirection, arrowSpeed);
-
-        }
-        else
-        {
-            Debug.Log("No Hit so we are shooting straight");
-            arrowInstance.Init(cam.transform.forward, arrowSpeed);
-        }
-
-        CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
-        currentBow.OnFire();
     }
 
     public void HandleRotationWithCamera()

@@ -14,5 +14,7 @@ public enum AudioTypeID
 	MenuMusic = 7,
 	UI_ButtonPress = 8,
 	UI_ButtonHover = 9,
+	ArrowReleaseGood = 10,
+	ArrowReleaseBad = 11,
 }
 }

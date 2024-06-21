@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AI_RoamState : AI_BaseState
 {
+    [SerializeField] float minDistance = 2f;
     [SerializeField] float moveSpeed;
     [SerializeField] Transiton reachRoamExit;
 
@@ -29,7 +30,7 @@ public class AI_RoamState : AI_BaseState
 
         //Debug.Log("Roam State" + GetEnemyController(animator).navMeshAgent.remainingDistance);
 
-        if (GetEnemyController(animator).navMeshAgent.remainingDistance < 1f)
+        if (GetEnemyController(animator).navMeshAgent.remainingDistance < minDistance)
         {
             if (!changeState)
             {
