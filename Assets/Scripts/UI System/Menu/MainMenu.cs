@@ -1,3 +1,4 @@
+using Pelumi.AudioSystem;
 using Pelumi.Juicer;
 using Pelumi.ObjectPool;
 using Pelumi.UISystem;
@@ -23,6 +24,12 @@ public class MainMenu : GenericMenu<MainMenu>
     [SerializeField] private AdvanceButton _continueBtn;
     [SerializeField] private AdvanceButton _creditsBtn;
     [SerializeField] private AdvanceButton _hidecreditsBtn;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSystemSO _audioSettings;
+    [SerializeField] private Slider _masterVolumeSlider;
+    [SerializeField] private Slider _musicVolumeSlider;
+    [SerializeField] private Slider _sfxVolumeSlider;
 
     [Header("Credits")]
     [SerializeField] private CanvasGroup _creditsPanel;
@@ -52,10 +59,18 @@ public class MainMenu : GenericMenu<MainMenu>
 
         _mainButtonEffect = _mainBtns.JuicyScale(1, 0.25f);
         _mainButtonEffect.SetEase(Ease.Spring);
+
+        _masterVolumeSlider.onValueChanged.AddListener((value) => _audioSettings.ChangeVolume(AudioCategory.Master, value));
+        _musicVolumeSlider.onValueChanged.AddListener((value) => _audioSettings.ChangeVolume(AudioCategory.Music, value));
+        _sfxVolumeSlider.onValueChanged.AddListener((value) => _audioSettings.ChangeVolume(AudioCategory.Sfx, value));
     }
 
     protected override void OnOpened()
     {
+        _masterVolumeSlider.value = _audioSettings.GetVolume(AudioCategory.Master);
+        _musicVolumeSlider.value = _audioSettings.GetVolume(AudioCategory.Music);
+        _sfxVolumeSlider.value = _audioSettings.GetVolume(AudioCategory.Sfx);
+
         _continueBtn.gameObject.SetActive(PlayerPrefs.GetInt("CurrentArea", 1) > 1);
     }
 

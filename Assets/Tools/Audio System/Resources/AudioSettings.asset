@@ -13,22 +13,13 @@ MonoBehaviour:
   m_Name: AudioSettings
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: e5f17c4e969eb3b46b65ba8c0190125e, type: 2}
-  audioVolumeData:
-  - AudioCategory: 0
-    Volume: 100
-  - AudioCategory: 1
-    Volume: 13.9
-  - AudioCategory: 2
-    Volume: 100
-  - AudioCategory: 3
-    Volume: 100
-  - AudioCategory: 4
-    Volume: 100
-  - AudioCategory: 5
-    Volume: 100
-  - AudioCategory: 6
-    Volume: 100
-  - AudioCategory: 7
-    Volume: 100
-  - AudioCategory: 8
-    Volume: 100
+  audioSaveData:
+    audioVolumeData:
+    - AudioCategory: 0
+      Volume: 100
+    - AudioCategory: 1
+      Volume: 17.559961
+    - AudioCategory: 2
+      Volume: 100
+    - AudioCategory: 3
+      Volume: 100

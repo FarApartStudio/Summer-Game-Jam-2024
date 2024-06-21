@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Pelumi.AudioSystem;
 
 public class GameMenu : GenericMenu<GameMenu>
 {
@@ -54,6 +55,11 @@ public class GameMenu : GenericMenu<GameMenu>
     [SerializeField] private Button _resumeBtn;
     [SerializeField] private Button _quitBtn;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSystemSO _audioSettings;
+    [SerializeField] private Slider _masterVolumeSlider;
+    [SerializeField] private Slider _musicVolumeSlider;
+    [SerializeField] private Slider _sfxVolumeSlider;
 
     private JuicerRuntimeCore<float> _fadeInOutEffect;
     private JuicerRuntimeCore<float> _fadeOutEffect;
@@ -84,10 +90,17 @@ public class GameMenu : GenericMenu<GameMenu>
         _settingBtn.onClick.AddListener(() => OnSettingsPressed?.Invoke());
         _resumeBtn.onClick.AddListener(() => OnResumePressed?.Invoke());
         _quitBtn.onClick.AddListener(() => OnQuitPressed?.Invoke());
+
+        _masterVolumeSlider.onValueChanged.AddListener((value) => _audioSettings.ChangeVolume(AudioCategory.Master, value));
+        _musicVolumeSlider.onValueChanged.AddListener((value) => _audioSettings.ChangeVolume(AudioCategory.Music, value));
+        _sfxVolumeSlider.onValueChanged.AddListener((value) => _audioSettings.ChangeVolume(AudioCategory.Sfx, value));
     }
 
     protected override void OnOpened()
     {
+        _masterVolumeSlider.value = _audioSettings.GetVolume(AudioCategory.Master);
+        _musicVolumeSlider.value = _audioSettings.GetVolume(AudioCategory.Music);
+        _sfxVolumeSlider.value = _audioSettings.GetVolume(AudioCategory.Sfx);
 
     }
 

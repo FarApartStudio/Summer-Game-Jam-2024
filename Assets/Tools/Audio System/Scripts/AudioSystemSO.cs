@@ -4,9 +4,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 
 namespace Pelumi.AudioSystem
 {
+    [Serializable]
+    public class AudioSaveData
+    {
+        public List<AudioVolumeData> audioVolumeData = new List<AudioVolumeData>();
+    }
+
     [Serializable]
     public class AudioVolumeData
     {
@@ -20,19 +27,47 @@ namespace Pelumi.AudioSystem
     public class AudioSystemSO : ScriptableObject
     {
         [SerializeField] private AudioMixer audioMixer;
-        [SerializeField] private List<AudioVolumeData> audioVolumeData = new List<AudioVolumeData>();
+        [SerializeField] private AudioSaveData audioSaveData;
 
         public AudioMixer AudioMixer => audioMixer;
 
-        public void SetMute(string key, bool mute)
+        public void Mute(AudioCategory audioCategory, bool mute)
         {
-            audioMixer.SetFloat(key, mute ? -80 : 0);
+            SetMute(audioCategory.ToString(), mute);
+            SaveAudioVolumeData (audioCategory, GetVolumeFromMixer(audioCategory));
         }
 
         public void ChangeVolume(AudioCategory audioCategory, float volume)
         {
             SetVolume (audioCategory, volume);
-            SaveAudioVolumeData();
+            SaveAudioVolumeData(audioCategory, volume);
+        }
+
+        public float GetVolume(AudioCategory audioCategory)
+        {
+            foreach (AudioVolumeData data in audioSaveData.audioVolumeData)
+            {
+                if (data.AudioCategory == audioCategory)
+                {
+                    return data.Volume;
+                }
+            }
+            return 0;
+        }
+
+        public void LoadAudioVolumeData()
+        {
+            LoadAll();
+
+            foreach (AudioVolumeData data in audioSaveData.audioVolumeData)
+            {
+                SetVolume(data.AudioCategory, data.Volume);
+            }
+        }
+
+        private void SetMute(string key, bool mute)
+        {
+            audioMixer.SetFloat(key, mute ? -80 : 0);
         }
 
         private void SetVolume(AudioCategory audioCategory, float volume)
@@ -40,84 +75,83 @@ namespace Pelumi.AudioSystem
             audioMixer.SetFloat(audioCategory.ToString(), ConvertVolumeToDecibel(volume));
         }
 
-        public float GetVolume (AudioCategory audioCategory)
+        private float GetVolumeFromMixer (AudioCategory audioCategory)
         {
             audioMixer.GetFloat(audioCategory.ToString(), out float volume);
             return ConvertDecibelToVolume(volume);
         }
 
-        public float ConvertVolumeToDecibel(float volume)
+        private float ConvertVolumeToDecibel(float volume)
         {
             volume /= 100;
             if (volume <= 0) volume = 0.0001f;
             return (Mathf.Log10(volume) * 20);
         }
 
-        public float ConvertDecibelToVolume(float decibel)
+        private float ConvertDecibelToVolume(float decibel)
         {
             return (Mathf.Pow(10, decibel / 20)) * 100;
         }
 
-        public void LoadAudioVolumeData()
-        {
-           // LoadFromPlayerPrefs();
-
-            foreach (AudioVolumeData data in audioVolumeData)
-            {
-                SetVolume(data.AudioCategory, data.Volume);
-            }
-        }
-
-        public void SaveAudioVolumeData()
+        private void RefreshVolumeData()
         {
             AudioMixerGroup[] groups = audioMixer.FindMatchingGroups("");
             List<AudioVolumeData> nonExistingAudioVolume = new List<AudioVolumeData>();
 
-            for (int i = 0; i < audioVolumeData.Count; i++)
+            for (int i = 0; i < audioSaveData.audioVolumeData.Count; i++)
             {
                 for (int j = 0; j < groups.Length; j++)
                 {
-                    if (audioVolumeData[i].AudioCategory.ToString() == Enum.GetName(typeof(AudioCategory), j))
+                    if (audioSaveData.audioVolumeData[i].AudioCategory.ToString() == Enum.GetName(typeof(AudioCategory), j))
                     {
-                        groups[j].audioMixer.GetFloat(audioVolumeData[i].AudioCategory.ToString(), out float volume);
-                        audioVolumeData[i].Volume = ConvertDecibelToVolume(volume);
+                        groups[j].audioMixer.GetFloat(audioSaveData.audioVolumeData[i].AudioCategory.ToString(), out float volume);
+                        audioSaveData.audioVolumeData[i].Volume = ConvertDecibelToVolume(volume);
                         break;
                     }
 
-                    nonExistingAudioVolume.Add(audioVolumeData[i]);
+                    nonExistingAudioVolume.Add(audioSaveData.audioVolumeData[i]);
                 }
             }
 
             foreach (AudioVolumeData index in nonExistingAudioVolume)
             {
-                audioVolumeData.Remove(index);
+                audioSaveData.audioVolumeData.Remove(index);
             }
 
             foreach (AudioMixerGroup group in groups)
             {
-                if (audioVolumeData.Exists(x => x.AudioCategory.ToString() == group.name)) continue;
+                if (audioSaveData.audioVolumeData.Exists(x => x.AudioCategory.ToString() == group.name)) continue;
                 group.audioMixer.GetFloat(group.name, out float volume);
                 AudioCategory audioCategory = (AudioCategory)Enum.Parse(typeof(AudioCategory), group.name);
-                audioVolumeData.Add(new AudioVolumeData() { AudioCategory = audioCategory, Volume = ConvertDecibelToVolume(volume) });
+                audioSaveData.audioVolumeData.Add(new AudioVolumeData() { AudioCategory = audioCategory, Volume = ConvertDecibelToVolume(volume) });
+            }
+        }
+
+        private void SaveAudioVolumeData(AudioCategory audioCategory, float volume)
+        {
+            foreach (AudioVolumeData data in audioSaveData.audioVolumeData)
+            {
+                if (data.AudioCategory == audioCategory)
+                {
+                    data.Volume = volume;
+                    break;
+                }
             }
 
-          //  SaveAsPlayerPef();
+            SaveAll();
         }
 
-        public void SaveAsPlayerPef ()
+        private void SaveAll()
         {
-            // convert audioVolumeData to json
-            string json = JsonUtility.ToJson(audioVolumeData);
-            // save json to player prefs
-            PlayerPrefs.SetString("AudioVolumeData", json);
+            string json = JsonUtility.ToJson(audioSaveData);
+            PlayerPrefs.SetString("AudioSaveData", json);
         }
 
-        public void LoadFromPlayerPrefs ()
+        private void LoadAll()
         {
-            // get json from player prefs
-            string json = PlayerPrefs.GetString("AudioVolumeData", null);
-            if (json != null)
-            audioVolumeData = JsonUtility.FromJson<List<AudioVolumeData>>(json);
+            string json = PlayerPrefs.GetString("AudioSaveData", "");
+            if (String.IsNullOrEmpty(json)) return;
+            audioSaveData = JsonUtility.FromJson<AudioSaveData>(json);
         }
 
 #if UNITY_EDITOR
@@ -137,7 +171,9 @@ namespace Pelumi.AudioSystem
 
             CreateEnum(audioEnum, audioList);
 
-            SaveAudioVolumeData();
+            RefreshVolumeData();
+
+           PlayerPrefs.DeleteKey("AudioVolumeData");
         }
 
         public void CreateEnum(string enumName, List<string> stringList)
@@ -203,21 +239,10 @@ namespace Pelumi.AudioSystem
                 audioSystemSO.Generate();
             }
 
-            if (GUILayout.Button("Save"))
-            {
-                audioSystemSO.SaveAudioVolumeData();
-            }
-
-            if (GUILayout.Button("Load"))
-            {
-                audioSystemSO.LoadAudioVolumeData();
-            }
-
-
-            if (GUILayout.Button("Clear PlayerPref"))
-            {
-                PlayerPrefs.DeleteKey("AudioVolumeData");
-            }
+            //if (GUILayout.Button("Clear PlayerPref"))
+            //{
+            //    PlayerPrefs.DeleteKey("AudioVolumeData");
+            //}
         }
     }
 #endif

@@ -18,6 +18,11 @@ public class MovingPlatfrom : MonoBehaviour
     [SerializeField] bool rotateToWayPoint;
     [SerializeField] float rotateSpeed;
 
+    [Header("Wave Settings")]
+    [SerializeField] bool wave;
+    [SerializeField] float waveSpeed;
+    [SerializeField] float waveHeight;
+
     private Vector3 startPos;
     private Vector3 currentWayPoint;
     private int wayPointIndex = -1;
@@ -38,13 +43,6 @@ public class MovingPlatfrom : MonoBehaviour
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            canMove = !canMove;
-        }
-
-
         if (!canMove) return;
         MoveToWayPoint();
         CheckDistanceToWayPoint();
@@ -52,6 +50,11 @@ public class MovingPlatfrom : MonoBehaviour
 
     public void MoveToWayPoint()
     {
+        if (wave)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + Mathf.Sin(Time.time * waveSpeed) * waveHeight, transform.localPosition.z);
+        }
+
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, currentWayPoint, speed * Time.deltaTime);
 
         if (rotateToWayPoint)
@@ -153,7 +156,7 @@ public class MovingPlatfrom : MonoBehaviour
 
 #if UNITY_EDITOR
 
-        if (!EditorApplication.isPlaying) startPos = transform.localPosition;
+        if (!EditorApplication.isPlaying) startPos = transform.position;
 
 #endif
         Gizmos.DrawWireSphere(startPos, .2f);
@@ -166,9 +169,16 @@ public class MovingPlatfrom : MonoBehaviour
 
         for (int i = 0; i < wayPoints.Length; i++)
         {
-            Gizmos.DrawLine(GetCorrectLocalPostion(wayPoints[i]), GetCorrectLocalPostion(wayPoints[(i + 1) % wayPoints.Length]));
+            if (i == wayPoints.Length - 1)
+            {
+                if (loop)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(GetCorrectLocalPostion(wayPoints[i]), startPos);
+                }
+                break;
+            }
+            Gizmos.DrawLine(GetCorrectLocalPostion(wayPoints[i]), GetCorrectLocalPostion(wayPoints[(i + 1)]));
         }
-
-        if (loop) Gizmos.DrawLine(startPos, GetCorrectLocalPostion(wayPoints[wayPoints.Length - 1]));
     }
 }

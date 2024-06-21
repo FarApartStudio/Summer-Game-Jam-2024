@@ -38,6 +38,7 @@ namespace Pelumi.AudioSystem
             if (Instance == null)
             {
                 Instance = this;
+                audioManagerSO.LoadAudioVolumeData();
                 Init();
             }
             else Destroy(gameObject);
@@ -56,11 +57,6 @@ namespace Pelumi.AudioSystem
             }
 
             audio3DPool = new ObjectPool<Audio3DPlayer>(On3DAudioCreated, On3DAudioPooledPool, On3DAudioReleasedToPool);
-        }
-
-        private void Start()
-        {
-            audioManagerSO.LoadAudioVolumeData();
         }
 
         public Audio3DPlayer On3DAudioCreated()

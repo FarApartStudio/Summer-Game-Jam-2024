@@ -3295,11 +3295,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GlobalManagers
       objectReference: {fileID: 0}
-    - target: {fileID: 4142224744323019043, guid: dcd654f24ccd21345961b4fd3b55e796,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5708012897968095183, guid: dcd654f24ccd21345961b4fd3b55e796,
         type: 3}
       propertyPath: m_LocalPosition.x
