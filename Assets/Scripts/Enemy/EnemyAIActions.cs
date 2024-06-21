@@ -62,6 +62,7 @@ public static class EnemyAIActions
     public static void LookAtTargetSmooth(this Transform ownerTranfrom, Transform targetPosition)
     {
         Vector3 direction = (targetPosition.position - ownerTranfrom.position).normalized;
+        if (direction == Vector3.zero) return;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         ownerTranfrom.rotation = Quaternion.Slerp(ownerTranfrom.rotation, lookRotation, Time.deltaTime * 5);
     }

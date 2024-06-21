@@ -913,6 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5fb5c7809f52f94c8ccc4ff41921b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDistance: 2
   moveSpeed: 3
   reachRoamExit:
     animationName: Wait 1

@@ -30,7 +30,7 @@ public class AI_RoamState : AI_BaseState
 
         //Debug.Log("Roam State" + GetEnemyController(animator).navMeshAgent.remainingDistance);
 
-        if (GetEnemyController(animator).navMeshAgent.remainingDistance < minDistance)
+        if (GetEnemyController(animator).navMeshAgent.remainingDistance < GetEnemyController(animator).navMeshAgent.stoppingDistance + 0.2f)
         {
             if (!changeState)
             {
