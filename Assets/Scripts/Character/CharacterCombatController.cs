@@ -17,7 +17,6 @@ public enum ViewMode
 
 public class CharacterCombatController : MonoBehaviour
 {
-
     public enum WeaponState
     {
         Idle,
