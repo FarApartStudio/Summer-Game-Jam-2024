@@ -68,11 +68,13 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private float minDetectRange = 20f;
 
     [Header("Debug Gun Controls")]
-    [SerializeField] private bool autoHideMouse = false;
     [SerializeField] private bool isTriggerHeld = false;
     [SerializeField] private bool isTriggerReleased = true;
     [SerializeField] private float currentTriggerHoldTime;
     [SerializeField] private float currentFireRate;
+
+    [Header("Testing")]
+    [SerializeField] private bool autoHideMouse = false;
 
     private ViewMode aimMode = ViewMode.HipFire;
     private WeaponState weaponState = WeaponState.Idle;
@@ -97,6 +99,12 @@ public class CharacterCombatController : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+
+        if (autoHideMouse)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     private void Update()
@@ -196,16 +204,18 @@ public class CharacterCombatController : MonoBehaviour
 
     public void SpawnArrow ()
     {
-        CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
+        //CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
 
-        Vector3 finalDestination = GetBulletSpread(lastTargetPos, maxRecoil, GetLastAimAccuracy());
+        //Vector3 finalDestination = GetBulletSpread(lastTargetPos, maxRecoil, GetLastAimAccuracy());
 
-        shootDirection = finalDestination - currentBow.GetFirePoint().position;
-        shootDirection.Normalize();
-        Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position,transform.rotation);
-        arrowInstance.OnHit = HitDetection;
-        arrowInstance.Init(shootDirection, arrowSpeed);
-        currentBow.OnFire();
+        //shootDirection = finalDestination - currentBow.GetFirePoint().position;
+        //shootDirection.Normalize();
+        //Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position,transform.rotation);
+        //arrowInstance.OnHit = HitDetection;
+        //arrowInstance.Init(shootDirection, arrowSpeed);
+        //currentBow.OnFire();
+
+        ArrowRayCast();
     }
 
     public void HitDetection(ArrowHit arrowHit)
@@ -291,6 +301,32 @@ public class CharacterCombatController : MonoBehaviour
         }
 
         aimTargetDebug.position = Vector3.Lerp(aimTargetDebug.position, mouseWorldPosition, Time.deltaTime * 10);
+    }
+
+    public void ArrowRayCast()
+    {
+        screeCenterPoint = new Vector2(UnityEngine.Screen.width / 2, UnityEngine.Screen.height / 2);
+        Ray ray = cam.ScreenPointToRay(screeCenterPoint);
+
+        Arrow arrowInstance = ObjectPoolManager.SpawnObject(arrow, currentBow.GetFirePoint().position, transform.rotation);
+        arrowInstance.OnHit = HitDetection;
+
+        if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer) && !IsTooClose(screeCenterHit.point))
+        {
+            Vector3 finalDestination = GetBulletSpread(screeCenterHit.point, maxRecoil, GetLastAimAccuracy());
+            shootDirection = finalDestination - currentBow.GetFirePoint().position;
+            shootDirection.Normalize();
+            arrowInstance.Init(shootDirection, arrowSpeed);
+
+        }
+        else
+        {
+            Debug.Log("No Hit so we are shooting straight");
+            arrowInstance.Init(cam.transform.forward, arrowSpeed);
+        }
+
+        CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
+        currentBow.OnFire();
     }
 
     public void HandleRotationWithCamera()
