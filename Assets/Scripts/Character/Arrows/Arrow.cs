@@ -27,6 +27,8 @@ public class Arrow : MonoBehaviour
 {
     public Action<ArrowHit> OnHit;
 
+    public Action<ArrowHit> OnImpact;
+
     [SerializeField] LayerMask _collisionLayer;
     [SerializeField] Vector3 _detectOffset;
     [SerializeField] float _detectRadius;
@@ -45,6 +47,9 @@ public class Arrow : MonoBehaviour
     private JuicerRuntimeCore<Vector3> _scaleEffect;
     private Coroutine _deSpawnRoutine;
     private DamageDefector checkedDefector;
+    private float accuracy;
+
+    public float GetAccuracy() => accuracy;
 
     [Header("Debug")]
     [SerializeField] private Collider[] hits;
@@ -57,10 +62,20 @@ public class Arrow : MonoBehaviour
         hits = new Collider[_maxHitCount];
     }
 
-    public void Init(Vector3 direction, float speed)
+    private void Update()
+    {
+        if (_canMove)
+            transform.position += _direction * _speed * Time.deltaTime;
+
+        Trace();
+    }
+
+
+    public void Init(Vector3 direction, float speed, float accuracy)
     {
         _direction = direction;
         _speed = speed;
+        this.accuracy = accuracy;
         transform.forward = direction;
         _trail.gameObject.SetActive(true);
         _deSpawnRoutine = StartCoroutine(DeSpawn(_lifeTime));
@@ -78,14 +93,6 @@ public class Arrow : MonoBehaviour
         {
             ProcessHits (hitCount);
         }
-    }
-
-    private void Update()
-    {
-        if (_canMove)
-        transform.position += _direction * _speed * Time.deltaTime;
-
-        Trace();
     }
 
     public void ProcessHits(int hitCount)
@@ -138,6 +145,8 @@ public class Arrow : MonoBehaviour
         hit.Set(this, collider, collider.ClosestPoint(transform.position), collider.ClosestPointOnBounds(transform.position), hitDirection);
 
         OnHit?.Invoke(hit);
+
+        OnImpact?.Invoke(hit);
 
         transform.SetParent(hit.Collider.transform, true);
 

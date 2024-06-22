@@ -48,8 +48,8 @@ MonoBehaviour:
   _collisionLayer:
     serializedVersion: 2
     m_Bits: 137
-  _detectOffset: {x: 0, y: 0, z: 0.44}
-  _detectRadius: 0.05
+  _detectOffset: {x: 0, y: 0, z: 0.45}
+  _detectRadius: 0.1
   _lifeTime: 30
   _afterHitLifeTime: 5
   _maxHitCount: 5

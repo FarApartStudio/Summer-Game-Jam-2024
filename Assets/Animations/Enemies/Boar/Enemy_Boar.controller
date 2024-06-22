@@ -393,8 +393,8 @@ MonoBehaviour:
   Invulnerable: 0
   lookAtPlayer: 0
   followPlayer: 1
-  followTime: 0.5
-  stopFollowAnimationTime: 0.7
+  followTime: 0.25
+  stopFollowAnimationTime: 0.5
   moveSpeed: 10
   canLoop: 0
   loopTimeRange: {x: 0, y: 0}
@@ -692,8 +692,8 @@ MonoBehaviour:
   Invulnerable: 0
   lookAtPlayer: 0
   followPlayer: 1
-  followTime: 0.5
-  stopFollowAnimationTime: 0.7
+  followTime: 0.25
+  stopFollowAnimationTime: 0.5
   moveSpeed: 10
   canLoop: 0
   loopTimeRange: {x: 0, y: 0}

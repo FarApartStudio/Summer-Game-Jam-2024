@@ -31,22 +31,24 @@ namespace GameProject
 
         private void Awake()
         {
-            highlightRingColorEffect = ring.JuicyAlpha(0.75f, 0.15f);
-            highlightRingScaleEffect = ring.transform.JuicyScale(1.1f, 0.25f);
-            highlihtIconScaleEffect = icon.transform.JuicyScale(1.1f, 0.15f);
+            highlightRingColorEffect = ring.JuicyAlpha(0.75f, 0.15f).SetTimeMode(TimeMode.Unscaled);
+            highlightRingScaleEffect = ring.transform.JuicyScale(1.1f, 0.25f).SetTimeMode(TimeMode.Unscaled);
+            highlihtIconScaleEffect = icon.transform.JuicyScale(1.1f, 0.15f).SetTimeMode(TimeMode.Unscaled);
 
-            unHighlightRingColorEffect = ring.JuicyAlpha(0.5f, 0.15f);
-            unHighlightRingScaleEffect = ring.transform.JuicyScale(1f, 0.25f);
-            unHighlightIconSacleEffect = icon.transform.JuicyScale(1f, 0.15f);
+            unHighlightRingColorEffect = ring.JuicyAlpha(0.5f, 0.15f).SetTimeMode(TimeMode.Unscaled); ;
+            unHighlightRingScaleEffect = ring.transform.JuicyScale(1f, 0.25f).SetTimeMode(TimeMode.Unscaled);
+            unHighlightIconSacleEffect = icon.transform.JuicyScale(1f, 0.15f).SetTimeMode(TimeMode.Unscaled);
 
-            selectedEffect = icon.JuicyColour(Color.yellow, 0.15f).SetLoop(2);
+            selectedEffect = icon.JuicyColour(Color.yellow, 0.15f).SetLoop(2).SetTimeMode(TimeMode.Unscaled);
             selectedEffect.SetOnCompleted(() => { OnSelected?.Invoke(); });
+
+            openEffect = transform.JuicyScale(1f, .2f).SetTimeMode(TimeMode.Unscaled);
         }
 
         public void Init(float delay)
         {
             transform.localScale = Vector3.zero;
-            openEffect = transform.JuicyScale(1f, .2f).SetDelay(delay).Start();
+            openEffect.SetDelay(delay).Start();
         }
 
         public void Highlight()

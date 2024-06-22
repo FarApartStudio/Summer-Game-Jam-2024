@@ -65,6 +65,7 @@ public class StoryModeManager : MonoBehaviour
     private HealthBarMenu _healthBarMenu;
     private ScreenFadeMenu _screenFadeMenu;
     private CinematicMenu _cinematicMenu;
+    private ArrowSelectionWheelMenu _arrowSelectionWheelMenu;
     private bool isPaused;
     private int _currentDeathCount;
 
@@ -99,6 +100,18 @@ public class StoryModeManager : MonoBehaviour
         LoadArea(_currentArea);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _arrowSelectionWheelMenu.Open();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            _arrowSelectionWheelMenu.Close();
+        }
+    }
 
     private void LoadArea(int area)
     {
@@ -256,6 +269,7 @@ public class StoryModeManager : MonoBehaviour
         _healthBarMenu = UIManager.GetMenu<HealthBarMenu>();
         _screenFadeMenu = UIManager.GetMenu<ScreenFadeMenu>();
         _cinematicMenu = UIManager.GetMenu<CinematicMenu>();
+        _arrowSelectionWheelMenu = UIManager.GetMenu<ArrowSelectionWheelMenu>();
 
         _gameMenu.OnSettingsPressed += () =>
         {
@@ -270,6 +284,16 @@ public class StoryModeManager : MonoBehaviour
         _gameMenu.OnQuitPressed += () =>
         {
             LoadingScreen.Instance.LoadScene(0);
+        };
+
+        _arrowSelectionWheelMenu.GetArrowSOs += () =>
+        {
+            return _player.GetCharacterCombatController.GetArrowSOs;
+        };
+
+        _arrowSelectionWheelMenu.OnArrowSelected += (arrowSO) =>
+        {
+            _player.GetCharacterCombatController.SetArrow(arrowSO);
         };
 
         InputManager.Instance.OnPauseBtnPressed = () =>

@@ -52,6 +52,7 @@ public class CharacterCombatController : MonoBehaviour
     [SerializeField] private Bow currentBow;
 
     [Header("WeaponToEdit")]
+    [SerializeField] private List<ArrowSO> arrows;
     [SerializeField] private Arrow arrow;
     [MinMaxSlider(0, 100, true)][SerializeField] private Vector2 _damageRange;
     [SerializeField] private float maxRecoil = 5;
@@ -93,6 +94,7 @@ public class CharacterCombatController : MonoBehaviour
 
     public ViewMode GetAimMode => aimMode;
     public WeaponState GetWeaponState => weaponState;
+    public List<ArrowSO> GetArrowSOs => arrows;
 
     private void Awake()
     {
@@ -216,19 +218,15 @@ public class CharacterCombatController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit screeCenterHit, float.MaxValue, detectLayer) && !IsTooClose(screeCenterHit.point))
         {
-            direction = screeCenterHit.point - currentBow.GetFirePoint().position;
-            direction.Normalize();
-
-            Vector3 finalDirection = GetBulletSpread(direction, maxRecoil, GetLastAimAccuracy());
-            arrowInstance.Init(finalDirection, arrowSpeed);
-
+            direction = (screeCenterHit.point - currentBow.GetFirePoint().position).normalized;
         }
         else
         {
             direction = cam.transform.forward;
-            Vector3 finalDirection = GetBulletSpread(direction, maxRecoil, GetLastAimAccuracy());
-            arrowInstance.Init(direction, arrowSpeed);
         }
+
+        Vector3 finalDirection = GetBulletSpread(direction, maxRecoil, GetLastAimAccuracy());
+        arrowInstance.Init(finalDirection, arrowSpeed, GetLastAimAccuracy());
 
         CameraManager.Instance.ShakeCamera(Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, .25f, .5f);
         AudioSystem.PlayOneShotAudio(GetLastAimAccuracy() > 0.5f ? AudioTypeID.ArrowReleaseGood : AudioTypeID.ArrowReleaseBad, AudioCategory.Sfx);
@@ -343,6 +341,11 @@ public class CharacterCombatController : MonoBehaviour
                 turnValue = Mathf.Lerp(turnValue, crossProduct > 0 ? 1 : -1, Time.deltaTime * 20);
             }
         }
+    }
+
+    public void SetArrow (ArrowSO arrowSO)
+    {
+        arrow = arrowSO.GetArrowPrefab;
     }
 
     public bool IsTooClose(Vector3 position)

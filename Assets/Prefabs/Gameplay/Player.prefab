@@ -9969,6 +9969,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 257
   currentBow: {fileID: 1335592831006303342}
+  arrows:
+  - {fileID: 11400000, guid: 66f75449305ba1b4ab517a4c6bae6e77, type: 2}
+  - {fileID: 11400000, guid: 2400bb8a30f175c4491c4cad2b96037f, type: 2}
   arrow: {fileID: 8349473470084570783, guid: 03578d52053a2184c97697672507e17b, type: 3}
   _damageRange: {x: 10, y: 50}
   maxRecoil: 0.05
