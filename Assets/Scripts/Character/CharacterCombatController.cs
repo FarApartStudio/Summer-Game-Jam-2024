@@ -246,7 +246,7 @@ public class CharacterCombatController : MonoBehaviour
             impactEffect.gameObject.SetActive(true);
             impactEffect.transform.LookAt(arrowHit.HitPoint + arrowHit.HitNormal);
 
-            AudioSystem.PlayOneShotAudio(surface.GetSurfaceInfo()._impactSound, AudioCategory.Sfx);
+            AudioSystem.PlayOneShotAudio(surface.GetSurfaceInfo()._impactSound, AudioCategory.Sfx,true);
         }
 
         if (arrowHit.Collider.TryGetComponent<IDamageable>(out IDamageable damageable))
