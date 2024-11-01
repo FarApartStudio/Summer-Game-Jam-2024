@@ -1,12 +1,8 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream:Assets/TextMesh Pro.meta
 guid: f54d1bd14bd3ca042bd867b519fee8cc
 folderAsset: yes
-=======
-guid: 48e08dc33330d11e9d4a1b246c52e4f6
-timeCreated: 1488828285
->>>>>>> Stashed changes:Assets/Plugins/Sirenix/Demos/Custom Drawers.unitypackage.meta
 DefaultImporter:
+  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

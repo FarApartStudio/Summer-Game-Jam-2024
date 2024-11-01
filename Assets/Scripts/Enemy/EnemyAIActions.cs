@@ -156,7 +156,7 @@ public static class EnemyAIActions
             //velocity.y = Mathf.Max(-0.01f, velocity.y);
             //velocity.z = Mathf.Max(-0.01f, velocity.z);
 
-            cannon.GetComponent<Rigidbody>().velocity = velocity;
+            cannon.GetComponent<Rigidbody>().linearVelocity = velocity;
         } 
     }
 
